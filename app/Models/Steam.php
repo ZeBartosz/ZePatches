@@ -12,5 +12,14 @@ class Steam extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
-    
+    protected $fillable = [
+        'name',
+        'appId',
+    ];
+
+    public static function findGameByName(String $game) {
+        return self::query()
+                ->where('name', 'LIKE', "%{$game}%")
+                ->get();
+    }
 }
