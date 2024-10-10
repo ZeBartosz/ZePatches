@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19a3b5a4b779323e327e659afc2a0195",
+    "content-hash": "5351ef4eb3c7b964ec2b2fcbec3127be",
     "packages": [
         {
             "name": "brick/math",
@@ -5418,6 +5418,66 @@
                 }
             ],
             "time": "2024-09-16T10:07:02+00:00"
+        },
+        {
+            "name": "syntax/steam-api",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/syntaxerrors/Steam.git",
+                "reference": "c4524c68b9467502b4838cc15e0c2f0900153ff1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/syntaxerrors/Steam/zipball/c4524c68b9467502b4838cc15e0c2f0900153ff1",
+                "reference": "c4524c68b9467502b4838cc15e0c2f0900153ff1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "guzzlehttp/guzzle": "^7.8",
+                "laravel/framework": "^10.0|^11.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0",
+                "phpunit/phpunit": "^10.5|^11.0",
+                "rector/rector": "^1.0",
+                "vlucas/phpdotenv": "^5.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Syntax\\SteamApi\\SteamApiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Syntax\\SteamApi\\": "src/Syntax/SteamApi"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stygian",
+                    "email": "stygian.warlock.v2@gmail.com"
+                }
+            ],
+            "description": "A steam-api client for Laravel 10+",
+            "support": {
+                "issues": "https://github.com/syntaxerrors/Steam/issues",
+                "source": "https://github.com/syntaxerrors/Steam/tree/3.0.0"
+            },
+            "time": "2024-04-28T00:46:37+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
