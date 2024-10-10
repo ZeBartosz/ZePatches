@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Steam;
+use Illuminate\Http\Request;
 use Syntax\SteamApi\Facades\SteamApi;
 use Inertia\Inertia;
 
@@ -14,6 +15,14 @@ class SteamController
         $steam = '';
         // Return to Inertia 'Home' component with 'steam' as a prop
         return Inertia::render('Home', ['steam' => $steam]);
+    }
+
+    public function searchForGame(Request $request) {
+
+        $games = Steam::findGameByName($request->search);
+        
+        return inertia('Home', ['games' => $games]);
+
     }
 
     public function store()
