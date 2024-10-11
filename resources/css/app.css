@@ -9,3 +9,7 @@ nav {
 .nav-link {
     @apply border rounded-md py-1 px-2 text-white hover:bg-slate-500
 }
+
+h1 {
+    @apply flex justify-center text-lg 
+}
