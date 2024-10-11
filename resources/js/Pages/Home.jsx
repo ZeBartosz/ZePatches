@@ -1,27 +1,45 @@
 import { useForm } from "@inertiajs/react";
 import React from "react";
 
-export default function Home({games , search}) {
-    console.log(games);
-    console.log(search);
+export default function Home({ games, search}) {
+    console.log("all games: ", games);
+    console.log("Total Sum: ", games.length);
 
+
+    const totalSearch = games.length;
     const { post, processing } = useForm({});
 
-
+    
     function submit(e) {
         e.preventDefault();
         post("/inputGames");
     }
 
-    
 
     return (
         <>
-            {search ? <h1>Searched for: <strong className="pl-1">{search}</strong></h1> : ''}
+            {search && (
+                <div className="flex flex-col">
+                    <h1 className="">
+                        Searched for: <strong className="pl-1">{search}</strong>
+                    </h1>
+                    <p className="flex justify-center text-sm text-gray-600">
+                        Total: {totalSearch}
+                    </p>
+                </div>
+            )}
 
             <div className="p-2">
                 <form onSubmit={submit}>
-                    <button id="addGames" className={`border-2 p-2 ${processing ? 'bg-red-600' : 'bg-gray-700'}`} disabled={processing}>{processing ? "Adding games..." : "Add games from API"}</button>
+                    <button
+                        id="addGames"
+                        className={`border-2 p-2 ${
+                            processing ? "bg-red-600" : "bg-gray-700"
+                        }`}
+                        disabled={processing}
+                    >
+                        {processing ? "Adding games..." : "Add games from API"}
+                    </button>
                 </form>
             </div>
 
