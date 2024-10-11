@@ -2,13 +2,11 @@ import { Link, useForm } from "@inertiajs/react";
 import searchIcon from "../../Assets/search.svg";
 
 export default function Layout({ children }) {
-    const { data, setData, post, processing } = useForm({ search: "" });
-
-    console.log(data.search);
+    const { data, setData, get, processing } = useForm({ search: "" });
 
     function searchSubmit(e) {
         e.preventDefault();
-        post("/search");
+        get("/");
     }
 
     return (
@@ -23,9 +21,9 @@ export default function Layout({ children }) {
 
                     <div className="flex justify-center">
                         <form onSubmit={searchSubmit}>
-                            <div className="relative m-2 border- rounded-lg shadow min-w-[300px]">
+                            <div className="relative m-2 shadow min-w-[300px] ">
                                 <input
-                                    className="h-10 px-5 focus:outline-none w-full rounded-lg bg-slate-500 text-white"
+                                    className="h-10 px-5 focus:outline-none w-full rounded-lg bg-slate-500 text-white focus:border-1"
                                     type="search"
                                     id="search"
                                     value={data.search}
