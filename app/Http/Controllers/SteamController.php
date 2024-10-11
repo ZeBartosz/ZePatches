@@ -27,6 +27,17 @@ class SteamController
         return inertia('Home', ['games' => $games, 'search' => $search]);
     }
 
+    public function show ($appId){
+        $urlMinor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=12";
+
+        $urlMajor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=13";
+
+        $minorPatches = json_decode(file_get_contents($urlMinor), true);
+        $majorPatches = json_decode(file_get_contents($urlMajor), true);
+        
+        return inertia('Show', ['minorPatches' => $minorPatches, 'majorPatches' => $majorPatches]);
+    }
+
     public function store()
     {     
         // Increase the execution time to go through the whole array   
