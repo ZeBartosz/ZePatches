@@ -3,25 +3,50 @@
 @tailwind utilities;
 
 nav {
-    @apply flex items-center justify-between px-2 bg-slate-700 border-b-2 border-slate-500
+    @apply flex items-center justify-between px-2 bg-[#2a475e] border-b-2 border-[#66c0f4]
 }
 
 .nav-link {
     @apply border rounded-md py-1 px-2 text-white hover:bg-slate-500
 }
 
+main {
+    @apply bg-[#171a21] flex flex-col items-center justify-center min-h-screen
+}
+
 h1 {
-    @apply flex justify-center text-4xl font-bold leading-9 mt-6 mb-4
+    @apply flex justify-center text-4xl font-bold leading-9 mt-6 mb-4  pb-3 border-b-[1px] text-center
 } 
+
+h3, h2 {
+    @apply font-bold text-lg py-3 
+}
+
 
 a {
     @apply text-blue-500 underline hover:text-blue-700
 }
 
 ul {
-    @apply px-3 py-2
+    @apply pl-24 py-2 text-left	
 }
 
 li {
-    @apply p-1 list-disc 
+    @apply py-1  list-disc
+}
+
+img {
+    @apply flex items-center justify-center rounded-sm
+}
+
+iframe {
+    @apply flex items-center justify-center
+}
+
+p {
+    @apply p-6 max-w-[900px]
+}
+
+strong {
+    @apply pt-2
 }
