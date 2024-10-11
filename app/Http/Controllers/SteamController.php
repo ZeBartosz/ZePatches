@@ -9,20 +9,24 @@ use Inertia\Inertia;
 
 class SteamController
 {
-    public function test()
-    {
-        // Get news
-        $steam = '';
-        // Return to Inertia 'Home' component with 'steam' as a prop
-        return Inertia::render('Home', ['steam' => $steam]);
-    }
 
-    public function searchForGame(Request $request) {
 
-        $games = Steam::findGameByName($request->search);
+    public function index () {
+
+        // Gets details from search query
+        $search = request()->get('search', ""); 
         
-        return inertia('Home', ['games' => $games]);
-
+        // Checks if $search is set
+        if ($search) {
+            // Checks for games with similar name then puts it in $game
+            $games = Steam::findGameByName($search);
+        } else {
+            // Search not set return empty string
+            $games = '';
+        }
+        
+        // return home with games and search string
+        return inertia('Home', ['games' => $games, 'search' => $search]);
     }
 
     public function store()
@@ -48,6 +52,5 @@ class SteamController
         // Resets the max execution time back to 60sec  
         ini_set('max_execution_time', 60);
     }
-
 
 }
