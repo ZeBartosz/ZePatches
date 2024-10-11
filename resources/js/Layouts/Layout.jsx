@@ -7,6 +7,7 @@ export default function Layout({ children }) {
     function searchSubmit(e) {
         e.preventDefault();
         get("/");
+        setData("search", "");
     }
 
     return (
@@ -30,11 +31,14 @@ export default function Layout({ children }) {
                                     onChange={(e) =>
                                         setData("search", e.target.value)
                                     }
-                                    placeholder="Search"
+                                    placeholder={`${
+                                        processing ? "Searching..." : "Search"
+                                    }`}
                                 ></input>
                                 <button
                                     id="searchSubmit"
                                     type="submit"
+                                    disabled={processing}
                                     className="absolute right-7 top-0 mt-3 mr-5"
                                 >
                                     <img
@@ -48,7 +52,9 @@ export default function Layout({ children }) {
                     </div>
 
                     <div className="flex-none">
-                        
+                        <button>
+                            
+                        </button>
                     </div>
                 </nav>
             </header>
