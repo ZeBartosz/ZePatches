@@ -1,8 +1,9 @@
 import { useForm } from "@inertiajs/react";
 import React from "react";
 
-export default function Home({ games }) {
+export default function Home({games , search}) {
     console.log(games);
+    console.log(search);
 
     const { post, processing } = useForm({});
 
@@ -23,7 +24,7 @@ export default function Home({ games }) {
             </div>
 
             <div>
-                {games && games.data ? (
+                {/* {games && games.data ? (
                     games.map((game) => (
                         <div key={game.id} className="p-4 border-b">
                             <div className="text-sm text-slate-400">
@@ -35,7 +36,7 @@ export default function Home({ games }) {
                     ))
                 ) : (
                     <p>No games available.</p>
-                )}
+                )} */}
             </div>
         </>
     );
