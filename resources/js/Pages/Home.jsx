@@ -7,6 +7,7 @@ export default function Home({games , search}) {
 
     const { post, processing } = useForm({});
 
+
     function submit(e) {
         e.preventDefault();
         post("/inputGames");
@@ -16,7 +17,8 @@ export default function Home({games , search}) {
 
     return (
         <>
-            <h1>Game games:</h1>
+            {search ? <h1>Searched for: <strong className="pl-1">{search}</strong></h1> : ''}
+
             <div className="p-2">
                 <form onSubmit={submit}>
                     <button id="addGames" className={`border-2 p-2 ${processing ? 'bg-red-600' : 'bg-gray-700'}`} disabled={processing}>{processing ? "Adding games..." : "Add games from API"}</button>
