@@ -28,6 +28,9 @@ class SteamController
     }
 
     public function show ($appId){
+
+        $gameName = Steam::findGameByAppId($appId)->name;
+
         $urlMinor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=12";
 
         $urlMajor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=13";
@@ -35,7 +38,7 @@ class SteamController
         $minorPatches = json_decode(file_get_contents($urlMinor), true);
         $majorPatches = json_decode(file_get_contents($urlMajor), true);
         
-        return inertia('Show', ['minorPatches' => $minorPatches, 'majorPatches' => $majorPatches]);
+        return inertia('Show', ['minorPatches' => $minorPatches, 'majorPatches' => $majorPatches, 'gameName' => $gameName]);
     }
 
     public function store()

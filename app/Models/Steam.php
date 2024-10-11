@@ -22,4 +22,8 @@ class Steam extends Authenticatable
                 ->where('name', 'LIKE', "%{$game}%")
                 ->get();
     }
+
+    public static function findGameByAppId($appId){
+        return self::query()->where('appId', $appId)->first();
+    }
 }

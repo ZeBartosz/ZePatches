@@ -1,4 +1,4 @@
-export default function Show({ minorPatches, majorPatches}) {
+export default function Show({ minorPatches, majorPatches, gameName}) {
     console.log('major', minorPatches);
     console.log('minior', majorPatches);
 
@@ -50,7 +50,7 @@ export default function Show({ minorPatches, majorPatches}) {
     return (
         <>
 
-                <h1 className="py-3 mt-0 text-[#c7d5e0]">Game name</h1>
+                <h1 className="py-3 mt-0 text-[#c7d5e0]">{ gameName }</h1>
 
                 {minorPatches ? 
                     minorPatches.events.map((patch) => (
