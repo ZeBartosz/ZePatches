@@ -2,10 +2,7 @@ import { Link, useForm } from "@inertiajs/react";
 import React from "react";
 
 export default function Home({ games, search}) {
-    console.log("all games: ", games);
-    console.log("Total Sum: ", games.length);
-    console.log(games.data)
-
+    
     const totalSearch = games.length;
     const { post, processing } = useForm({});
 

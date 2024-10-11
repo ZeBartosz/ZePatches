@@ -1,7 +1,6 @@
 export default function Show({ minorPatches, majorPatches, gameName}) {
-    console.log('major', minorPatches);
-    console.log('minior', majorPatches);
 
+    
     const convertToHTML = (text) => {
         // Start by defining a function to convert custom syntax into valid HTML
         
