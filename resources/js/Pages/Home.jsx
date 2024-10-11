@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import React from "react";
 
 export default function Home({ games, search}) {
@@ -9,8 +9,9 @@ export default function Home({ games, search}) {
     const totalSearch = games.length;
     const { post, processing } = useForm({});
 
+
     
-    function submit(e) {
+    function retrieveGameDataSubmit(e) {
         e.preventDefault();
         post("/inputGames");
     }
@@ -30,7 +31,7 @@ export default function Home({ games, search}) {
             )}
 
             <div className="p-2">
-                <form onSubmit={submit}>
+                <form onSubmit={retrieveGameDataSubmit}>
                     <button
                         id="addGames"
                         className={`border-2 p-2 ${
@@ -52,6 +53,7 @@ export default function Home({ games, search}) {
                                 <span>{game.appId}</span>
                             </div>
                             <p className="font-medium">{game.name}</p>
+                            <Link href={`/game/${game.appId}`} >Chech Patches</Link>
                         </div>
                     )) : ''}
             </div>
