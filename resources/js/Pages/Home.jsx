@@ -4,7 +4,7 @@ import React from "react";
 export default function Home({ games, search}) {
     console.log("all games: ", games);
     console.log("Total Sum: ", games.length);
-
+    console.log(games.data)
 
     const totalSearch = games.length;
     const { post, processing } = useForm({});
@@ -43,9 +43,8 @@ export default function Home({ games, search}) {
                 </form>
             </div>
 
-            <div>
-                {/* {games && games.data ? (
-                    games.map((game) => (
+            <div >
+                    {games.map((game) => (
                         <div key={game.id} className="p-4 border-b">
                             <div className="text-sm text-slate-400">
                                 <span>Posted on: </span>
@@ -53,10 +52,7 @@ export default function Home({ games, search}) {
                             </div>
                             <p className="font-medium">{game.name}</p>
                         </div>
-                    ))
-                ) : (
-                    <p>No games available.</p>
-                )} */}
+                    ))}
             </div>
         </>
     );
