@@ -44,7 +44,8 @@ export default function Home({ games, search}) {
             </div>
 
             <div >
-                    {games.map((game) => (
+                {games ? 
+                    games.map((game) => (
                         <div key={game.id} className="p-4 border-b">
                             <div className="text-sm text-slate-400">
                                 <span>Posted on: </span>
@@ -52,7 +53,7 @@ export default function Home({ games, search}) {
                             </div>
                             <p className="font-medium">{game.name}</p>
                         </div>
-                    ))}
+                    )) : ''}
             </div>
         </>
     );
