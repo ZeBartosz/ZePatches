@@ -9,7 +9,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
     return (
         <>
             <h1 className="pt-2 my-0 text-[#c7d5e0]">{gameName}</h1>
-            <div className="tab flex justify-evenly bg-[#2a475e] border-2 text-[#c7d5e0] border-[#66c0f4] rounded-md m-2 p-1">
+            <div className="tab flex justify-evenly bg-[#2a475e] border text-[#c7d5e0] border-[#66c0f4] rounded-md m-2 p-1">
                 <button
                     className={`m-1 p-2 rounded-md tablinks ${
                         activeTab === "Table1" ? "active bg-gray-900" : ""
@@ -33,7 +33,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                 id="Table1"
                 className={`table-content ${
                     activeTab === "Table1" ? "active" : "hidden"
-                } bg-gray-900 bg-opacity-75 border-2 border-[#66c0f4] rounded-lg text-white`}
+                } bg-gray-900 bg-opacity-75 border-2 border-white rounded-lg text-white`}
             >
                 <h1 className="py-3  my-0 text-[#c7d5e0] border-0">Major</h1>
                 {majorPatches
@@ -65,7 +65,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                 id="Table2"
                 className={`table-content ${
                     activeTab === "Table2" ? "active" : "hidden"
-                } bg-gray-800 bg-opacity-75 border-[#66c0f4] border-2 rounded-lg text-white`}
+                } bg-gray-800 bg-opacity-75 border-white border-2 rounded-lg text-white`}
             >
                 <h1 className="py-3 my-0 text-[#c7d5e0] border-0">Minor</h1>
                 {minorPatches

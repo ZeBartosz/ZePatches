@@ -24,7 +24,7 @@ export default function Layout({ children }) {
                         <form onSubmit={searchSubmit}>
                             <div className="relative m-2 shadow min-w-[300px] ">
                                 <input
-                                    className="h-10 px-5 focus:outline-none w-full rounded-lg bg-slate-500 text-white focus:border-1"
+                                    className={`h-10 px-5 w-full bg-[#1b2838] text-[#c7d5e0] rounded-md border border-transparent focus:outline-none focus:ring-1 focus:ring-white focus:border-white transition-colors duration-200 ${processing ? 'cursor-not-allowed' : ''}`}
                                     type="search"
                                     id="search"
                                     value={data.search}
@@ -39,7 +39,7 @@ export default function Layout({ children }) {
                                     id="searchSubmit"
                                     type="submit"
                                     disabled={processing}
-                                    className="absolute right-7 top-0 mt-3 mr-5"
+                                    className="absolute right-7 top-0 mt-3 mr-5 "
                                 >
                                     <img
                                         src={searchIcon}
