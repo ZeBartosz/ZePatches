@@ -11,5 +11,5 @@ nav {
 }
 
 h1 {
-    @apply flex justify-center text-lg 
-}
+    @apply flex justify-center text-4xl font-bold leading-9 mt-6
+} 
