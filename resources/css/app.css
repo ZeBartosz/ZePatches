@@ -11,9 +11,17 @@ nav {
 }
 
 h1 {
-    @apply flex justify-center text-4xl font-bold leading-9 mt-6
+    @apply flex justify-center text-4xl font-bold leading-9 mt-6 mb-4
 } 
 
 a {
     @apply text-blue-500 underline hover:text-blue-700
+}
+
+ul {
+    @apply px-3 py-2
+}
+
+li {
+    @apply p-1 list-disc 
 }
