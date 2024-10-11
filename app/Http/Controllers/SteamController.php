@@ -38,7 +38,7 @@ class SteamController
             // Access properties using the object notation
             if (isset($game->appid, $game->name)) {
                 // Use Create correctly
-                Steam::create([
+                Steam::updateOrCreate([
                     'appId' => $game->appid, 
                     'name' => $game->name    
                 ]);
