@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Patches from "../Layouts/Patches"
+import Patches from "../Layouts/Patches";
 
 export default function Show({ minorPatches, majorPatches, gameName }) {
     const [activeTab, setActiveTab] = useState("Table1");
@@ -26,12 +26,11 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                 </button>
             </div>
 
-            {/* Render the PatchesTable for both major and minor patches */}
             <Patches
                 patch={majorPatches}
                 activeTab={activeTab}
-                tableId="Table1"
-                title="Major"
+                tableId={"Table1"}
+                title={"Major"}
             />
             <Patches
                 patch={minorPatches}
