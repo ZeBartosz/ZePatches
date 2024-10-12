@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { convertToHTML } from "../app.js";
+import Patches from "../Layouts/Patches"
 
 export default function Show({ minorPatches, majorPatches, gameName }) {
-    // State to track active tab
     const [activeTab, setActiveTab] = useState("Table1");
 
     return (
@@ -27,91 +26,19 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                 </button>
             </div>
 
-            {/* Major Patches Table */}
-            {majorPatches.events.length > 0 ? (
-                <div
-                    id="Table1"
-                    className={`table-content ${
-                        activeTab === "Table1" ? "active" : "hidden"
-                    } bg-gray-900 bg-opacity-75 border-2 border-white rounded-lg text-white`}
-                >
-                    <h1 className="py-3  my-0 text-[#c7d5e0] border-0">
-                        Major
-                    </h1>
-                    {majorPatches
-                        ? majorPatches.events.map((patch) => (
-                              <div
-                                  key={patch.forum_topic_id}
-                                  className="mx-4 mb-4 p-4 border-2 border-[#66c0f4] bg-[#1b2838] rounded-xl flex flex-col items-center w-auto max-w-[900px] min-w-[900px]"
-                              >
-                                  <div className="flex flex-col justify-center items-center text-[#c7d5e0]">
-                                      <h1 className="">
-                                          {patch.announcement_body.headline}
-                                      </h1>
-                                      <p
-                                          className="text-center flex flex-col justify-center"
-                                          dangerouslySetInnerHTML={{
-                                              __html: convertToHTML(
-                                                  patch.announcement_body.body
-                                              ),
-                                          }}
-                                      />
-                                  </div>
-                              </div>
-                          ))
-                        : ""}
-                </div>
-            ) : (
-                <h3
-                    className={`text-[#c7d5e0] text-3xl ${
-                        activeTab === "Table1" ? "active" : "hidden"
-                    } `}
-                >
-                    Doesn't have any major patches
-                </h3>
-            )}
-
-            {/* Minor Patches Table */}
-            {minorPatches.events.length > 0 ? (
-                <div
-                    id="Table2"
-                    className={`table-content ${
-                        activeTab === "Table2" ? "active" : "hidden"
-                    } bg-gray-800 bg-opacity-75 border-white border-2 rounded-lg text-white`}
-                >
-                    <h1 className="py-3 my-0 text-[#c7d5e0] border-0">Minor</h1>
-                    {minorPatches
-                        ? minorPatches.events.map((patch) => (
-                              <div
-                                  key={patch.forum_topic_id}
-                                  className="mx-4 mb-4 p-4 border-2 border-[#66c0f4] bg-[#1b2838] rounded-xl flex flex-col items-center w-auto max-w-[900px] min-w-[900px]"
-                              >
-                                  <div className="flex flex-col justify-center items-center text-[#c7d5e0]">
-                                      <h1 className="">
-                                          {patch.announcement_body.headline}
-                                      </h1>
-                                      <p
-                                          className="text-center flex flex-col justify-center"
-                                          dangerouslySetInnerHTML={{
-                                              __html: convertToHTML(
-                                                  patch.announcement_body.body
-                                              ),
-                                          }}
-                                      />
-                                  </div>
-                              </div>
-                          ))
-                        : ""}
-                </div>
-            ) : (
-                <h3
-                    className={`text-[#c7d5e0] text-3xl ${
-                        activeTab === "Table2" ? "active" : "hidden"
-                    } `}
-                >
-                    Doesn't have any minor Patches patches
-                </h3>
-            )}
+            {/* Render the PatchesTable for both major and minor patches */}
+            <Patches
+                patch={majorPatches}
+                activeTab={activeTab}
+                tableId="Table1"
+                title="Major"
+            />
+            <Patches
+                patch={minorPatches}
+                activeTab={activeTab}
+                tableId={"Table2"}
+                title={"Minor"}
+            />
         </>
     );
 }
