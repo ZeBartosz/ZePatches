@@ -24,7 +24,9 @@ export default function Layout({ children }) {
                         <form onSubmit={searchSubmit}>
                             <div className="relative m-2 shadow min-w-[300px] ">
                                 <input
-                                    className={`h-10 px-5 w-full bg-[#1b2838] text-[#c7d5e0] rounded-md border border-transparent focus:outline-none focus:ring-1 focus:ring-white focus:border-white transition-colors duration-300 ${processing ? 'cursor-not-allowed' : ''}`}
+                                    className={`h-10 px-5 w-full bg-[#1b2838] text-[#c7d5e0] rounded-md border border-transparent focus:outline-none focus:ring-1 focus:ring-white focus:border-white transition-colors duration-300 ${
+                                        processing ? "cursor-not-allowed" : ""
+                                    }`}
                                     type="search"
                                     id="search"
                                     value={data.search}
@@ -52,9 +54,12 @@ export default function Layout({ children }) {
                     </div>
 
                     <div className="flex-none">
-                        <button>
-                            
-                        </button>
+                        <Link className="nav-link m-1" href="#">
+                            Login
+                        </Link>
+                        <Link className="nav-link" href="/register">
+                            Register
+                        </Link>
                     </div>
                 </nav>
             </header>
