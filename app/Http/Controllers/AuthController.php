@@ -41,5 +41,20 @@ class AuthController
             return back()->withErrors(['failed' => 'The provided information does not match our records']);
         }
     }
+    
+    public function logout(Request $request){
+
+        // Logout the user
+        Auth::logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // Regenerate the token 
+        $request->session()->regenerateToken();
+
+        // Redirect to home 
+        return redirect('/');
+    }
 
 }
