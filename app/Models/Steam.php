@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Syntax\SteamApi\Facades\SteamApi;
 
 class Steam extends Authenticatable
 {
@@ -25,5 +26,11 @@ class Steam extends Authenticatable
 
     public static function findGameByAppId($appId){
         return self::query()->where('appId', $appId)->first();
+    }
+
+    public static function getGameDetails($appId){
+        $num = +$appId;
+        return SteamApi::app()->appDetails($num)->first();
+
     }
 }

@@ -16,12 +16,19 @@ class SteamController
         // Gets details from search query
         $search = request()->get('search', ""); 
         $games = '';
-        
+        $banner = [];
+
         // Checks if $search is set
         if ($search) {
             // Checks for games with similar name then puts it in $game
             $games = Steam::findGameByName($search);
+            foreach ($games as $game){
+                $self = Steam::getGameDetails($game->appId);
+                $banner[] = $self->header();
+            };
         } 
+
+        dd($banner);
         
         // return home with games and search string
         return inertia('Home', ['games' => $games, 'search' => $search]);
