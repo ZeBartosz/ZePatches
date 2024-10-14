@@ -11,7 +11,7 @@ nav {
 }
 
 main {
-    @apply bg-[#171a21] flex flex-col items-center justify-center min-h-screen
+    @apply bg-[#171a21] flex flex-col items-center justify-start min-h-screen
 }
 
 h1 {
