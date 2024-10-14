@@ -6,19 +6,19 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
 
     return (
         <>
-            <h1 className="pt-2 my-0 text-[#c7d5e0]">{gameName}</h1>
-            <div className="tab flex justify-evenly bg-[#2a475e] border text-[#c7d5e0] border-[#66c0f4] rounded-md m-3 p-">
+            <h1 className="flex items-start pt-2 my-0 text-[#c7d5e0]">{gameName}</h1>
+            <div className="tab flex justify-evenlytext-[#c7d5e0] border-[#66c0f4] mb-2 text-blue-900">
                 <button
-                    className={`m-1 p-2 rounded-md tablinks ${
-                        activeTab === "Table1" ? "active bg-gray-900" : ""
+                    className={`px-1 border-r tablinks ${
+                        activeTab === "Table1" ? "activ text-blue-600" : ""
                     }`}
                     onClick={() => setActiveTab("Table1")}
                 >
                     Major
                 </button>
                 <button
-                    className={`m-1 p-2 rounded-md tablinks ${
-                        activeTab === "Table2" ? "active bg-gray-800" : ""
+                    className={`px-1  tablinks ${
+                        activeTab === "Table2" ? "activ text-blue-600" : ""
                     }`}
                     onClick={() => setActiveTab("Table2")}
                 >
