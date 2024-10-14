@@ -59,7 +59,7 @@ function Patches({ patch, activeTab, tableId, title }) {
                         {currentPatches.map((patch) => (
                             <div
                                 key={patch.forum_topic_id}
-                                className="mx-4 mb-4 p-4  flex flex-col items-center w-auto max-w-[900px] min-w-[900px]"
+                                className="mx-4 mb-4 p-4 border-b flex flex-col items-center w-auto max-w-[900px] min-w-[900px]"
                             >
                                 <div className="flex flex-col justify-center items-center text-[#c7d5e0]">
                                     <h1>{patch.announcement_body.headline}</h1>
