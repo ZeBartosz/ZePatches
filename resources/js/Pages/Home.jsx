@@ -1,7 +1,7 @@
 import { Link, useForm } from "@inertiajs/react";
 import React from "react";
 
-export default function Home({ games, search}) {
+export default function Home({ games, search, authUser}) {
     
     const totalSearch = games.length;
     const { post, processing } = useForm({});
@@ -16,6 +16,9 @@ export default function Home({ games, search}) {
 
     return (
         <>
+            {authUser ? (      
+                <h1>{authUser.name}</h1>
+            ) : "No user"}
             {search && (
                 <div className="flex flex-col">
                     <h1 className="">

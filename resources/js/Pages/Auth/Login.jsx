@@ -44,7 +44,7 @@ export default function Login() {
                     </div>
 
                     <button disabled={processing}>
-                        {processing ? "Creating Account..." : "Register"}
+                        {processing ? "Logging in..." : "Login"}
                     </button>
                 </form>
             </div>

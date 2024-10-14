@@ -1,13 +1,22 @@
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import searchIcon from "../../Assets/search.svg";
 
 export default function Layout({ children }) {
     const { data, setData, get, processing } = useForm({ search: "" });
+    const { post, logoutprocessing} = useForm({});
+    const { authUser } = usePage().props;
+
+    console.log(authUser);
 
     function searchSubmit(e) {
         e.preventDefault();
         get("/");
         setData("search", "");
+    }
+
+    function logout(e){
+        e.preventDefault();
+        post('/logout')
     }
 
     return (
@@ -53,14 +62,22 @@ export default function Layout({ children }) {
                         </form>
                     </div>
 
-                    <div className="flex-none">
-                        <Link className="nav-link m-1" href="/login">
-                            Login
-                        </Link>
-                        <Link className="nav-link" href="/register">
-                            Register
-                        </Link>
-                    </div>
+                    {authUser ? (
+                        <div>
+                            <form onSubmit={logout}>
+                                <button type="submit">{logoutprocessing ? "Logging out..." : "logout"}</button>
+                            </form>
+                        </div>
+                    ) : (
+                        <div className="flex-none">
+                            <Link className="nav-link m-1" href="/login">
+                                Login
+                            </Link>
+                            <Link className="nav-link" href="/register">
+                                Register
+                            </Link>
+                        </div>
+                    )}
                 </nav>
             </header>
 
