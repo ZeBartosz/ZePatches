@@ -54,7 +54,7 @@ export default function Layout({ children }) {
                     </div>
 
                     <div className="flex-none">
-                        <Link className="nav-link m-1" href="#">
+                        <Link className="nav-link m-1" href="/login">
                             Login
                         </Link>
                         <Link className="nav-link" href="/register">

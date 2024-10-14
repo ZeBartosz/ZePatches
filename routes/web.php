@@ -1,16 +1,20 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SteamController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [SteamController::class, 'index']);
-Route::inertia('/register', '../Auth/Register');
 
-Route::get('/register', function() {
-    return Inertia::render('Auth/Register');
-});
+Route::resource('auth', AuthController::class);
+
+Route::inertia('/register', 'Auth/Register');
+Route::inertia('/login', 'Auth/Login');
+
 Route::get('/game/{steam}' , [SteamController::class, 'show']);
 
 
 Route::post('/inputGames', [SteamController::class, 'store']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);

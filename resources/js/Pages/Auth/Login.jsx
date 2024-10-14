@@ -1,16 +1,14 @@
 import { useForm } from "@inertiajs/react";
 
-export default function Register() {
+export default function Login() {
     const { data, setData, post, errors, processing } = useForm({
-        username: "",
         email: "",
         password: "",
-        password_confirmation: "",
     });
 
     function submit(e) {
         e.preventDefault();
-        post("/auth/register");
+        post("/auth/login");
     }
 
     return (
@@ -18,19 +16,6 @@ export default function Register() {
             <h1 className="text-white">Register</h1>
             <div>
                 <form onSubmit={submit}>
-                    {/* Username */}
-                    <div>
-                        <label htmlFor="username">Username</label>
-                        <input
-                            type="text"
-                            name="username"
-                            value={data.username}
-                            onChange={(e) =>
-                                setData("username", e.target.value)
-                            }
-                            className={errors.username && "!ring-red-500"}
-                        />
-                    </div>
 
                     {/* Email */}
                     <div>
@@ -55,24 +40,6 @@ export default function Register() {
                                 setData("password", e.target.value)
                             }
                             className={errors.password && "!ring-red-500"}
-                        />
-                    </div>
-
-                    {/* Password Confirmation  */}
-                    <div>
-                        <label htmlFor="password_confirmation">
-                            Password Confirmation
-                        </label>
-                        <input
-                            type="password"
-                            name="password_confirmation"
-                            value={data.password_confirmation}
-                            onChange={(e) =>
-                                setData("password_confirmation", e.target.value)
-                            }
-                            className={
-                                errors.password_confirmation && "!ring-red-500"
-                            }
                         />
                     </div>
 
