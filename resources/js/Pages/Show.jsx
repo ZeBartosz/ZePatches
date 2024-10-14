@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Patches from "../Layouts/Patches";
+import Patches from "../Components/Patches";
 
 export default function Show({ minorPatches, majorPatches, gameName }) {
     const [activeTab, setActiveTab] = useState("Table1");
