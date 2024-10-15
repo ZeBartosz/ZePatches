@@ -13,25 +13,31 @@ class SteamController
 
     public function index()
     {
-
         // Gets details from search query
         $search = request()->get('search', "");
-        $games = '';
+        $games = [];
 
         // Checks if $search is set
         if ($search) {
-            // Checks for games with similar name then puts it in $game
-            $games = Steam::findGameByName($search);
-            for ($i = 0; $i < count($games) - 1; $i++) {
-                if (Steam::getGameDetails($games[$i]->appId)) {
-                    $gameDetails = Steam::getGameDetails($games[$i]->appId);
-                    $games[$i]['type'] = $gameDetails->type;
-                    $games[$i]['banner'] = $gameDetails->header;
+            // Retrieves games matching the search
+            $games = Steam::findGameByName($search)->toArray();
+
+            // Map over the games and add banner and type using game details
+            $games = array_map(function ($game) {
+
+                $gameDetails = Steam::getGameDetails($game['appId']);
+
+                // Only proceed if game details are available
+                if ($gameDetails) {
+                    $game['type'] = $gameDetails->type;
+                    $game['banner'] = $gameDetails->header;
                 }
-            }
+
+                return $game;
+            }, $games);
         }
 
-        // return home with games and search string
+        // Return view with games and search string
         return inertia('Home', ['games' => $games, 'search' => $search]);
     }
 
