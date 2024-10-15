@@ -4,33 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Steam;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Syntax\SteamApi\Facades\SteamApi;
 use Inertia\Inertia;
 
 class SteamController
 {
 
-
     public function index()
     {
+
         // Gets details from search query
         $search = request()->get('search', "");
         $games = [];
 
         // Checks if $search is set
         if ($search) {
-            // Retrieves games matching the search
+            // Retrieves limited games matching the search query
             $games = Steam::findGameByName($search)->toArray();
-
             // Map over the games and add banner and type using game details
             $games = array_map(function ($game) {
+                $game = Steam::where('appId', $game['appId'])->first();
+                if ($game->moreDetails === 0) {
+                    // Get details for the specific game
+                    $gameDetails = Steam::getGameDetails($game->appId);
 
-                $gameDetails = Steam::getGameDetails($game['appId']);
-
-                // Only proceed if game details are available
-                if ($gameDetails) {
-                    $game['type'] = $gameDetails->type;
-                    $game['banner'] = $gameDetails->header;
+                    $game->update([
+                        'type' => !empty($gameDetails->type) ? $gameDetails->type : "Unknown Type",
+                        'banner' => !empty($gameDetails->header) ? $gameDetails->header : "",
+                        'developer' =>  !empty($gameDetails->developers) ? $gameDetails->developers[0] : "Unknown Developer",
+                        'releaseDate' => $gameDetails->release->date ?? "Unknown Release Date",
+                        'moreDetails' => 1,
+                    ]);
                 }
 
                 return $game;
@@ -40,6 +45,7 @@ class SteamController
         // Return view with games and search string
         return inertia('Home', ['games' => $games, 'search' => $search]);
     }
+
 
     public function show($appId)
     {

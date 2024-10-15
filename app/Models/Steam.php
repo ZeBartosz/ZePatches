@@ -16,18 +16,21 @@ class Steam extends Authenticatable
     protected $fillable = [
         'name',
         'appId',
+        'developer',
+        'releaseDate',
+        'banner',
+        'type',
+        'moreDetails',
     ];
 
     public static function findGameByName(String $game)
     {
-        return self::query()
-            ->where('name', 'LIKE', "%{$game}%")
-            ->get();
+        return self::where('name', 'LIKE', "%$game%")->orderBy('type')->get();
     }
 
     public static function findGameByAppId($appId)
     {
-        return self::query()->where('appId', $appId)->first();
+        return self::where('appId', $appId)->first();
     }
 
     public static function getGameDetails($appId)
