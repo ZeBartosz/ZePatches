@@ -3,10 +3,8 @@ import searchIcon from "../../Assets/search.svg";
 
 export default function Layout({ children }) {
     const { data, setData, get, processing } = useForm({ search: "" });
-    const { post, logoutprocessing} = useForm({});
+    const { post, logoutprocessing } = useForm({});
     const { authUser } = usePage().props;
-
-    console.log(authUser);
 
     function searchSubmit(e) {
         e.preventDefault();
@@ -14,9 +12,9 @@ export default function Layout({ children }) {
         setData("search", "");
     }
 
-    function logout(e){
+    function logout(e) {
         e.preventDefault();
-        post('/logout')
+        post("/logout");
     }
 
     return (
@@ -65,7 +63,11 @@ export default function Layout({ children }) {
                     {authUser ? (
                         <div>
                             <form onSubmit={logout}>
-                                <button type="submit">{logoutprocessing ? "Logging out..." : "logout"}</button>
+                                <button type="submit">
+                                    {logoutprocessing
+                                        ? "Logging out..."
+                                        : "logout"}
+                                </button>
                             </form>
                         </div>
                     ) : (

@@ -11,52 +11,54 @@ class SteamController
 {
 
 
-    public function index () {
+    public function index()
+    {
 
         // Gets details from search query
-        $search = request()->get('search', ""); 
+        $search = request()->get('search', "");
         $games = '';
-        $banner = [];
 
         // Checks if $search is set
         if ($search) {
             // Checks for games with similar name then puts it in $game
             $games = Steam::findGameByName($search);
-            foreach ($games as $game){
-                $self = Steam::getGameDetails($game->appId);
-                $banner[] = $self->header();
-            };
-        } 
+            for ($i = 0; $i < count($games) - 1; $i++) {
+                if (Steam::getGameDetails($games[$i]->appId)) {
+                    $gameDetails = Steam::getGameDetails($games[$i]->appId);
+                    $games[$i]['type'] = $gameDetails->type;
+                    $games[$i]['banner'] = $gameDetails->header;
+                }
+            }
+        }
 
-        dd($banner);
-        
         // return home with games and search string
         return inertia('Home', ['games' => $games, 'search' => $search]);
     }
 
-    public function show ($appId){
+    public function show($appId)
+    {
 
         $gameName = Steam::findGameByAppId($appId)->name;
-
         $urlMinor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=12";
 
         $urlMajor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=14";
 
         // $urlFutureAnnounce = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=16";
+        // $FutureAnnounceEvent = json_decode(file_get_contents($urlFutureAnnounce), true);
+
 
         $minorPatches = json_decode(file_get_contents($urlMinor), true);
         $majorPatches = json_decode(file_get_contents($urlMajor), true);
-        // $FutureAnnounceEvent = json_decode(file_get_contents($urlFutureAnnounce), true);
 
-        
+
         return inertia('Show', ['minorPatches' => $minorPatches, 'majorPatches' => $majorPatches, 'gameName' => $gameName]);
     }
 
     public function store()
-    {     
+    {
         // Increase the execution time to go through the whole array   
         ini_set('max_execution_time', 500);
-        
+
         // Get all appIds from Steam
         $steamApps = SteamApi::app()->GetAppList(50);
 
@@ -66,8 +68,8 @@ class SteamController
             if (isset($game->appid, $game->name)) {
                 // Use Create correctly
                 Steam::create([
-                    'appId' => $game->appid, 
-                    'name' => $game->name    
+                    'appId' => $game->appid,
+                    'name' => $game->name
                 ]);
             }
         }
@@ -75,5 +77,4 @@ class SteamController
         // Resets the max execution time back to 60sec  
         ini_set('max_execution_time', 60);
     }
-
 }

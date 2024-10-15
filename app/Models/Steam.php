@@ -18,19 +18,21 @@ class Steam extends Authenticatable
         'appId',
     ];
 
-    public static function findGameByName(String $game) {
+    public static function findGameByName(String $game)
+    {
         return self::query()
-                ->where('name', 'LIKE', "%{$game}%")
-                ->get();
+            ->where('name', 'LIKE', "%{$game}%")
+            ->get();
     }
 
-    public static function findGameByAppId($appId){
+    public static function findGameByAppId($appId)
+    {
         return self::query()->where('appId', $appId)->first();
     }
 
-    public static function getGameDetails($appId){
+    public static function getGameDetails($appId)
+    {
         $num = +$appId;
         return SteamApi::app()->appDetails($num)->first();
-
     }
 }

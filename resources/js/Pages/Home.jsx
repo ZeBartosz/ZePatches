@@ -1,24 +1,20 @@
 import { Link, useForm } from "@inertiajs/react";
 import React from "react";
 
-export default function Home({ games, search, authUser}) {
-    
+export default function Home({ games, search, authUser }) {
     const totalSearch = games.length;
     const { post, processing } = useForm({});
 
+    console.log(games);
 
-    
     function retrieveGameDataSubmit(e) {
         e.preventDefault();
         post("/inputGames");
     }
 
-
     return (
         <>
-            {authUser ? (      
-                <h1>{authUser.name}</h1>
-            ) : "No user"}
+            {authUser ? <h1>{authUser.name}</h1> : "No user"}
             {search && (
                 <div className="flex flex-col">
                     <h1 className="">
@@ -44,18 +40,30 @@ export default function Home({ games, search, authUser}) {
                 </form>
             </div>
 
-            <div >
-                {games ? 
-                    games.map((game) => (
-                        <div key={game.id} className="p-4 border-b">
-                            <div className="text-sm text-slate-400">
-                                <span>Posted on: </span>
-                                <span>{game.appId}</span>
-                            </div>
-                            <p className="font-medium">{game.name}</p>
-                            <Link href={`/game/${game.appId}`} >Chech Patches</Link>
-                        </div>
-                    )) : ''}
+            <div>
+                {games
+                    ? games.map((game) => (
+                          <div
+                              key={game.id}
+                              className="relative my-4 min-w-[500px] max-w-[500px]"
+                          >
+                              <div
+                                  className="absolute border-2 inset-0 bg-cover bg-center filter blur-[2px] rounded-lg"
+                                  style={{
+                                      backgroundImage: `url(${game.banner})`,
+                                      zIndex: 0,
+                                  }}
+                              ></div>
+                              <div className="text-white relative z-10 bg-black opacity-75 rounded-lg p-2">
+                                  <p className="p-1">AppId: {game.appId}</p>
+                                  <h2 className="font-medium">{game.name}</h2>
+                                  <Link href={`/game/${game.appId}`}>
+                                      Check Patches
+                                  </Link>
+                              </div>
+                          </div>
+                      ))
+                    : ""}
             </div>
         </>
     );
