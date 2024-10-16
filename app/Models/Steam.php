@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
@@ -54,5 +55,10 @@ class Steam extends Authenticatable
     {
         $num = +$appId;
         return SteamApi::app()->appDetails($num)->first();
+    }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Steam::class);
     }
 }

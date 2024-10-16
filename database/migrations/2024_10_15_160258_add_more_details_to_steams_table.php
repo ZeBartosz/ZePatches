@@ -26,7 +26,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('steams', function (Blueprint $table) {
-            //
+            Schema::table('steams', function ($table) {
+                $table->dropColumn('developer');
+                $table->dropColumn('releaseDate');
+                $table->dropColumn('banner');
+                $table->dropColumn('type');
+                $table->dropColumn('moreDetails');
+            });
         });
     }
 };
