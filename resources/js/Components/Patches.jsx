@@ -6,6 +6,8 @@ function Patches({ patch, activeTab, tableId, title }) {
     const [currentPatches, setCurrentPatches] = useState([]);
     const [hasMore, setHasMore] = useState(true);
 
+    console.log(currentPatches);
+
     // Hook to manage side effects and lifecycle events
     useEffect(() => {
         // Load the first 3 patches from the provided patch.events array
@@ -13,7 +15,6 @@ function Patches({ patch, activeTab, tableId, title }) {
 
         // If there are more than 3 patches, set the hasMore state to true
         setHasMore(patch.events.length > 3);
-
     }, [patch.events]);
 
     // Function to load more patches when user scrolls
@@ -33,6 +34,23 @@ function Patches({ patch, activeTab, tableId, title }) {
         }
     };
 
+    // function to get the date of post
+    const getSteamPostDate = (time) => {
+        // Check is posttime set
+        if (time) {
+            // time is in seconds, so multiply by 1000
+            const postDate = new Date(time * 1000);
+
+            // Extract the day, month, and year from the Date object
+            const day = String(postDate.getDate()).padStart(2, "0");
+            const month = String(postDate.getMonth() + 1).padStart(2, "0");
+            const year = postDate.getFullYear();
+
+            // Return in 'dd-mm-yyyy' format
+            return `${day}-${month}-${year}`;
+        }
+    };
+
     return (
         <>
             {patch.events.length > 0 ? (
@@ -41,7 +59,7 @@ function Patches({ patch, activeTab, tableId, title }) {
                     className={`table-content ${
                         activeTab === tableId ? "active" : "hidden"
                     } bg-gray-900 bg-opacity-75 border-2 border-white rounded-lg text-white`}
-                >   
+                >
                     <h1 className="py-3 my-0 text-[#c7d5e0] border-0">
                         {title}
                     </h1>
@@ -63,6 +81,12 @@ function Patches({ patch, activeTab, tableId, title }) {
                             >
                                 <div className="flex flex-col justify-center items-center text-[#c7d5e0]">
                                     <h1>{patch.announcement_body.headline}</h1>
+                                    <span>
+                                        <span>Posted on: </span>
+                                        {getSteamPostDate(
+                                            patch.announcement_body.posttime
+                                        )}
+                                    </span>
                                     <p
                                         className="text-center flex flex-col justify-center"
                                         dangerouslySetInnerHTML={{
