@@ -9,6 +9,8 @@
         .replace(/\[\/h3\]/g, "</h3>")
         .replace(/\[h2\]/g, "<h2>")
         .replace(/\[\/h2\]/g, "</h2>")
+        .replace(/\[h1\]/g, "<h1>")
+        .replace(/\[\/h1\]/g, "</h1>")
         .replace(/\[b\]/g, "<strong>")
         .replace(/\[\/b\]/g, "</strong>")
         .replace(/\[i\]/g, "<em>")
