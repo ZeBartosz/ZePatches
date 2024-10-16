@@ -2,16 +2,16 @@ import { Link, useForm } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Home({ games = { data: [] }, search, authUser }) {
+export default function Home({ games, search, authUser }) {
     const [detailedGames, setDetailedGames] = useState(games.data || []);
     const { post, processing } = useForm({});
 
-    // Effect to update detailed games when games prop changes
+    // Effect to update the detailedGames state when the 'games' prop changes
     useEffect(() => {
         setDetailedGames(games.data || []);
     }, [games]);
 
-    // Fetch game details if moreDetails is 0
+    // Effect to fetch additional details for games if they are not already available
     useEffect(() => {
         if (detailedGames.length > 0) {
             detailedGames.forEach((game, index) => {
@@ -22,15 +22,18 @@ export default function Home({ games = { data: [] }, search, authUser }) {
         }
     }, [detailedGames]);
 
+    // Function to fetch more game details from the server
     const fetchGameDetails = async (appId, index) => {
         try {
             const response = await axios.get(`/games/details/${appId}`);
             const updatedGame = response.data;
 
+            // Update the detailedGames state by replacing the game at the specified index with the new data
             setDetailedGames((prevGames) =>
                 prevGames.map((game, i) => (i === index ? updatedGame : game))
             );
         } catch (error) {
+            // Log an error message to the console if the API request fails
             console.error("Error fetching game details", error);
         }
     };
