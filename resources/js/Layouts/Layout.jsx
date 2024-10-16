@@ -8,7 +8,8 @@ export default function Layout({ children }) {
 
     function searchSubmit(e) {
         e.preventDefault();
-        get("/");
+        const query = data.search ? `?query=${data.search}` : "";
+        get(`/${query}`);
         setData("search", "");
     }
 
@@ -43,12 +44,12 @@ export default function Layout({ children }) {
                                     placeholder={`${
                                         processing ? "Searching..." : "Search"
                                     }`}
-                                ></input>
+                                />
                                 <button
                                     id="searchSubmit"
                                     type="submit"
                                     disabled={processing}
-                                    className="absolute right-7 top-0 mt-3 mr-5 "
+                                    className="absolute right-7 top-0 mt-3 mr-5"
                                 >
                                     <img
                                         src={searchIcon}

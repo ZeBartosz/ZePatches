@@ -13,10 +13,12 @@ Route::resource('auth', AuthController::class);
 Route::inertia('/register', 'Auth/Register');
 Route::inertia('/login', 'Auth/Login');
 
-Route::get('/game/{steam}' , [SteamController::class, 'show']);
+Route::get('/game/{steam}', [SteamController::class, 'show']);
 
 
 Route::post('/inputGames', [SteamController::class, 'store']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+Route::get('/games/details/{steam}', [SteamController::class, 'fetchGameDetails']);

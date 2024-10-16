@@ -13,37 +13,37 @@ class SteamController
 
     public function index()
     {
-
         // Gets details from search query
-        $search = request()->get('search', "");
+        $search = request()->get('query', "");
         $games = [];
 
         // Checks if $search is set
         if ($search) {
-            // Retrieves limited games matching the search query
-            $games = Steam::findGameByName($search)->toArray();
-            // Map over the games and add banner and type using game details
-            $games = array_map(function ($game) {
-                $game = Steam::where('appId', $game['appId'])->first();
-                if ($game->moreDetails === 0) {
-                    // Get details for the specific game
-                    $gameDetails = Steam::getGameDetails($game->appId);
-
-                    $game->update([
-                        'type' => !empty($gameDetails->type) ? $gameDetails->type : "Unknown Type",
-                        'banner' => !empty($gameDetails->header) ? $gameDetails->header : "",
-                        'developer' =>  !empty($gameDetails->developers) ? $gameDetails->developers[0] : "Unknown Developer",
-                        'releaseDate' => $gameDetails->release->date ?? "Unknown Release Date",
-                        'moreDetails' => 1,
-                    ]);
-                }
-
-                return $game;
-            }, $games);
+            // Retrieves limited games matching the search query paginate by 10
+            $games = Steam::findGameByName($search)->paginate(10);
         }
 
         // Return view with games and search string
         return inertia('Home', ['games' => $games, 'search' => $search]);
+    }
+
+    public function fetchGameDetails($appId)
+    {
+        $game = Steam::where('appId', $appId)->first();
+
+        if ($game->moreDetails === 0) {
+            $gameDetails = Steam::getGameDetails($appId);
+
+            $game->update([
+                'type' => !empty($gameDetails->type) ? $gameDetails->type : "Unknown Type",
+                'banner' => !empty($gameDetails->header) ? $gameDetails->header : "",
+                'developer' =>  !empty($gameDetails->developers) ? $gameDetails->developers[0] : "Unknown Developer",
+                'releaseDate' => $gameDetails->release->date ?? "Unknown Release Date",
+                'moreDetails' => 1,
+            ]);
+        }
+
+        return response()->json($game);
     }
 
 
@@ -82,7 +82,7 @@ class SteamController
                 Steam::create([
                     'appId' => $game->appid,
                     'name' => $game->name
-                ]);
+                ])->searchable();
             }
         }
 
