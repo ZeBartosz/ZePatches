@@ -85,6 +85,9 @@ export default function Home({ games = { data: [] }, search, authUser }) {
                                 <p className="p-1">AppId: {game.appId}</p>
                                 <p className="p-1">Type: {game.type}</p>
                                 <h2 className="font-medium">{game.name}</h2>
+                                <form>
+                                    <button>Fav</button>
+                                </form>
                                 <Link href={`/game/${game.appId}`}>
                                     Check Patches
                                 </Link>

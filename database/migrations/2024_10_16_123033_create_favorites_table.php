@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Steam;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,8 +16,7 @@ return new class extends Migration
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained();
-            $table->unsignedBigInteger('steam_Id');
-            $table->foreign('steam_Id')->references('Id')->on('steams');
+            $table->foreignIdFor(Steam::class)->constrained();
             $table->timestamps();
         });
     }
