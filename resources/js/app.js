@@ -30,6 +30,10 @@
         .replace(
             /\[previewyoutube=(.+?);full\]\[\/previewyoutube\]/g,
             '<div class="flex justify-center p-2"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
+        )
+        .replace(
+            /\[spoiler\](.+?)\[\/spoiler\]/g,
+            '<span class="spoiler" style="background-color: black; color: black;" onmouseover="this.style.color=\'white\';" onmouseout="this.style.color=\'black\';">$1</span>' 
         );
 
     return formattedText;
