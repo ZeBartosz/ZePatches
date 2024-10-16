@@ -6,7 +6,9 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
 
     return (
         <>
-            <h1 className="flex items-start pt-2 my-0 text-[#c7d5e0]">{gameName}</h1>
+            <h1 className="flex items-start pt-2 my-0 text-[#c7d5e0]">
+                {gameName}
+            </h1>
             <div className="tab flex justify-evenlytext-[#c7d5e0] border-[#66c0f4] mb-2 text-blue-900">
                 <button
                     className={`px-1 border-r tablinks ${
@@ -14,7 +16,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                     }`}
                     onClick={() => setActiveTab("Table1")}
                 >
-                    Major
+                    Events
                 </button>
                 <button
                     className={`px-1  tablinks ${
@@ -22,7 +24,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                     }`}
                     onClick={() => setActiveTab("Table2")}
                 >
-                    Minor
+                    Patch Notes
                 </button>
             </div>
 
