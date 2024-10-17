@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessSteam;
 use App\Models\Steam;
 use App\Services\SteamService;
 use Illuminate\Http\Request;
@@ -29,15 +30,7 @@ class SteamController
         $game = Steam::where('appId', $appId)->first();
 
         if ($game->moreDetails === 0) {
-            $gameDetails = Steam::getGameDetails($appId);
-
-            $game->update([
-                'type' => !empty($gameDetails->type) ? $gameDetails->type : "Unknown Type",
-                'banner' => !empty($gameDetails->header) ? $gameDetails->header : "",
-                'developer' =>  !empty($gameDetails->developers) ? $gameDetails->developers[0] : "Unknown Developer",
-                'releaseDate' => $gameDetails->release->date ?? "Unknown Release Date",
-                'moreDetails' => 1,
-            ]);
+            $this->steamService->getGameDetails($game);
         }
 
         return response()->json($game);
@@ -46,21 +39,9 @@ class SteamController
 
     public function show($appId)
     {
+        $gamePatches = $this->steamService->getPatches($appId);
 
-        $gameName = Steam::findGameByAppId($appId)->name;
-        $urlMinor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=13";
-
-        $urlMajor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=14";
-
-        // $urlFutureAnnounce = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $appId . "&count_before=0&count_after=100&event_type_filter=16";
-        // $FutureAnnounceEvent = json_decode(file_get_contents($urlFutureAnnounce), true);
-
-
-        $minorPatches = json_decode(file_get_contents($urlMinor), true);
-        $majorPatches = json_decode(file_get_contents($urlMajor), true);
-
-
-        return inertia('Show', ['minorPatches' => $minorPatches, 'majorPatches' => $majorPatches, 'gameName' => $gameName]);
+        return inertia('Show', ['minorPatches' => $gamePatches['minorPatches'], 'majorPatches' => $gamePatches['majorPatches'], 'gameName' => $gamePatches['gameName']]);
     }
 
     public function store()
