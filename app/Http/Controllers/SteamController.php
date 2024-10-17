@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Steam;
+use App\Services\SteamService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Syntax\SteamApi\Facades\SteamApi;
@@ -10,18 +11,14 @@ use Inertia\Inertia;
 
 class SteamController
 {
+    public function __construct(protected SteamService $steamService) {}
 
     public function index()
     {
         // Gets details from search query
         $search = request()->get('query', "");
-        $games = [];
 
-        // Checks if $search is set
-        if ($search) {
-            // Retrieves limited games matching the search query paginate by 10
-            $games = Steam::findGameByName($search)->paginate(10);
-        }
+        $games = $this->steamService->getSearchedGames($search);
 
         // Return view with games and search string
         return inertia('Home', ['games' => $games, 'search' => $search]);

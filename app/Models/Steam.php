@@ -32,31 +32,6 @@ class Steam extends Authenticatable
         ];
     }
 
-    public static function findGameByName(String $game)
-    {
-        return self::search($game)->query(function ($query) {
-            $query->orderByRaw("
-            CASE 
-                WHEN type = 'game' THEN 0
-                WHEN type = 'dlc' THEN 1
-                WHEN type = 'Unknown Type' THEN 3
-                ELSE 2
-            END
-                ")->orderByRaw('LENGTH(name) ASC');
-        });
-    }
-
-    public static function findGameByAppId($appId)
-    {
-        return self::where('appId', $appId)->first();
-    }
-
-    public static function getGameDetails($appId)
-    {
-        $num = +$appId;
-        return SteamApi::app()->appDetails($num)->first();
-    }
-
     public function favorites(): HasMany
     {
         return $this->hasMany(Steam::class);
