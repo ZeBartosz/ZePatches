@@ -5,7 +5,6 @@ import axios from "axios";
 export default function Home({ games, search, authUser }) {
     const [detailedGames, setDetailedGames] = useState(games.data || []);
     const { post, processing } = useForm({});
-    console.log(games);
 
     // Effect to update the detailedGames state when the 'games' prop changes
     useEffect(() => {
@@ -42,6 +41,13 @@ export default function Home({ games, search, authUser }) {
     const retrieveGameDataSubmit = (e) => {
         e.preventDefault();
         post("/inputGames");
+    };
+
+    const addToFavorite = (e, steam) => {
+        e.preventDefault();
+        post(`/favorite/${steam}`, {
+            preserveScroll: true,
+        });
     };
 
     return (
@@ -88,8 +94,10 @@ export default function Home({ games, search, authUser }) {
                             <p className="p-1">AppId: {game.appId}</p>
                             <p className="p-1">Type: {game.type}</p>
                             <h2 className="font-medium">{game.name}</h2>
-                            <form>
-                                <button>Fav</button>
+                            <form onSubmit={(e) => addToFavorite(e, game.id)}>
+                                <button className="border p-3" type="submit">
+                                    Fav
+                                </button>
                             </form>
                             <Link href={`/game/${game.appId}`}>
                                 Check Patches

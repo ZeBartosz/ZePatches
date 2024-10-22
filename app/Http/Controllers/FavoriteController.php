@@ -4,21 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Favorite;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFavoriteRequest;
-use App\Http\Requests\UpdateFavoriteRequest;
+use App\Models\Steam;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
 
 
-    public function favorite(Request $request)
+    public function favorite(Steam $steam)
     {
-        //
-    }
 
-    public function unFavorite(Favorite $favorite)
-    {
-        //
+        $user = Auth::user();
+        $favorite = $steam->favorites()
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$favorite) {
+            $steam->favorites()->create([
+                'user_id' => $user->id,
+            ]);
+            return back()->with('Added', 'The ' . $steam->name . ' was added to your favorite list');
+        } else {
+            $favorite->delete();
+            return back()->with('success', 'The ' . $steam->name . ' was removed from your favorite list');
+        }
     }
 }

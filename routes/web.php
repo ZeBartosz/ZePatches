@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SteamController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,7 @@ Route::inertia('/login', 'Auth/Login');
 
 Route::get('/game/{steam}', [SteamController::class, 'show']);
 
-
+Route::post('/favorite/{steam}', [FavoriteController::class, 'favorite']);
 Route::post('/inputGames', [SteamController::class, 'store']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
