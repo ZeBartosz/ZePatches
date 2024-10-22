@@ -34,6 +34,6 @@ class Steam extends Authenticatable
 
     public function favorites(): HasMany
     {
-        return $this->hasMany(Steam::class);
+        return $this->hasMany(Favorite::class);
     }
 }
