@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 class AuthController
 {
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
 
         // validating the data
         $request->validate([
@@ -25,24 +26,32 @@ class AuthController
             'password' => $request->password,
         ]);
 
+        // Login
+        Auth::login($user);
+
         // Redirect back to home page
         return redirect('/');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
+        // validate the imput
         $data = $request->validate([
             'email' => 'required | max:255 | email',
-            'password' => 'required', 
+            'password' => 'required',
         ]);
 
-        if (Auth::attempt($data)) {
-            return redirect()->intended();
-        } else {
+        // Checks if useer doesnt exites 
+        if (!Auth::attempt($data)) {
             return back()->withErrors(['failed' => 'The provided information does not match our records']);
         }
+
+        // Redirect to home page
+        return redirect()->intended();
     }
-    
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
 
         // Logout the user
         Auth::logout();
@@ -56,5 +65,4 @@ class AuthController
         // Redirect to home 
         return redirect('/');
     }
-
 }
