@@ -111,15 +111,15 @@ export default function Home({ games, search, authUser }) {
 
             {/* Pagination links */}
             <div className="flex justify-center mt-4">
-                {games.links &&
-                    games.links.length > 0 &&
+                {games.meta &&
+                    games.meta.total > 1 &&
                     games.links.map((link, index) => {
                         const query = search ? `&query=${search}` : "";
                         return (
                             <Link
                                 key={index}
                                 href={link.url ? `${link.url}${query}` : "#"}
-                                className={` p-2 ${
+                                className={`p-2 ${
                                     link.active ? "bg-blue-500 text-white" : ""
                                 }`}
                                 dangerouslySetInnerHTML={{ __html: link.label }}
