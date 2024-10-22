@@ -25,15 +25,25 @@ class SteamController
         return inertia('Home', ['games' => $games, 'search' => $search]);
     }
 
-    public function fetchGameDetails($appId)
-    {
-        $game = Steam::where('appId', $appId)->first();
 
-        if ($game->moreDetails === 0) {
-            $this->steamService->getGameDetails($game);
+    public function fetchGameDetails(Request $request)
+    {
+
+        // Validate incoming request
+        $request->validate([
+            'appIds' => 'required|array',
+        ]);
+
+        // Fetch game details based on appIds
+        $games = Steam::whereIn('appId', $request->appIds)->get();
+        foreach ($games as $game) {
+            if (!$game->moreDetails) {
+                $this->steamService->getGameDetails($game);
+            }
         }
 
-        return response()->json($game);
+        // Transform the data if needed, and return the response
+        return response()->json($games);
     }
 
 

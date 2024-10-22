@@ -16,10 +16,10 @@ Route::inertia('/login', 'Auth/Login');
 
 Route::get('/game/{steam}', [SteamController::class, 'show']);
 
+
+Route::post('/games/batchDetails', [SteamController::class, 'fetchGameDetails']);
 Route::post('/favorite/{steam}', [FavoriteController::class, 'favorite']);
 Route::post('/inputGames', [SteamController::class, 'store']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
-
-Route::get('/games/details/{steam}', [SteamController::class, 'fetchGameDetails']);

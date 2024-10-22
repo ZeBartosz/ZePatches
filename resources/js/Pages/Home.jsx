@@ -6,37 +6,53 @@ export default function Home({ games, search, authUser }) {
     const [detailedGames, setDetailedGames] = useState(games.data || []);
     const { post, processing } = useForm({});
 
-    // Effect to update the detailedGames state when the 'games' prop changes
+    // Update the detailedGames state when the 'games' prop changes
     useEffect(() => {
+        // Set detailedGames to the data from the games prop or an empty array
         setDetailedGames(games.data || []);
     }, [games]);
 
-    // Effect to fetch additional details for games if they are not already available
+    // Fetch additional details for games with an appId that haven't been fetched yet
     useEffect(() => {
-        if (detailedGames.length > 0) {
-            detailedGames.forEach((game, index) => {
-                if (game.moreDetails === 0) {
-                    fetchGameDetails(game.appId, index);
-                }
-            });
-        }
-    }, [detailedGames]);
-
-    // Function to fetch more game details from the server
-    const fetchGameDetails = async (appId, index) => {
-        try {
-            const response = await axios.get(`/games/details/${appId}`);
-            const updatedGame = response.data;
-
-            // Update the detailedGames state by replacing the game at the specified index with the new data
-            setDetailedGames((prevGames) =>
-                prevGames.map((game, i) => (i === index ? updatedGame : game))
+        // Define an asynchronous function to fetch game details
+        const fetchGameDetails = async () => {
+            // Filter the detailedGames to find those with an appId and that haven't had their details fetched
+            const gamesToFetch = detailedGames.filter(
+                (game) => game.appId && !game.moreDetails
             );
-        } catch (error) {
-            // Log an error message to the console if the API request fails
-            console.error("Error fetching game details", error);
-        }
-    };
+            console.log(gamesToFetch);
+
+            // Check if there are any games to fetch
+            if (gamesToFetch.length > 0) {
+                try {
+                    // Map the gamesToFetch to extract their appIds
+                    const gameIds = gamesToFetch.map((game) => game.appId);
+
+                    // Make a POST request to the API to fetch details for the appIds
+                    const response = await axios.post("/games/batchDetails", {
+                        appIds: gameIds,
+                    });
+
+                    // Update the detailedGames state with the response data
+                    const updatedGames = detailedGames.map((game) => {
+                        const foundGame = response.data.find(
+                            (g) => g.appId === game.appId
+                        );
+                        return foundGame ? { ...game, ...foundGame } : game;
+                    });
+
+                    // Set the updated detailedGames
+                    setDetailedGames(updatedGames);
+                } catch (error) {
+                    // Log any errors encountered during the fetching process
+                    console.error("Error fetching game details", error);
+                }
+            }
+        };
+
+        // Call the fetchGameDetails function to initiate the fetching process
+        fetchGameDetails();
+    }, [detailedGames]);
 
     const retrieveGameDataSubmit = (e) => {
         e.preventDefault();
@@ -84,7 +100,7 @@ export default function Home({ games, search, authUser }) {
                         className="relative my-4 min-w-[500px] max-w-[500px]"
                     >
                         <div
-                            className="absolute border-2 inset-0 bg-cover bg-center filter blur-[2px] rounded-lg"
+                            className="absolute border-2 border-[#66c0f4] inset-0 bg-cover bg-center filter blur-[2px] rounded-lg"
                             style={{
                                 backgroundImage: `url(${game.banner})`,
                                 zIndex: 0,
@@ -111,15 +127,15 @@ export default function Home({ games, search, authUser }) {
 
             {/* Pagination links */}
             <div className="flex justify-center mt-4">
-                {games.meta &&
-                    games.meta.total > 1 &&
+                {games.links &&
+                    games.links.length > 0 &&
                     games.links.map((link, index) => {
                         const query = search ? `&query=${search}` : "";
                         return (
                             <Link
                                 key={index}
                                 href={link.url ? `${link.url}${query}` : "#"}
-                                className={`p-2 ${
+                                className={` p-2 ${
                                     link.active ? "bg-blue-500 text-white" : ""
                                 }`}
                                 dangerouslySetInnerHTML={{ __html: link.label }}
