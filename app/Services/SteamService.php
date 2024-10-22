@@ -87,7 +87,7 @@ class SteamService
         // Pluck out the ids 
         $favoriteIds = $favorites->pluck('steam_id');
         // Search for the games with the ids 
-        return Steam::whereIn('id', $favoriteIds)->paginate(10);
+        return Steam::whereIn('id', $favoriteIds)->orderBy('name')->paginate(10);
     }
 
     //
