@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Jobs\ProcessSteam;
 use App\Models\Steam;
+use Illuminate\Support\Facades\Auth;
 use Syntax\SteamApi\Facades\SteamApi;
 
 class SteamService
@@ -14,7 +15,8 @@ class SteamService
     {
         // Checks if $search is set
         if (!$search) {
-            return [];
+            // Gets the users favorite games
+            return $this->findFavoriteGame();
         }
 
         // Retrieves limited games matching the search query paginate by 10
@@ -68,6 +70,24 @@ class SteamService
             END
                 ")->orderByRaw('LENGTH(name) ASC');
         });
+    }
+
+    // Find users favorited games
+    public function findFavoriteGame()
+    {
+
+        // Check if user is logged in
+        if (!Auth::user()) {
+            return [];
+        };
+
+        // Gets the list of favorites games (favoritesDB)
+        $favorites = Auth::user()->favorites;
+
+        // Pluck out the ids 
+        $favoriteIds = $favorites->pluck('steam_id');
+        // Search for the games with the ids 
+        return Steam::whereIn('id', $favoriteIds)->paginate(10);
     }
 
     //

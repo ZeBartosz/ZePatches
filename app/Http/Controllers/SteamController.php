@@ -39,6 +39,7 @@ class SteamController
 
     public function show($appId)
     {
+        // Finds the patches for games
         $gamePatches = $this->steamService->getPatches($appId);
 
         return inertia('Show', ['minorPatches' => $gamePatches['minorPatches'], 'majorPatches' => $gamePatches['majorPatches'], 'gameName' => $gamePatches['gameName']]);
