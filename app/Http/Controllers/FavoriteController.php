@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Favorite;
 use App\Http\Controllers\Controller;
 use App\Models\Steam;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,5 +30,15 @@ class FavoriteController extends Controller
             $favorite->delete();
             return back()->with('success', 'The ' . $steam->name . ' was removed from your favorite list');
         }
+    }
+
+
+    public function isFavorited(User $user, Steam $steam)
+    {
+        $isFavorited = Favorite::where('user_id', $user->id)
+            ->where('steam_id', $steam->id)
+            ->exists();
+
+        return response()->json(['favorited' => $isFavorited]);
     }
 }

@@ -5,52 +5,53 @@ import axios from "axios";
 export default function Home({ games, search, authUser }) {
     const [detailedGames, setDetailedGames] = useState(games.data || []);
     const { post, processing } = useForm({});
+    const [favorites, setFavorites] = useState({}); // Track favorite status
 
     // Update the detailedGames state when the 'games' prop changes
     useEffect(() => {
-        // Set detailedGames to the data from the games prop or an empty array
         setDetailedGames(games.data || []);
     }, [games]);
 
-    // Fetch additional details for games with an appId that haven't been fetched yet
+    // Fetch favorite status for each game
     useEffect(() => {
-        // Define an asynchronous function to fetch game details
+        if (authUser && detailedGames.length > 0) {
+            detailedGames.forEach(async (game) => {
+                const response = await axios.get(
+                    `/favorites/${authUser.id}/${game.id}`
+                );
+                setFavorites((prev) => ({
+                    ...prev,
+                    [game.id]: response.data.favorited,
+                }));
+            });
+        }
+    }, [authUser, detailedGames]);
+
+    // Fetch additional game details
+    useEffect(() => {
         const fetchGameDetails = async () => {
-            // Filter the detailedGames to find those with an appId and that haven't had their details fetched
             const gamesToFetch = detailedGames.filter(
                 (game) => game.appId && !game.moreDetails
             );
-            console.log(gamesToFetch);
-
-            // Check if there are any games to fetch
             if (gamesToFetch.length > 0) {
                 try {
-                    // Map the gamesToFetch to extract their appIds
                     const gameIds = gamesToFetch.map((game) => game.appId);
-
-                    // Make a POST request to the API to fetch details for the appIds
                     const response = await axios.post("/games/batchDetails", {
                         appIds: gameIds,
                     });
 
-                    // Update the detailedGames state with the response data
                     const updatedGames = detailedGames.map((game) => {
                         const foundGame = response.data.find(
                             (g) => g.appId === game.appId
                         );
                         return foundGame ? { ...game, ...foundGame } : game;
                     });
-
-                    // Set the updated detailedGames
                     setDetailedGames(updatedGames);
                 } catch (error) {
-                    // Log any errors encountered during the fetching process
                     console.error("Error fetching game details", error);
                 }
             }
         };
-
-        // Call the fetchGameDetails function to initiate the fetching process
         fetchGameDetails();
     }, [detailedGames]);
 
@@ -92,7 +93,6 @@ export default function Home({ games, search, authUser }) {
                 </form>
             </div>
 
-            {/* Displaying the games */}
             {detailedGames.length > 0 ? (
                 detailedGames.map((game) => (
                     <div
@@ -110,11 +110,15 @@ export default function Home({ games, search, authUser }) {
                             <p className="p-1">AppId: {game.appId}</p>
                             <p className="p-1">Type: {game.type}</p>
                             <h2 className="font-medium">{game.name}</h2>
+
                             <form onSubmit={(e) => addToFavorite(e, game.id)}>
                                 <button className="border p-3" type="submit">
-                                    Fav
+                                    {favorites[game.id]
+                                        ? "Remove from Favorites"
+                                        : "Add to Favorites"}
                                 </button>
                             </form>
+
                             <Link href={`/game/${game.appId}`}>
                                 Check Patches
                             </Link>
@@ -125,7 +129,6 @@ export default function Home({ games, search, authUser }) {
                 <p>No games found.</p>
             )}
 
-            {/* Pagination links */}
             <div className="flex justify-center mt-4">
                 {games.links &&
                     games.links.length > 0 &&
