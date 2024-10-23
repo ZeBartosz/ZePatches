@@ -1,6 +1,8 @@
 import { Link, useForm } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import favorite from "../../Assets/favorite.svg";
+import favorited from "../../Assets/favorited.svg";
 
 export default function Home({ games, search, authUser }) {
     const [detailedGames, setDetailedGames] = useState(games.data || []);
@@ -112,10 +114,20 @@ export default function Home({ games, search, authUser }) {
                             <h2 className="font-medium">{game.name}</h2>
 
                             <form onSubmit={(e) => addToFavorite(e, game.id)}>
-                                <button className="border p-3" type="submit">
-                                    {favorites[game.id]
-                                        ? "Remove from Favorites"
-                                        : "Add to Favorites"}
+                                <button className="" type="submit">
+                                    {favorites[game.id] ? (
+                                        <img
+                                            src={favorited}
+                                            className="h-22 w-22 fill-current"
+                                            alt="Favorited Icon"
+                                        />
+                                    ) : (
+                                        <img
+                                            src={favorite}
+                                            className="h-22 w-22 fill-current"
+                                            alt="Favorite Icon"
+                                        />
+                                    )}
                                 </button>
                             </form>
 
