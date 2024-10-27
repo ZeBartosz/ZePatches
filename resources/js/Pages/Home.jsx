@@ -7,7 +7,7 @@ import favorited from "../../Assets/favorited.svg";
 export default function Home({ games, search, authUser }) {
     const [detailedGames, setDetailedGames] = useState(games.data || []);
     const { post, processing } = useForm({});
-    const [favorites, setFavorites] = useState({}); // Track favorite status
+    const [favorites, setFavorites] = useState({});
 
     // Update the detailedGames state when the 'games' prop changes
     useEffect(() => {
@@ -108,32 +108,40 @@ export default function Home({ games, search, authUser }) {
                                 zIndex: 0,
                             }}
                         ></div>
-                        <div className="text-white relative z-10 bg-black opacity-75 rounded-lg p-2">
-                            <p className="p-1">AppId: {game.appId}</p>
-                            <p className="p-1">Type: {game.type}</p>
-                            <h2 className="font-medium">{game.name}</h2>
+                        <div className="flex text-white z-10 bg-black opacity-75 rounded-lg p-2">
+                            <div className="flex flex-col justify-start">
+                                <h2 className="font-bold py-1 ">{game.name}</h2>
+                                <p className="p-0 text-sm">
+                                    AppId: {game.appId}
+                                </p>
+                                <p className="p-0 text-sm">Type: {game.type}</p>
 
-                            <form onSubmit={(e) => addToFavorite(e, game.id)}>
-                                <button className="" type="submit">
-                                    {favorites[game.id] ? (
-                                        <img
-                                            src={favorited}
-                                            className="h-22 w-22 fill-current"
-                                            alt="Favorited Icon"
-                                        />
-                                    ) : (
-                                        <img
-                                            src={favorite}
-                                            className="h-22 w-22 fill-current"
-                                            alt="Favorite Icon"
-                                        />
-                                    )}
-                                </button>
-                            </form>
+                                <Link href={`/game/${game.appId}`}>
+                                    Check Patches
+                                </Link>
+                            </div>
 
-                            <Link href={`/game/${game.appId}`}>
-                                Check Patches
-                            </Link>
+                            <div className="flex justify-end items-center ml-auto">
+                                <form
+                                    onSubmit={(e) => addToFavorite(e, game.id)}
+                                >
+                                    <button className="" type="submit">
+                                        {favorites[game.id] ? (
+                                            <img
+                                                src={favorited}
+                                                className="h-22 w-22 fill-current"
+                                                alt="Favorited Icon"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={favorite}
+                                                className="h-22 w-22 fill-current"
+                                                alt="Favorite Icon"
+                                            />
+                                        )}
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 ))
