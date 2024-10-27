@@ -33,10 +33,9 @@ class FavoriteController extends Controller
     }
 
 
-    public function isFavorited(User $user, Steam $steam)
+    public function isFavorited(User $user)
     {
         $isFavorited = Favorite::where('user_id', $user->id)
-            ->where('steam_id', $steam->id)
             ->exists();
 
         return response()->json(['favorited' => $isFavorited]);
