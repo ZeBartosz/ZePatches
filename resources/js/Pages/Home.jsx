@@ -4,20 +4,20 @@ import axios from "axios";
 import favorite from "../../Assets/favorite.svg";
 import favorited from "../../Assets/favorited.svg";
 
-export default function Home({ games, search, authUser }) {
-    const [detailedGames, setDetailedGames] = useState(games.data || []);
+export default function Home({ games: initialGames, search, authUser }) {
+    const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
     const [favorites, setFavorites] = useState({});
 
-    // Update the detailedGames state when the 'games' prop changes
+    // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
-        setDetailedGames(games.data || []);
-    }, [games]);
+        setGames(initialGames.data || []);
+    }, [initialGames]);
 
     // Fetch favorite status for each game
     useEffect(() => {
-        if (authUser && detailedGames.length > 0) {
-            detailedGames.forEach(async (game) => {
+        if (authUser && games.length > 0) {
+            games.forEach(async (game) => {
                 const response = await axios.get(
                     `/favorites/${authUser.id}/${game.id}`
                 );
@@ -27,12 +27,12 @@ export default function Home({ games, search, authUser }) {
                 }));
             });
         }
-    }, [authUser, detailedGames]);
+    }, [authUser, games]);
 
     // Fetch additional game details
     useEffect(() => {
         const fetchGameDetails = async () => {
-            const gamesToFetch = detailedGames.filter(
+            const gamesToFetch = games.filter(
                 (game) => game.appId && !game.moreDetails
             );
             if (gamesToFetch.length > 0) {
@@ -42,20 +42,20 @@ export default function Home({ games, search, authUser }) {
                         appIds: gameIds,
                     });
 
-                    const updatedGames = detailedGames.map((game) => {
+                    const updatedGames = games.map((game) => {
                         const foundGame = response.data.find(
                             (g) => g.appId === game.appId
                         );
                         return foundGame ? { ...game, ...foundGame } : game;
                     });
-                    setDetailedGames(updatedGames);
+                    setGames(updatedGames);
                 } catch (error) {
                     console.error("Error fetching game details", error);
                 }
             }
         };
         fetchGameDetails();
-    }, [detailedGames]);
+    }, [games]);
 
     const retrieveGameDataSubmit = (e) => {
         e.preventDefault();
@@ -71,32 +71,17 @@ export default function Home({ games, search, authUser }) {
 
     return (
         <>
-            {/* {authUser ? <h1>{authUser.name}</h1> : "No user"} */}
             {search && (
                 <div className="flex flex-col">
                     <h1 className="pb-1 mb-0">Searched for: {search}</h1>
                     <p className="flex justify-center text-sm text-gray-600 mt-0 pt-0">
-                        Total Results: {games.total || 0}
+                        Total Results: {initialGames.total || 0}
                     </p>
                 </div>
             )}
 
-            {/* <div className="p-2">
-                <form onSubmit={retrieveGameDataSubmit}>
-                    <button
-                        id="addGames"
-                        className={`border-2 p-2 ${
-                            processing ? "bg-red-600" : "bg-gray-700"
-                        }`}
-                        disabled={processing}
-                    >
-                        {processing ? "Adding games..." : "Add games from API"}
-                    </button>
-                </form>
-            </div> */}
-
-            {detailedGames.length > 0 ? (
-                detailedGames.map((game) => (
+            {games.length > 0 ? (
+                games.map((game) => (
                     <div
                         key={game.id}
                         className="relative my-3 w-[80%] lg:w-[50%]"
@@ -153,9 +138,9 @@ export default function Home({ games, search, authUser }) {
             )}
 
             <div className="flex justify-center mt-4">
-                {games.links &&
-                    games.links.length > 0 &&
-                    games.links.map((link, index) => {
+                {initialGames.links &&
+                    initialGames.links.length > 0 &&
+                    initialGames.links.map((link, index) => {
                         const query = search ? `&query=${search}` : "";
                         return (
                             <Link
