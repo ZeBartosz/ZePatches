@@ -71,11 +71,11 @@ export default function Home({ games, search, authUser }) {
 
     return (
         <>
-            {authUser ? <h1>{authUser.name}</h1> : "No user"}
+            {/* {authUser ? <h1>{authUser.name}</h1> : "No user"} */}
             {search && (
                 <div className="flex flex-col">
-                    <h1 className="">Searched for: {search}</h1>
-                    <p className="flex justify-center text-sm text-gray-600">
+                    <h1 className="pb-1 mb-0">Searched for: {search}</h1>
+                    <p className="flex justify-center text-sm text-gray-600 mt-0 pt-0">
                         Total Results: {games.total || 0}
                     </p>
                 </div>
