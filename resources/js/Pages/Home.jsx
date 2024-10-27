@@ -81,7 +81,7 @@ export default function Home({ games, search, authUser }) {
                 </div>
             )}
 
-            <div className="p-2">
+            {/* <div className="p-2">
                 <form onSubmit={retrieveGameDataSubmit}>
                     <button
                         id="addGames"
@@ -93,13 +93,13 @@ export default function Home({ games, search, authUser }) {
                         {processing ? "Adding games..." : "Add games from API"}
                     </button>
                 </form>
-            </div>
+            </div> */}
 
             {detailedGames.length > 0 ? (
                 detailedGames.map((game) => (
                     <div
                         key={game.id}
-                        className="relative my-4 min-w-[500px] max-w-[500px]"
+                        className="relative my-3 w-[80%] lg:w-[50%]"
                     >
                         <div
                             className="absolute border-2 border-[#66c0f4] inset-0 bg-cover bg-center filter blur-[2px] rounded-lg"
@@ -116,7 +116,10 @@ export default function Home({ games, search, authUser }) {
                                 </p>
                                 <p className="p-0 text-sm">Type: {game.type}</p>
 
-                                <Link href={`/game/${game.appId}`}>
+                                <Link
+                                    className="no-underline"
+                                    href={`/game/${game.appId}`}
+                                >
                                     Check Patches
                                 </Link>
                             </div>
