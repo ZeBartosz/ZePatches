@@ -35,7 +35,9 @@ class SteamController
         ]);
 
         // Fetch game details based on appIds
-        $games = Steam::whereIn('appId', $request->appIds)->get();
+        $games = Steam::whereIn('appId', $request->appIds)
+            ->where('moreDetails', '0')
+            ->get();
         foreach ($games as $game) {
             if (!$game->moreDetails) {
                 $this->steamService->getGameDetails($game);

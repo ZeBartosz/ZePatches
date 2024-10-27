@@ -20,7 +20,7 @@ class SteamService
         }
 
         // Retrieves limited games matching the search query paginate by 10
-        return $this->findGameByName($search)->paginate(10);
+        return $this->findGameByName($search)->paginate(8);
     }
 
     //
