@@ -25,10 +25,10 @@ class FavoriteController extends Controller
             $steam->favorites()->create([
                 'user_id' => $user->id,
             ]);
-            return back()->with('message', 'The ' . $steam->name . ' was added to your favorite list');
+            return back()->with('Added', 'The ' . $steam->name . ' was added to your favorite list');
         } else {
             $favorite->delete();
-            return back()->with('message', 'The ' . $steam->name . ' was removed from your favorite list');
+            return back()->with('success', 'The ' . $steam->name . ' was removed from your favorite list');
         }
     }
 
