@@ -8,6 +8,8 @@ export default function Home({ games: initialGames, search, authUser }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
 
+    console.log(authUser);
+
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
         setGames(initialGames.data || []);
@@ -55,12 +57,16 @@ export default function Home({ games: initialGames, search, authUser }) {
 
     return (
         <>
-            {search && (
+            {search ? (
                 <div className="flex flex-col">
                     <h1 className="pb-1 mb-0">Searched for: {search}</h1>
                     <p className="flex justify-center text-sm text-gray-600 mt-0 pt-0">
                         Total Results: {initialGames.total || 0}
                     </p>
+                </div>
+            ) : (
+                <div>
+                    <h1>{authUser.name}'s Favorite List:</h1>
                 </div>
             )}
 
@@ -123,7 +129,7 @@ export default function Home({ games: initialGames, search, authUser }) {
 
             <div className="flex justify-center mt-4">
                 {initialGames.links &&
-                    initialGames.links.length > 0 &&
+                    initialGames.links[2].url &&
                     initialGames.links.map((link, index) => {
                         const query = search ? `&query=${search}` : "";
                         return (
