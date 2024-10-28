@@ -88,18 +88,14 @@ export default function Home({ games: initialGames, search, authUser }) {
                                 }}
                             ></div>
 
-                            <div className="flex text-white z-10 bg-black opacity-75 rounded-lg p-2">
-                                <div className="flex flex-col justify-start">
-                                    <h2 className="font-bold py-1 ">
-                                        {game.name}
-                                    </h2>
-                                    <p className="p-0 text-sm">
-                                        AppId: {game.appId}
-                                    </p>
-                                    <p className="p-0 text-sm pb-3">
-                                        Type: {game.type}
-                                    </p>
-                                </div>
+                            <div className="flex flex-col justify-start text-white z-10 bg-black opacity-75 rounded-lg p-2">
+                                <h2 className="font-bold py-1 ">{game.name}</h2>
+                                <p className="p-0 text-sm">
+                                    AppId: {game.appId}
+                                </p>
+                                <p className="p-0 text-sm pb-3">
+                                    Type: {game.type}
+                                </p>
                             </div>
                         </div>
                         <div className="absolute top-[32px] right-[10px] ">
