@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Jobs\ProcessSteam;
 use App\Models\Steam;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Syntax\SteamApi\Facades\SteamApi;
 
 class SteamService
@@ -60,16 +61,30 @@ class SteamService
     //
     public function findGameByName(String $game)
     {
-        return Steam::search($game)->query(function ($query) {
-            $query->orderByRaw("
+
+        return Steam::search($game)
+            ->query(function ($query) {
+                $query->orderByRaw("
             CASE 
                 WHEN type = 'game' THEN 0
                 WHEN type = 'dlc' THEN 1
                 WHEN type = 'Unknown Type' THEN 3
                 ELSE 2
             END
-                ")->orderByRaw('LENGTH(name) ASC');
-        });
+        ")->orderByRaw('LENGTH(name) ASC');
+
+                // Check if a user is authenticated
+                if (Auth::check()) {
+                    $userId = Auth::id();
+
+                    // Add a left join to check if the game is favorited by the authenticated user
+                    $query->leftJoin('favorites', function ($join) use ($userId) {
+                        $join->on('favorites.steam_id', '=', 'steams.id')
+                            ->where('favorites.user_id', '=', $userId);
+                    })
+                        ->select('steams.*', DB::raw("IF(favorites.id IS NOT NULL, true, false) as is_favorite"));
+                }
+            });
     }
 
     // Find users favorited games
