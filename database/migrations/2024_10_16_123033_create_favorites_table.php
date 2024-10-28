@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Steam::class)->constrained();
-            $table->integer('is_favorite')->default(1);
+            $table->boolean('is_favorite')->default(true);
             $table->timestamps();
         });
     }
