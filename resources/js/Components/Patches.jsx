@@ -6,8 +6,6 @@ function Patches({ patch, activeTab, tableId, title }) {
     const [currentPatches, setCurrentPatches] = useState([]);
     const [hasMore, setHasMore] = useState(true);
 
-    console.log(currentPatches);
-
     // Hook to manage side effects and lifecycle events
     useEffect(() => {
         // Load the first 3 patches from the provided patch.events array
