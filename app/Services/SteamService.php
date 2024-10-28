@@ -81,13 +81,13 @@ class SteamService
             return [];
         };
 
-        // Gets the list of favorites games (favoritesDB)
-        $favorites = Auth::user()->favorites;
-
-        // Pluck out the ids 
-        $favoriteIds = $favorites->pluck('steam_id');
         // Search for the games with the ids 
-        return Steam::whereIn('id', $favoriteIds)->orderBy('name')->paginate(10);
+        return Auth::user()
+            ->favorites()
+            ->join('steams', 'favorites.steam_id', '=', 'steams.id')
+            ->with('steam')
+            ->orderBy('steams.name')
+            ->paginate(10);
     }
 
     //
