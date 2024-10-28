@@ -30,7 +30,7 @@ class AuthController
         Auth::login($user);
 
         // Redirect back to home page
-        return redirect('/');
+        return redirect('/')->with('message', 'You have successfully created an account');
     }
 
     public function login(Request $request)
