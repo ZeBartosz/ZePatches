@@ -8,8 +8,6 @@ export default function Home({ games: initialGames, search, authUser }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
 
-    console.log(authUser);
-
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
         setGames(initialGames.data || []);
@@ -77,49 +75,51 @@ export default function Home({ games: initialGames, search, authUser }) {
                         className="relative my-3 w-[80%] lg:w-[50%]"
                     >
                         <div
-                            className="absolute border-2 border-[#66c0f4] inset-0 bg-cover bg-center filter blur-[2px] rounded-lg"
-                            style={{
-                                backgroundImage: `url(${game.banner})`,
-                                zIndex: 0,
+                            className="cursor-pointer"
+                            onClick={() => {
+                                window.location.href = `/game/${game.appId}`;
                             }}
-                        ></div>
-                        <div className="flex text-white z-10 bg-black opacity-75 rounded-lg p-2">
-                            <div className="flex flex-col justify-start">
-                                <h2 className="font-bold py-1 ">{game.name}</h2>
-                                <p className="p-0 text-sm">
-                                    AppId: {game.appId}
-                                </p>
-                                <p className="p-0 text-sm">Type: {game.type}</p>
+                        >
+                            <div
+                                className="absolute border-2 border-[#66c0f4] inset-0 bg-cover bg-center filter blur-[2px] rounded-lg cursor-pointer"
+                                style={{
+                                    backgroundImage: `url(${game.banner})`,
+                                    zIndex: 0,
+                                }}
+                            ></div>
 
-                                <Link
-                                    className="no-underline"
-                                    href={`/game/${game.appId}`}
-                                >
-                                    Check Patches
-                                </Link>
+                            <div className="flex text-white z-10 bg-black opacity-75 rounded-lg p-2">
+                                <div className="flex flex-col justify-start">
+                                    <h2 className="font-bold py-1 ">
+                                        {game.name}
+                                    </h2>
+                                    <p className="p-0 text-sm">
+                                        AppId: {game.appId}
+                                    </p>
+                                    <p className="p-0 text-sm pb-3">
+                                        Type: {game.type}
+                                    </p>
+                                </div>
                             </div>
-
-                            <div className="flex justify-end items-center ml-auto">
-                                <form
-                                    onSubmit={(e) => addToFavorite(e, game.id)}
-                                >
-                                    <button className="" type="submit">
-                                        {game.is_favorite ? (
-                                            <img
-                                                src={favorited}
-                                                className="h-22 w-22 fill-current"
-                                                alt="Favorited Icon"
-                                            />
-                                        ) : (
-                                            <img
-                                                src={favorite}
-                                                className="h-22 w-22 fill-current"
-                                                alt="Favorite Icon"
-                                            />
-                                        )}
-                                    </button>
-                                </form>
-                            </div>
+                        </div>
+                        <div className="absolute top-[32px] right-[10px] ">
+                            <form onSubmit={(e) => addToFavorite(e, game.id)}>
+                                <button className="" type="submit">
+                                    {game.is_favorite ? (
+                                        <img
+                                            src={favorited}
+                                            className="h-22 w-22 fill-current"
+                                            alt="Favorited Icon"
+                                        />
+                                    ) : (
+                                        <img
+                                            src={favorite}
+                                            className="h-22 w-22 fill-current"
+                                            alt="Favorite Icon"
+                                        />
+                                    )}
+                                </button>
+                            </form>
                         </div>
                     </div>
                 ))
