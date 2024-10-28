@@ -8,7 +8,6 @@ export default function Home({ games: initialGames, search, authUser }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
 
-    console.log(games);
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
         setGames(initialGames.data || []);

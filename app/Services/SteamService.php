@@ -76,13 +76,12 @@ class SteamService
                 // Check if a user is authenticated
                 if (Auth::check()) {
                     $userId = Auth::id();
-
-                    // Add a left join to check if the game is favorited by the authenticated user
-                    $query->leftJoin('favorites', function ($join) use ($userId) {
-                        $join->on('favorites.steam_id', '=', 'steams.id')
-                            ->where('favorites.user_id', '=', $userId);
-                    })
-                        ->select('steams.*', DB::raw("IF(favorites.id IS NOT NULL, true, false) as is_favorite"));
+                    $query->addSelect('steams.*')
+                        ->addSelect(DB::raw("EXISTS (
+                            SELECT 1 FROM favorites 
+                            WHERE favorites.steam_id = steams.id 
+                            AND favorites.user_id = {$userId}
+                        ) AS is_favorite"));
                 }
             });
     }
