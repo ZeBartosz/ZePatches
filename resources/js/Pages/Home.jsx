@@ -7,27 +7,12 @@ import favorited from "../../Assets/favorited.svg";
 export default function Home({ games: initialGames, search, authUser }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
-    const [favorites, setFavorites] = useState({});
 
+    console.log(games);
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
         setGames(initialGames.data || []);
     }, [initialGames]);
-
-    // Fetch favorite status for each game
-    useEffect(() => {
-        if (authUser && games.length > 0) {
-            games.forEach(async (game) => {
-                const response = await axios.get(
-                    `/favorites/${authUser.id}/${game.id}`
-                );
-                setFavorites((prev) => ({
-                    ...prev,
-                    [game.id]: response.data.favorited,
-                }));
-            });
-        }
-    }, [authUser, games]);
 
     // Fetch additional game details
     useEffect(() => {
@@ -114,7 +99,7 @@ export default function Home({ games: initialGames, search, authUser }) {
                                     onSubmit={(e) => addToFavorite(e, game.id)}
                                 >
                                     <button className="" type="submit">
-                                        {favorites[game.id] ? (
+                                        {game.is_favorite ? (
                                             <img
                                                 src={favorited}
                                                 className="h-22 w-22 fill-current"
