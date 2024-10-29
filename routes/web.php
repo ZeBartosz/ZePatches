@@ -10,11 +10,6 @@ use Inertia\Inertia;
 
 Route::get('/', [SteamController::class, 'index']);
 
-Route::resource('auth', AuthController::class)->except(['show']);
-
-Route::inertia('/register', 'Auth/Register');
-Route::inertia('/login', 'Auth/Login');
-
 Route::get('/game/{steam}', [SteamController::class, 'show']);
 
 Route::get('/favorites/{user}/{steam}', [FavoriteController::class, 'isFavorited']);
