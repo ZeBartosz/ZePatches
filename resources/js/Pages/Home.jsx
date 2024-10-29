@@ -22,7 +22,7 @@ export default function Home({ games: initialGames, search, authUser }) {
             if (gamesToFetch.length > 0) {
                 try {
                     const gameIds = gamesToFetch.map((game) => game.appId);
-                    const response = await axios.post("/games/batchDetails", {
+                    const response = await axios.post("games/batchDetails", {
                         appIds: gameIds,
                     });
 
@@ -70,7 +70,7 @@ export default function Home({ games: initialGames, search, authUser }) {
                         <div
                             className="cursor-pointer"
                             onClick={() => {
-                                window.location.href = `/game/${game.appId}`;
+                                window.location.href = `game/${game.appId}`;
                             }}
                         >
                             <div

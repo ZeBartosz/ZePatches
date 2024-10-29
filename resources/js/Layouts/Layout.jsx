@@ -1,12 +1,18 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
 import FlashCard from "../Components/FlashCard";
 import searchIcon from "../../Assets/search.svg";
+import { useEffect, useState } from "react";
 
 export default function Layout({ children }) {
+    const { flash } = usePage().props;
+    const [message, setMessage] = useState("");
     const { data, setData, get, processing } = useForm({ search: "" });
     const { post, logoutprocessing } = useForm({});
     const { authUser } = usePage().props;
-    const { flash } = usePage().props;
+
+    useEffect(() => {
+        setMessage(flash.message);
+    }, [flash.message]);
 
     function searchSubmit(e) {
         e.preventDefault();
@@ -86,10 +92,8 @@ export default function Layout({ children }) {
                 </nav>
             </header>
 
-            <main>
-                {children}
-                <FlashCard message={flash.message} />
-            </main>
+            <main>{children}</main>
+            <FlashCard message={message} />
         </>
     );
 }
