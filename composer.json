@@ -17,6 +17,7 @@
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "socialiteproviders/steam": "^4.2",
+        "socialiteproviders/zoho": "^4.1",
         "syntax/steam-api": "3.*"
     },
     "require-dev": {

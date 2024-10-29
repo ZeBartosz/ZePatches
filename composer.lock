@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb5fbfc637603c55ee57f58dc0fe113b",
+    "content-hash": "c58d7b456f6400d49e29aa79cf04e4b8",
     "packages": [
         {
             "name": "brick/math",
@@ -3896,6 +3896,47 @@
                 "source": "https://github.com/socialiteproviders/providers"
             },
             "time": "2022-03-28T22:38:40+00:00"
+        },
+        {
+            "name": "socialiteproviders/zoho",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Zoho.git",
+                "reference": "7edf769faf6ee851a3c698486dc1f42edba09ed9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Zoho/zipball/7edf769faf6ee851a3c698486dc1f42edba09ed9",
+                "reference": "7edf769faf6ee851a3c698486dc1f42edba09ed9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0",
+                "socialiteproviders/manager": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Zoho\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "glowlogix",
+                    "email": "support@glowlogix.com"
+                }
+            ],
+            "description": "Zoho OAuth2 Provider for Laravel Socialite",
+            "support": {
+                "source": "https://github.com/SocialiteProviders/Zoho/tree/4.1.0"
+            },
+            "time": "2020-12-01T23:10:59+00:00"
         },
         {
             "name": "symfony/clock",
