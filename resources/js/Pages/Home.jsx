@@ -1,6 +1,5 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
-import FlashCard from "../Components/FlashCard";
 import axios from "axios";
 import favorite from "../../Assets/favorite.svg";
 import favorited from "../../Assets/favorited.svg";
@@ -8,7 +7,6 @@ import favorited from "../../Assets/favorited.svg";
 export default function Home({ games: initialGames, search, authUser }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
-    const { flash } = usePage().props;
 
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
@@ -60,12 +58,8 @@ export default function Home({ games: initialGames, search, authUser }) {
                     </p>
                 </div>
             ) : (
-                <div>
-                    <h1>{authUser.name}'s Favorite List:</h1>
-                </div>
+                <div>{/* <h1>{authUser.name}'s Favorite List:</h1> */}</div>
             )}
-
-            <FlashCard message={flash.message} />
 
             {games.length > 0 ? (
                 games.map((game) => (
