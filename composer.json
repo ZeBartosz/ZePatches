@@ -14,7 +14,9 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.11",
+        "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
+        "socialiteproviders/steam": "^4.2",
         "syntax/steam-api": "3.*"
     },
     "require-dev": {
