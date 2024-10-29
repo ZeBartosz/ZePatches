@@ -2,6 +2,7 @@ import { Link, useForm, usePage } from "@inertiajs/react";
 import FlashCard from "../Components/FlashCard";
 import searchIcon from "../../Assets/search.svg";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Layout({ children }) {
     const { flash } = usePage().props;
@@ -81,9 +82,14 @@ export default function Layout({ children }) {
                         </div>
                     ) : (
                         <div className="flex-none">
-                            <Link className="nav-link m-1" href="/login">
+                            <button
+                                className="nav-link m-1"
+                                onClick={() =>
+                                    (window.location.href = "/auth/steam")
+                                }
+                            >
                                 Login
-                            </Link>
+                            </button>
                             <Link className="nav-link" href="/register">
                                 Register
                             </Link>

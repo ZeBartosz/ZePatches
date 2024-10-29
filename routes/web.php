@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SteamAuthController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SteamController;
@@ -10,7 +11,7 @@ use Inertia\Inertia;
 
 Route::get('/', [SteamController::class, 'index']);
 
-Route::resource('auth', AuthController::class);
+Route::resource('auth', AuthController::class)->except(['show']);
 
 Route::inertia('/register', 'Auth/Register');
 Route::inertia('/login', 'Auth/Login');
@@ -25,3 +26,6 @@ Route::post('/inputGames', [SteamController::class, 'store']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+Route::get('/auth/steam', [SteamAuthController::class, 'redirectToSteam']);
+Route::get('/auth/steam/callback', [SteamAuthController::class, 'handleSteamCallback']);
