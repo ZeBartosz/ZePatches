@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\SteamAuthController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\SteamAuthController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SteamController;
 use App\Models\Favorite;
@@ -23,9 +22,8 @@ Route::get('/favorites/{user}/{steam}', [FavoriteController::class, 'isFavorited
 Route::post('/games/batchDetails', [SteamController::class, 'fetchGameDetails']);
 Route::post('/favorite/{steam}', [FavoriteController::class, 'favorite']);
 Route::post('/inputGames', [SteamController::class, 'store']);
-Route::post('/auth/register', [AuthController::class, 'register']);
-Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
 
+
+Route::post('/logout', [SteamAuthController::class, 'logout']);
 Route::get('/auth/steam', [SteamAuthController::class, 'redirectToSteam']);
 Route::get('/auth/steam/callback', [SteamAuthController::class, 'handleSteamCallback']);

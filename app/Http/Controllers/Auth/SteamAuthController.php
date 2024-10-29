@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SteamAuthController extends Controller
@@ -35,5 +36,21 @@ class SteamAuthController extends Controller
         } catch (\Exception $e) {
             return redirect("/")->withErrors('Steam login failed.');
         }
+    }
+
+    public function logout(Request $request)
+    {
+
+        // Logout the user
+        Auth::logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // Regenerate the token 
+        $request->session()->regenerateToken();
+
+        // Redirect to home 
+        return redirect('/');
     }
 }
