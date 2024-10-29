@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 nav {
-    @apply flex items-center justify-between px-2 bg-[#2a475e] border-b-2 border-[#66c0f4]
+    @apply flex items-center justify-between px-2 bg-[#2a475e] border-b-2 border-[#66c0f4] w-full
 }
 
 .nav-link {
