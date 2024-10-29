@@ -8,6 +8,7 @@ export default function Home({ games: initialGames, search, authUser }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
 
+    console.log(authUser);
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
         setGames(initialGames.data || []);
@@ -57,8 +58,19 @@ export default function Home({ games: initialGames, search, authUser }) {
                         Total Results: {initialGames.total || 0}
                     </p>
                 </div>
+            ) : authUser ? (
+                <div className="flex justify-items-center">
+                    <img
+                        className="w-16 h-16 m-3 rounded-3xl"
+                        src={authUser.avatar}
+                        alt="User's Avatar"
+                    />
+                    <h1 className="text-white">
+                        {authUser.nickname}'s Favorite List:
+                    </h1>
+                </div>
             ) : (
-                <div>{/* <h1>{authUser.name}'s Favorite List:</h1> */}</div>
+                ""
             )}
 
             {games.length > 0 ? (
