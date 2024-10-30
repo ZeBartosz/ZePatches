@@ -71,9 +71,19 @@ export default function Layout({ children }) {
                     </div>
 
                     {authUser ? (
-                        <div>
+                        <div className="flex-none">
+                            {authUser.is_admin ? (
+                                <Link
+                                    className="nav-link m-1"
+                                    href="/admin/dashboard"
+                                >
+                                    admin Dashboard
+                                </Link>
+                            ) : (
+                                ""
+                            )}
                             <form onSubmit={logout}>
-                                <button type="submit">
+                                <button className="nav-link m-1" type="submit">
                                     {logoutprocessing
                                         ? "Logging out..."
                                         : "logout"}
