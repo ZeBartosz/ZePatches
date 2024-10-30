@@ -14,37 +14,26 @@ class ProcessSteam implements ShouldQueue
 
     use Queueable;
 
+
     public function handle(): void
     {
 
+        ini_set('memory_limit', '1024M');
+
+        // Get all appIds from Steam
         $steamApps = SteamApi::app()->GetAppList();
-        $appIdCollection = collect($steamApps)->pluck('appid')->filter()->take(500)->toArray();
-        // $gamesWithDetails = SteamApi::app()->appDetails($appIdCollection)->get();
-        $num = 0;
+        log::info("the total count of games: " . count($steamApps));
 
-        foreach ($appIdCollection as $appId) {
-            $gamesWithDetails = SteamApi::app()->appDetails($appId)->first();
-            $num++;
-            log::info("number of api calls" . $num);
+        foreach ($steamApps as $game) {
+            // Access properties using the object notation
+            if (isset($game->appid, $game->name)) {
+                // Use Create correctly
+                Steam::updateOrCreate([
+                    'appId' => $game->appid,
+                    'name' => $game->name
+                ])->searchable();
+            }
+            unset($game);
         }
-
-        // Assuming the returned structure is an array of stdClass objects with 'appid' and 'name'
-        // foreach ($gamesWithDetails as $game) {
-
-        //     // Access properties using the object notation
-        //     if (isset($game->id, $game->name)) {
-        //         https://store.steampowered.com/api/appdetails?appids=
-        //         // Use Create correctly
-        //         Steam::updateOrCreate([
-        //             'appId' => $game->id,
-        //             'name' => $game->name,
-        //             'type' => !empty($game->type) ? $game->type : "Unknown Type",
-        //             'banner' => !empty($game->header) ? $game->header : "",
-        //             'developer' =>  !empty($game->developers) ? $game->developers[0] : "Unknown Developer",
-        //             'releaseDate' => $game->release->date ?? "Unknown Release Date",
-        //             'moreDetails' => 1,
-        //         ])->searchable();
-        //     }
-        // }
     }
 }
