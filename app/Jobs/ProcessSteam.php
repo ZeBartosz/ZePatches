@@ -14,17 +14,17 @@ class ProcessSteam implements ShouldQueue
 
     use Queueable;
 
+    public $games;
+
+    public function __construct($games)
+    {
+        $this->games = $games;
+    }
 
     public function handle(): void
     {
 
-        ini_set('memory_limit', '1024M');
-
-        // Get all appIds from Steam
-        $steamApps = SteamApi::app()->GetAppList();
-        log::info("the total count of games: " . count($steamApps));
-
-        foreach ($steamApps as $game) {
+        foreach ($this->games as $game) {
             // Access properties using the object notation
             if (isset($game->appid, $game->name)) {
                 // Use Create correctly
@@ -33,7 +33,6 @@ class ProcessSteam implements ShouldQueue
                     'name' => $game->name
                 ])->searchable();
             }
-            unset($game);
         }
     }
 }

@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Models\Admin;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
+use App\Jobs\ProcessSteam;
+use App\Models\Steam;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Syntax\SteamApi\Facades\SteamApi;
+
+class AdminController extends Controller
+{
+
+    public function show()
+    {
+        $totalGameCount = Steam::count();
+
+        return inertia('Auth/AdminDashboard', ['gameCount' => $totalGameCount]);
+    }
+
+    public function FetchGamesFromAPI()
+    {
+
+        collect(SteamApi::app()->GetAppList())
+            ->chunk(5000)->each(function ($games) {
+                ProcessSteam::dispatch($games);
+            });
+
+        return back()->with('message', 'Retriving games from API ');
+    }
+}
