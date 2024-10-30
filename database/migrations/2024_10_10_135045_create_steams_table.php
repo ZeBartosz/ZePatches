@@ -14,7 +14,13 @@ return new class extends Migration
         Schema::create('steams', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('appId');
+            $table->index('appId');
             $table->string('name')->default('')->nullable();
+            $table->string('developer')->default('');
+            $table->string('releaseDate')->default('');
+            $table->string('banner')->default('');
+            $table->string('type')->default('');
+            $table->integer('moreDetails')->default(0);
             $table->timestamps();
         });
     }

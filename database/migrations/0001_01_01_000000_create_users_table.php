@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nickname');
             $table->string('steam_id')->unique();
             $table->string('avatar');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
