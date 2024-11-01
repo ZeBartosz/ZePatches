@@ -24,6 +24,8 @@ class Steam extends Authenticatable
         'banner',
         'type',
         'moreDetails',
+        'eventPatchesDate',
+        'patchNotesDate',
     ];
 
     public function toSearchableArray(): array
