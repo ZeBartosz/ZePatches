@@ -4,9 +4,11 @@ import axios from "axios";
 import favorite from "../../Assets/favorite.svg";
 import favorited from "../../Assets/favorited.svg";
 
-function GameCard({ initialGames, activeTab, tableId }) {
+function GameCard({ initialGames, activeTab, tableId, search }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
+
+    console.log(initialGames);
 
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
@@ -80,6 +82,12 @@ function GameCard({ initialGames, activeTab, tableId }) {
                                 <p className="p-0 text-sm pb-3">
                                     Type: {game.type}
                                 </p>
+                                <p className="p-0 text-sm pb-3">
+                                    Latest event {game.eventPatchesDate}
+                                </p>
+                                <p className="p-0 text-sm pb-3">
+                                    Latest Patch {game.patchNotesDate}
+                                </p>
                             </div>
                         </div>
                         <div className="absolute top-[32px] right-[10px] ">
@@ -104,10 +112,18 @@ function GameCard({ initialGames, activeTab, tableId }) {
                     </div>
                 ))
             ) : (
-                <p>No games found.</p>
+                <div
+                    className={`${activeTab === tableId ? "active" : "hidden"}`}
+                >
+                    <p>No games found.</p>
+                </div>
             )}
 
-            <div className="flex justify-center mt-4">
+            <div
+                className={`flex justify-center mt-4 mb-4 ${
+                    activeTab === tableId ? "active" : "hidden"
+                }`}
+            >
                 {initialGames.links &&
                     initialGames.links[2].url &&
                     initialGames.links.map((link, index) => {

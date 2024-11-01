@@ -72,6 +72,7 @@ export default function Home({
                 initialGames={games}
                 activeTab={activeTab}
                 tableId={"NameOrder"}
+                search={search}
             />
 
             <GameCard
