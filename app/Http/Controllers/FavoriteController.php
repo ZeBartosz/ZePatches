@@ -21,7 +21,6 @@ class FavoriteController extends Controller
 
         $user = Auth::user();
 
-        dd($steam);
         $favorite = $steam->favorites()
             ->where('user_id', $user->id)
             ->first();

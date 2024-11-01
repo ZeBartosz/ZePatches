@@ -21,13 +21,17 @@ class FavoriteService
         $patches = json_decode(file_get_contents($urlPatches), true);
 
         // Change from unix to readable date
-        $unixEventDate = Carbon::createFromTimestamp($eventPatches["events"][0]["announcement_body"]["posttime"])->toDateTimeString();
-        $unixPatchDate = Carbon::createFromTimestamp($patches["events"][0]["announcement_body"]["posttime"])->toDateTimeString();
+        if (!empty($eventPatches["events"])) {
+            $unixEventDate = Carbon::createFromTimestamp($eventPatches["events"][0]["announcement_body"]["posttime"])->toDateTimeString() ?? null;
+        }
 
+        if (!empty($unixEventDate["events"])) {
+            $unixPatchDate = Carbon::createFromTimestamp($patches["events"][0]["announcement_body"]["posttime"])->toDateTimeString() ?? null;
+        }
         // update steam model 
         $steam->update([
-            "eventPatchesDate" => $unixEventDate,
-            "patchNotesDate" => $unixPatchDate
+            "eventPatchesDate" => $unixEventDate ?? null,
+            "patchNotesDate" => $unixPatchDate ?? null
         ]);
     }
 }
