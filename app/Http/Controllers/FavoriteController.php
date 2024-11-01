@@ -6,17 +6,22 @@ use App\Models\Favorite;
 use App\Http\Controllers\Controller;
 use App\Models\Steam;
 use App\Models\User;
+use App\Services\FavoriteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
 
+    public function __construct(protected FavoriteService $favoriteService) {}
+
 
     public function favorite(Steam $steam)
     {
 
         $user = Auth::user();
+
+        dd($steam);
         $favorite = $steam->favorites()
             ->where('user_id', $user->id)
             ->first();
@@ -25,6 +30,9 @@ class FavoriteController extends Controller
             $steam->favorites()->create([
                 'user_id' => $user->id,
             ]);
+
+            $this->favoriteService->updateGamePatchDate($steam);
+
             return back()->with('message', 'The ' . $steam->name . ' was added to your favorite list');
         } else {
             $favorite->delete();
