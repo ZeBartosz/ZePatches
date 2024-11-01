@@ -4,7 +4,13 @@ import axios from "axios";
 import favorite from "../../Assets/favorite.svg";
 import favorited from "../../Assets/favorited.svg";
 
-export default function Home({ games: initialGames, search, authUser }) {
+export default function Home({
+    games: initialGames,
+    eventOrder,
+    patchesOrder,
+    search,
+    authUser,
+}) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
 
