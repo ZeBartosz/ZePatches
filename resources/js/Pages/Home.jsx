@@ -20,47 +20,49 @@ export default function Home({
                     </p>
                 </div>
             ) : authUser ? (
-                <div className="flex justify-items-center">
-                    <img
-                        className="w-16 h-16 m-3 rounded-3xl"
-                        src={authUser.avatar}
-                        alt="User's Avatar"
-                    />
-                    <h1 className="text-white">
-                        {authUser.nickname}'s Favorite List:
-                    </h1>
-                </div>
-            ) : (
-                ""
-            )}
+                <div className="flex flex-col justify-items-center">
+                    <div className="flex">
+                        <img
+                            className="w-16 h-16 m-3 rounded-3xl"
+                            src={authUser.avatar}
+                            alt="User's Avatar"
+                        />
+                        <h1 className="text-white">
+                            {authUser.nickname}'s Favorite List:
+                        </h1>
+                    </div>
 
-            {authUser ? (
-                <div className="tab flex justify-evenly border-[#66c0f4] mb-2 text-blue-900">
-                    <p className="p-0 pr-1 text-white">Order by:</p>
-                    <button
-                        className={`tablinks px-1 border-r ${
-                            activeTab === "NameOrder" ? "text-blue-600" : ""
-                        }`}
-                        onClick={() => setActiveTab("NameOrder")}
-                    >
-                        Name
-                    </button>
-                    <button
-                        className={`px-1 border-r tablinks ${
-                            activeTab === "EventOrder" ? "text-blue-600" : ""
-                        }`}
-                        onClick={() => setActiveTab("EventOrder")}
-                    >
-                        Latest Event
-                    </button>
-                    <button
-                        className={`px-1 tablinks ${
-                            activeTab === "PatchOrder" ? "text-blue-600" : ""
-                        }`}
-                        onClick={() => setActiveTab("PatchOrder")}
-                    >
-                        Latest Patch Notes
-                    </button>
+                    <div className="tab flex  border-[#66c0f4] mb-2 text-blue-900">
+                        <p className="p-0 pr-1 text-white">Order by:</p>
+                        <button
+                            className={`tablinks px-1 border-r ${
+                                activeTab === "NameOrder" ? "text-blue-600" : ""
+                            }`}
+                            onClick={() => setActiveTab("NameOrder")}
+                        >
+                            Name
+                        </button>
+                        <button
+                            className={`px-1 border-r tablinks ${
+                                activeTab === "EventOrder"
+                                    ? "text-blue-600"
+                                    : ""
+                            }`}
+                            onClick={() => setActiveTab("EventOrder")}
+                        >
+                            Latest Event
+                        </button>
+                        <button
+                            className={`px-1 tablinks ${
+                                activeTab === "PatchOrder"
+                                    ? "text-blue-600"
+                                    : ""
+                            }`}
+                            onClick={() => setActiveTab("PatchOrder")}
+                        >
+                            Latest Patch Notes
+                        </button>
+                    </div>
                 </div>
             ) : (
                 ""
