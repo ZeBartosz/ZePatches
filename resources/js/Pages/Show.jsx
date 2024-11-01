@@ -12,7 +12,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
             <div className="tab flex justify-evenlytext-[#c7d5e0] border-[#66c0f4] mb-2 text-blue-900">
                 <button
                     className={`px-1 border-r tablinks ${
-                        activeTab === "Table1" ? "activ text-blue-600" : ""
+                        activeTab === "Table1" ? "text-blue-600" : ""
                     }`}
                     onClick={() => setActiveTab("Table1")}
                 >
@@ -20,7 +20,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                 </button>
                 <button
                     className={`px-1  tablinks ${
-                        activeTab === "Table2" ? "activ text-blue-600" : ""
+                        activeTab === "Table2" ? "text-blue-600" : ""
                     }`}
                     onClick={() => setActiveTab("Table2")}
                 >
