@@ -108,14 +108,27 @@ class SteamService
             ->favorites()
             ->join('steams', 'favorites.steam_id', '=', 'steams.id')
             ->with('steam')
-            ->orderBy('eventPatchesDate', 'desc')
+            ->orderByRaw("
+            CASE 
+                WHEN eventPatchesDate IS NULL THEN 1
+                ELSE 0
+            END ASC,
+                eventPatchesDate DESC
+            ")
             ->paginate(10);
+
 
         $patchesByLatest = Auth::user()
             ->favorites()
             ->join('steams', 'favorites.steam_id', '=', 'steams.id')
             ->with('steam')
-            ->orderBy('patchNotesDate', 'desc')
+            ->orderByRaw("
+                CASE 
+                    WHEN patchNotesDate IS NULL THEN 1
+                    ELSE 0
+                END ASC,
+                    patchNotesDate DESC
+            ")
             ->paginate(10);
 
         return [
