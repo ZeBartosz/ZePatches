@@ -4,7 +4,7 @@ import axios from "axios";
 import favorite from "../../Assets/favorite.svg";
 import favorited from "../../Assets/favorited.svg";
 
-function GameCard({ initialGames }) {
+function GameCard({ initialGames, activeTab, tableId }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
 
@@ -54,7 +54,9 @@ function GameCard({ initialGames }) {
                 games.map((game) => (
                     <div
                         key={game.id}
-                        className="relative my-3 w-[80%] lg:w-[50%]"
+                        className={`relative my-3 w-[80%] lg:w-[50%] ${
+                            activeTab === tableId ? "active" : "hidden"
+                        }`}
                     >
                         <div
                             className="cursor-pointer"
@@ -117,7 +119,9 @@ function GameCard({ initialGames }) {
                                 className={` p-2 ${
                                     link.active ? "bg-blue-500 text-white" : ""
                                 }`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                dangerouslySetInnerHTML={{
+                                    __html: link.label,
+                                }}
                             />
                         );
                     })}
