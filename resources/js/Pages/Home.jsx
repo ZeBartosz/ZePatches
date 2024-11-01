@@ -32,7 +32,7 @@ export default function Home({
                         </h1>
                     </div>
 
-                    <div className="tab flex  border-[#66c0f4] mb-2 text-blue-900">
+                    <div className="tab flex justify-center border-[#66c0f4] mb-2 text-blue-900">
                         <p className="p-0 pr-1 text-white">Order by:</p>
                         <button
                             className={`tablinks px-1 border-r ${
