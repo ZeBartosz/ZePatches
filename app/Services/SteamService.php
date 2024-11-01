@@ -96,12 +96,33 @@ class SteamService
         };
 
         // Search for the games with the ids 
-        return Auth::user()
+        $favorites = Auth::user()
             ->favorites()
             ->join('steams', 'favorites.steam_id', '=', 'steams.id')
             ->with('steam')
             ->orderBy('steams.name')
             ->paginate(10);
+
+        // Search for the games with the ids 
+        $eventByLatest = Auth::user()
+            ->favorites()
+            ->join('steams', 'favorites.steam_id', '=', 'steams.id')
+            ->with('steam')
+            ->orderBy('eventPatchesDate', 'desc')
+            ->paginate(10);
+
+        $patchesByLatest = Auth::user()
+            ->favorites()
+            ->join('steams', 'favorites.steam_id', '=', 'steams.id')
+            ->with('steam')
+            ->orderBy('patchNotesDate', 'desc')
+            ->paginate(10);
+
+        return [
+            'games' => $favorites,
+            'eventOrder' => $eventByLatest,
+            'patchesOrder' => $patchesByLatest
+        ];
     }
 
     //
