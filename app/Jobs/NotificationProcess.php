@@ -9,6 +9,7 @@ use App\Services\SteamService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Syntax\SteamApi\Facades\SteamApi;
 
@@ -27,45 +28,58 @@ class NotificationProcess implements ShouldQueue
     public function handle(): void
     {
         foreach ($this->games as $game) {
-            // url 
+            // URL definitions
             $urlEvent = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $game->appId . "&count_before=0&count_after=100&event_type_filter=14";
             $urlPatches = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=" . $game->appId . "&count_before=0&count_after=100&event_type_filter=13";
 
-            // decode
-            $eventPatches = json_decode(file_get_contents($urlEvent), true);
+            // Decode responses
+            $eventPatches =  json_decode(file_get_contents($urlEvent), true);
             $patches = json_decode(file_get_contents($urlPatches), true);
 
+            // Process events
             if (!empty($eventPatches["events"])) {
+                $unixEventDate = Carbon::createFromTimestamp($eventPatches["events"][0]["announcement_body"]["posttime"])->toDateTimeString();
+                $currentEventDate = $game->eventPatchesDate;
 
-                $unixEventDate = Carbon::createFromTimestamp($eventPatches["events"][0]["announcement_body"]["posttime"])->toDateTimeString() ?? null;
-
-                $currectEventDate = $game->eventPatchesDate;
-
-                if ($currectEventDate !== $unixEventDate) {
-
+                if ($currentEventDate !== $unixEventDate) {
                     $eventName = $eventPatches["events"][0]["announcement_body"]["headline"];
 
-                    $userIds = Favorite::where('steam_id', $game->id)
-                        ->get()
-                        ->pluck('user_id');
+                    $userIds = Favorite::where('steam_id', $game->id)->pluck('user_id');
 
                     foreach ($userIds as $userId) {
                         Notification::create([
                             'user_id' => $userId,
                             'steam_id' => $game->id,
-                            'EventName' => $eventName,
+                            'eventName' => $eventName,
                             'eventPatchesDate' => $unixEventDate,
                         ]);
                     }
 
-                    $game->update([
-                        'eventPatchesDate' => $unixEventDate,
-                    ]);
+                    $game->update(['eventPatchesDate' => $unixEventDate]);
                 }
             }
 
-            if (!empty($unixEventDate["events"])) {
-                $unixPatchDate = Carbon::createFromTimestamp($patches["events"][0]["announcement_body"]["posttime"])->toDateTimeString() ?? null;
+            // Process patches
+            if (!empty($patches["events"])) {
+                $unixPatchDate = Carbon::createFromTimestamp($patches["events"][0]["announcement_body"]["posttime"])->toDateTimeString();
+                $currentPatchDate = $game->patchNotesDate;
+
+                if ($currentPatchDate !== $unixPatchDate) {
+                    $patchName = $patches["events"][0]["announcement_body"]["headline"];
+
+                    $userIds = Favorite::where('steam_id', $game->id)->pluck('user_id');
+
+                    foreach ($userIds as $userId) {
+                        Notification::create([
+                            'user_id' => $userId,
+                            'steam_id' => $game->id,
+                            'patchName' => $patchName,
+                            'patchNotesDate' => $unixPatchDate,
+                        ]);
+                    }
+
+                    $game->update(['patchNotesDate' => $unixPatchDate]);
+                }
             }
         }
     }
