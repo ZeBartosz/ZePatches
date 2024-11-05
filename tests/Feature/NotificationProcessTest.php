@@ -4,7 +4,7 @@ use App\Models\Steam;
 use App\Models\Favorite;
 use App\Models\Notification;
 use App\Models\User;
-use App\Jobs\NotificationProcess;
+use App\Jobs\ProcessNotification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -56,7 +56,7 @@ class NotificationProcessTest extends TestCase
         Favorite::create(['user_id' => $user3->id, 'steam_id' => $steamGame->id]);
 
         // Act: Dispatch the job immediately for testing
-        NotificationProcess::dispatch([$steamGame]);
+        ProcessNotification::dispatch([$steamGame]);
 
         // Assert: Check that each user has received a notification for the new event and patch
         foreach ([$user1, $user2, $user3] as $user) {

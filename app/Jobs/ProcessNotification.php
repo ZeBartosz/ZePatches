@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Syntax\SteamApi\Facades\SteamApi;
 
-class NotificationProcess implements ShouldQueue
+class ProcessNotification implements ShouldQueue
 {
 
     use Queueable;
