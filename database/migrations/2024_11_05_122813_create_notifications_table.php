@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Steam::class)->constrained();
-            $table->string('PatchName')->nullable();
+            $table->string('patchName')->nullable();
             $table->timestamp('patchNotesDate')->nullable();
-            $table->string('EventName')->nullable();
+            $table->string('eventName')->nullable();
             $table->timestamp('eventPatchesDate')->nullable();
             $table->timestamps();
         });
