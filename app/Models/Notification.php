@@ -13,9 +13,9 @@ class Notification extends Model
     protected $fillable = [
         'user_id',
         'steam_id',
-        'PatchName',
+        'patchName',
         'patchNotesDate',
-        'EventName',
+        'eventName',
         'eventPatchesDate',
     ];
 }
