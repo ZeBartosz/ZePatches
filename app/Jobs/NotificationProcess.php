@@ -36,6 +36,10 @@ class NotificationProcess implements ShouldQueue
             $eventPatches =  json_decode(file_get_contents($urlEvent), true);
             $patches = json_decode(file_get_contents($urlPatches), true);
 
+            // only for testing 
+            // $eventPatches = Http::get($urlEvent)->json();
+            // $patches = Http::get($urlPatches)->json();
+
             // Process events
             if (!empty($eventPatches["events"])) {
                 $unixEventDate = Carbon::createFromTimestamp($eventPatches["events"][0]["announcement_body"]["posttime"])->toDateTimeString();
