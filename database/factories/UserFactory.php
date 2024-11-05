@@ -24,21 +24,21 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'nickname' => $this->faker->userName(),
+            'steam_id' => $this->faker->unique()->numerify('##########'), // Generate a unique Steam ID
+            'avatar' => $this->faker->imageUrl(100, 100, 'people'), // Generate a random avatar URL
+            'is_admin' => false, // Default to non-admin
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the user is an admin.
      */
-    public function unverified(): static
+    public function admin(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+        return $this->state(fn(array $attributes) => [
+            'is_admin' => true,
         ]);
     }
 }
