@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Jobs\ProcessNotification;
 use App\Jobs\ProcessSteam;
+use App\Models\Favorite;
 use App\Models\Steam;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -102,6 +104,11 @@ class SteamService
             ->with('steam')
             ->orderBy('steams.name')
             ->paginate(10);
+
+
+
+        ProcessNotification::dispatch($favorites);
+
 
         // Search for the games with the ids 
         $eventByLatest = Auth::user()
