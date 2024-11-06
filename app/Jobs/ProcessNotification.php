@@ -58,6 +58,7 @@ class ProcessNotification implements ShouldQueue
                             'steam_id' => $game->id,
                             'eventName' => $eventName,
                             'eventPatchesDate' => $unixEventDate,
+                            'game' => $game->name,
                         ]);
                     }
 
@@ -81,6 +82,7 @@ class ProcessNotification implements ShouldQueue
                             'steam_id' => $game->id,
                             'patchName' => $patchName,
                             'patchNotesDate' => $unixPatchDate,
+                            'game' => $game->name,
                         ]);
                     }
 
