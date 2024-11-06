@@ -73,39 +73,37 @@ export default function Layout({ children }) {
                     </div>
 
                     {authUser ? (
-                        <div className="relative z-10">
+                        <div
+                            className="relative z-10"
+                            onMouseLeave={() => setActive(false)}
+                        >
                             <button
+                                className=""
                                 onClick={() => setActive(active ? false : true)}
                             >
                                 <img
-                                    className="w-12 h-12 m-3 rounded-3xl border border-[#2a475e]"
+                                    className="w-12 h-12 mt-1 rounded-3xl border border-[#2a475e]"
                                     src={authUser.avatar}
                                     alt="User's Avatar"
                                 />
                             </button>
                             <div
-                                className={`absolute bg-gray-400 top-5 right-5 -z-10 ${
+                                className={`absolute bg-gray-400 top-3 right-3 -z-10 ${
                                     active ? "active" : "hidden"
                                 }`}
                             >
-                                <p className="text-white mx-2 py-3 pr-16 border-b border-[#66c0f4]">
+                                <p className="justify-items-center text-white mx-2 py-3 pr-11 border-b border-[#66c0f4]">
                                     {authUser.nickname}
                                 </p>
                                 {authUser.is_admin ? (
-                                    <Link
-                                        className="nav-link mx-2 "
-                                        href="/admin/dashboard"
-                                    >
-                                        admin Dashboard
+                                    <Link className="" href="/admin/dashboard">
+                                        Admin
                                     </Link>
                                 ) : (
                                     ""
                                 )}
                                 <form onSubmit={logout}>
-                                    <button
-                                        className="nav-link m-1"
-                                        type="submit"
-                                    >
+                                    <button className="" type="submit">
                                         {logoutprocessing
                                             ? "Logging out..."
                                             : "logout"}
