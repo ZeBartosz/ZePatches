@@ -7,6 +7,7 @@ export default function Home({
     patchesOrder,
     search,
     authUser,
+    notifications,
 }) {
     const [activeTab, setActiveTab] = useState("NameOrder");
 
