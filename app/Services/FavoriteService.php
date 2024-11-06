@@ -25,7 +25,7 @@ class FavoriteService
             $unixEventDate = Carbon::createFromTimestamp($eventPatches["events"][0]["announcement_body"]["posttime"])->toDateTimeString() ?? null;
         }
 
-        if (!empty($unixEventDate["events"])) {
+        if (!empty($patches["events"])) {
             $unixPatchDate = Carbon::createFromTimestamp($patches["events"][0]["announcement_body"]["posttime"])->toDateTimeString() ?? null;
         }
         // update steam model 
