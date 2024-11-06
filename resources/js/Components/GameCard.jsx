@@ -8,8 +8,6 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
     const [games, setGames] = useState(initialGames.data || []);
     const { post, processing } = useForm({});
 
-    console.log(initialGames);
-
     // Update the games state when the 'initialGames' prop changes
     useEffect(() => {
         setGames(initialGames.data || []);
