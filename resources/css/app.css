@@ -6,9 +6,6 @@ nav {
     @apply flex items-center justify-between px-2 bg-[#2a475e] border-b-2 border-[#66c0f4] w-full
 }
 
-.nav-link {
-    @apply border rounded-md py-1 px-2 text-white hover:bg-slate-500
-}
 
 main {
     @apply bg-gray-500 flex flex-col items-center justify-start min-h-screen
