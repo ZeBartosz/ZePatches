@@ -21,7 +21,7 @@ class SteamController
 
         $games = $this->steamService->getSearchedGames($search);
 
-
+        $notifications = $this->steamService->getNotifications();
         // Return view with games and search string
         return inertia(
             'Home',
@@ -29,6 +29,7 @@ class SteamController
                 'games' => $games['games'] ?? $games,
                 "eventOrder" => $games["eventOrder"] ?? [],
                 "patchesOrder" => $games["patchesOrder"] ?? [],
+                "notifications" => $notifications ?? [],
                 'search' => $search
             ]
         );
