@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Layout({ children }) {
-    const { flash } = usePage().props;
     const [message, setMessage] = useState("");
+    const [active, setActive] = useState(false);
     const { data, setData, get, processing } = useForm({ search: "" });
     const { post, logoutprocessing } = useForm({});
+    const { flash } = usePage().props;
     const { authUser } = usePage().props;
 
+    console.log(active);
     useEffect(() => {
         setMessage(flash.message);
     }, [flash.message]);
@@ -71,24 +73,45 @@ export default function Layout({ children }) {
                     </div>
 
                     {authUser ? (
-                        <div className="flex-none">
-                            {authUser.is_admin ? (
-                                <Link
-                                    className="nav-link m-1"
-                                    href="/admin/dashboard"
-                                >
-                                    admin Dashboard
-                                </Link>
-                            ) : (
-                                ""
-                            )}
-                            <form onSubmit={logout}>
-                                <button className="nav-link m-1" type="submit">
-                                    {logoutprocessing
-                                        ? "Logging out..."
-                                        : "logout"}
-                                </button>
-                            </form>
+                        <div className="relative z-10">
+                            <button
+                                onClick={() => setActive(active ? false : true)}
+                            >
+                                <img
+                                    className="w-12 h-12 m-3 rounded-3xl border border-[#2a475e]"
+                                    src={authUser.avatar}
+                                    alt="User's Avatar"
+                                />
+                            </button>
+                            <div
+                                className={`absolute bg-gray-400 top-5 right-5 -z-10 ${
+                                    active ? "active" : "hidden"
+                                }`}
+                            >
+                                <p className="text-white mx-2 py-3 pr-16 border-b border-[#66c0f4]">
+                                    {authUser.nickname}
+                                </p>
+                                {authUser.is_admin ? (
+                                    <Link
+                                        className="nav-link mx-2 "
+                                        href="/admin/dashboard"
+                                    >
+                                        admin Dashboard
+                                    </Link>
+                                ) : (
+                                    ""
+                                )}
+                                <form onSubmit={logout}>
+                                    <button
+                                        className="nav-link m-1"
+                                        type="submit"
+                                    >
+                                        {logoutprocessing
+                                            ? "Logging out..."
+                                            : "logout"}
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     ) : (
                         <div className="flex-none">
@@ -100,9 +123,6 @@ export default function Layout({ children }) {
                             >
                                 Login
                             </button>
-                            <Link className="nav-link" href="/register">
-                                Register
-                            </Link>
                         </div>
                     )}
                 </nav>
