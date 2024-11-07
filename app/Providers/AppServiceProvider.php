@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
             return Auth::user();
         });
 
+        Inertia::share('notifications', function () {
+            return Auth::user()->notifications;
+        });
+
         Event::listen(function (SocialiteWasCalled $event) {
             $event->extendSocialite('steam', Provider::class);
         });
