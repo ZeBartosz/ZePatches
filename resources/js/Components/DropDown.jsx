@@ -94,8 +94,8 @@ function DropDown({}) {
 
             {/* DropDown */}
             <div
-                // onMouseLeave={() => setPressed(false)}
-                className={`fixed z-50 w-4/5 top-5 -m-4 bg-black text-white bg-opacity-100 left-1/2 transform -translate-x-1/2 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
+                onMouseLeave={() => setPressed(false)}
+                className={`fixed z-50 w-4/5 lg:w-4/6 top-5 left-1/2 transform -translate-x-1/2 bg-black text-white bg-blur bg-opacity-80 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
                     pressed ? "active" : "hidden"
                 }`}
             >
