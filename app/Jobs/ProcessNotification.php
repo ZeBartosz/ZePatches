@@ -9,6 +9,7 @@ use App\Services\SteamService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Syntax\SteamApi\Facades\SteamApi;
@@ -53,6 +54,8 @@ class ProcessNotification implements ShouldQueue
                     $userIds = Favorite::where('steam_id', $game->id)->pluck('user_id');
 
                     foreach ($userIds as $userId) {
+                        Cache::forget('user.' . $userId . '.notifications');
+
                         Notification::create([
                             'user_id' => $userId,
                             'steam_id' => $game->id,
@@ -78,6 +81,8 @@ class ProcessNotification implements ShouldQueue
                     $userIds = Favorite::where('steam_id', $game->id)->pluck('user_id');
 
                     foreach ($userIds as $userId) {
+                        Cache::forget('user.' . $userId . '.notifications');
+
                         Notification::create([
                             'user_id' => $userId,
                             'steam_id' => $game->id,

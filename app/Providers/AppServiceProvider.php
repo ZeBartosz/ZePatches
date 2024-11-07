@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Inertia\Inertia;
@@ -30,7 +31,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Inertia::share('notifications', function () {
-            return Auth::user()->notifications;
+            $cacheKey = 'user.' . Auth::id() . '.notifications';
+            return Cache::remember($cacheKey, 5, function () {
+                return Auth::user()->notifications;
+            });
         });
 
         Event::listen(function (SocialiteWasCalled $event) {
