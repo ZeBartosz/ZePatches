@@ -59,6 +59,7 @@ class ProcessNotification implements ShouldQueue
                             'eventName' => $eventName,
                             'eventPatchesDate' => $unixEventDate,
                             'game' => $game->name,
+                            'appId' => $game->appId
                         ]);
                     }
 
@@ -83,6 +84,7 @@ class ProcessNotification implements ShouldQueue
                             'patchName' => $patchName,
                             'patchNotesDate' => $unixPatchDate,
                             'game' => $game->name,
+                            'appId' => $game->appId
                         ]);
                     }
 

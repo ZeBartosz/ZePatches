@@ -18,7 +18,8 @@ class Notification extends Model
         'patchNotesDate',
         'eventName',
         'eventPatchesDate',
-        'game'
+        'game',
+        'appId',
     ];
 
     public function users(): BelongsTo
