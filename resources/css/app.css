@@ -19,11 +19,6 @@ h3, h2 {
     @apply font-bold text-lg py-3 
 }
 
-
-a {
-    @apply text-blue-500 underline hover:text-blue-700
-}
-
 ul {
     @apply pl-24 py-2 text-left	
 }
@@ -40,10 +35,38 @@ iframe {
     @apply flex items-center justify-center
 }
 
+
+a {
+    @apply text-blue-500 underline hover:text-blue-700
+}
+
+
 p {
     @apply p-6 max-w-[900px]
 }
 
 strong {
     @apply pt-2
+}
+
+.ani {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 5px;
+    transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+}
+
+.ani:hover,
+.ani:focus {
+    text-decoration: none;
+    background-size: 100% 3px;
+    transform: translateY(-1px);
+}
+
+div > a.ani:hover {
+    text-decoration: none;
+    background-size: 100% 3px;
+    transform: translateY(-1px);
 }

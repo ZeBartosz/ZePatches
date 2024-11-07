@@ -44,15 +44,19 @@ function DropDown({}) {
                         ""
                     )}
                     <div
-                        className={`absolute bg-gray-400 top-3 right-3 -z-10 pl-2 pb-2 ${
+                        className={`absolute bg-gray-400 bg-opacity-80 top-3 right-3 -z-10 pl-2 pb-2 ${
                             active ? "active" : "hidden"
                         }`}
                     >
-                        <p className="justify-items-center text-white mx-2 py-3 pr-11 border-b border-[#66c0f4]">
+                        <p className="text-white mx-2 py-3 pr-11 border-b border-[#66c0f4]">
                             {authUser.nickname}
                         </p>
                         {authUser.is_admin ? (
-                            <Link className="" href="/admin/dashboard">
+                            // TODO Link does change y axis's when hovered over
+                            <Link
+                                className="ani no-underline text-black hover:text-black"
+                                href="/admin/dashboard"
+                            >
                                 Admin
                             </Link>
                         ) : (
@@ -68,11 +72,14 @@ function DropDown({}) {
                             ) : (
                                 ""
                             )}
-                            <button onClick={() => setPressed(true)}>
+                            <button
+                                className="ani"
+                                onClick={() => setPressed(true)}
+                            >
                                 Notifications
                             </button>
                             <form onSubmit={logout}>
-                                <button className="" type="submit">
+                                <button className="ani" type="submit">
                                     {logoutprocessing
                                         ? "Logging out..."
                                         : "logout"}
@@ -139,7 +146,7 @@ function DropDown({}) {
                                     </div>
                                 )}
                                 <Link
-                                    className="p-0 m-0"
+                                    className="ani p-0 m-0"
                                     href={`game/${notification.appId}`}
                                 >
                                     View Update
@@ -147,7 +154,7 @@ function DropDown({}) {
                             </div>
                         ))}
                         <div className="flex justify-end">
-                            <button className="p-0 m-0 pr-4 pb-3">
+                            <button className="ani p-0 m-0 mr-4 mb-2">
                                 Clear Notification
                             </button>
                         </div>
