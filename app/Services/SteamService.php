@@ -150,10 +150,4 @@ class SteamService
     {
         return Steam::where('appId', $appId)->first();
     }
-
-    //
-    public function getNotifications()
-    {
-        return Auth::user()->notifications;
-    }
 }
