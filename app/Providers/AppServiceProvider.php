@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share('notifications', function () {
             $cacheKey = 'user.' . Auth::id() . '.notifications';
             return Cache::remember($cacheKey, 5, function () {
-                return Auth::user()->notifications;
+                return Auth::user()->notifications ?? [];
             });
         });
 
