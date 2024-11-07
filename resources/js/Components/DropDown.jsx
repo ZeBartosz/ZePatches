@@ -94,7 +94,7 @@ function DropDown({}) {
 
             {/* DropDown */}
             <div
-                onMouseLeave={() => setPressed(false)}
+                // onMouseLeave={() => setPressed(false)}
                 className={`fixed z-50 w-4/5 top-5 -m-4 bg-black text-white bg-opacity-100 left-1/2 transform -translate-x-1/2 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
                     pressed ? "active" : "hidden"
                 }`}
@@ -108,17 +108,20 @@ function DropDown({}) {
                         {notifications.map((notification) => (
                             <div
                                 key={notification.id}
-                                className={`p-1 flex justify-between m-3 border-b  ${
+                                className={`p-1 flex justify-between items-center m-3 border-b  ${
                                     pressed ? "active" : "hidden"
                                 }`}
                             >
-                                <h2>{notification.game}</h2>
-                                <p className="pt-4 pr-0 m-0">
-                                    AppId {notification.appId}
-                                </p>
+                                <div>
+                                    <h2 className="p-0">{notification.game}</h2>
+
+                                    <p className="p-0  m-0">
+                                        AppId {notification.appId}
+                                    </p>
+                                </div>
                                 {notification.eventName ? (
                                     <div className="">
-                                        <p className="pt-4 px-0 pb-0 m-0">
+                                        <p className=" p-0 pb-0 m-0">
                                             {notification.eventName}
                                         </p>
                                         <p className="p-0 m-0">
@@ -127,7 +130,7 @@ function DropDown({}) {
                                     </div>
                                 ) : (
                                     <div className="">
-                                        <p className="pt-4 px-0 pb-0 m-0">
+                                        <p className=" p-0 pb-0 m-0">
                                             {notification.patchName}
                                         </p>
                                         <p className="p-0 m-0">
@@ -136,7 +139,7 @@ function DropDown({}) {
                                     </div>
                                 )}
                                 <Link
-                                    className="pt-4 m-0"
+                                    className="p-0 m-0"
                                     href={`game/${notification.appId}`}
                                 >
                                     View Update
