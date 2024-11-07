@@ -44,7 +44,7 @@ function DropDown({}) {
                         ""
                     )}
                     <div
-                        className={`absolute bg-gray-400 top-3 right-3 -z-10 ${
+                        className={`absolute bg-gray-400 top-3 right-3 -z-10 pl-2 pb-2 ${
                             active ? "active" : "hidden"
                         }`}
                     >
@@ -92,11 +92,16 @@ function DropDown({}) {
                 </div>
             )}
 
+            {/* DropDown */}
             <div
-                className={`fixed z-50 w-4/5 top-5 bg-black text-white bg-opacity-100 left-1/2 transform -translate-x-1/2 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
+                className={`fixed z-50 w-4/5 top-5 -m-4 bg-black text-white bg-opacity-100 left-1/2 transform -translate-x-1/2 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
                     pressed ? "active" : "hidden"
                 }`}
             >
+                <div
+                    onMouseLeave={() => setPressed(false)}
+                    className="absolute inset-0 -m-5 "
+                />
                 <h1 className="m-1 p-1 border-[#66c0f4]">
                     You currently have {notifications.length} notifications
                 </h1>
@@ -141,7 +146,11 @@ function DropDown({}) {
                                 </Link>
                             </div>
                         ))}
-                        <div></div>
+                        <div className="flex justify-end">
+                            <button className="p-0 m-0 pr-4 pb-3">
+                                Clear Notification
+                            </button>
+                        </div>
                     </>
                 ) : (
                     <div>
