@@ -35,7 +35,7 @@ export default function Home({
                     <div className="tab flex justify-center border-[#66c0f4] mb-2 text-blue-900">
                         <p className="p-0 pr-1 text-white">Order by:</p>
                         <button
-                            className={`tablinks px-1 border-r ${
+                            className={`ani tablinks px-1 border-r ${
                                 activeTab === "NameOrder" ? "text-blue-600" : ""
                             }`}
                             onClick={() => setActiveTab("NameOrder")}
@@ -43,7 +43,7 @@ export default function Home({
                             Name
                         </button>
                         <button
-                            className={`px-1 border-r tablinks ${
+                            className={`ani px-1 border-r tablinks ${
                                 activeTab === "EventOrder"
                                     ? "text-blue-600"
                                     : ""
@@ -53,7 +53,7 @@ export default function Home({
                             Latest Event
                         </button>
                         <button
-                            className={`px-1 tablinks ${
+                            className={`ani px-1 tablinks ${
                                 activeTab === "PatchOrder"
                                     ? "text-blue-600"
                                     : ""
