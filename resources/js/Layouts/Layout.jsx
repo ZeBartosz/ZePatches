@@ -2,17 +2,13 @@ import { Link, useForm, usePage } from "@inertiajs/react";
 import FlashCard from "../Components/FlashCard";
 import searchIcon from "../../Assets/search.svg";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import DropDown from "../Components/DropDown";
 
 export default function Layout({ children }) {
     const [message, setMessage] = useState("");
-    const [active, setActive] = useState(false);
     const { data, setData, get, processing } = useForm({ search: "" });
-    const { post, logoutprocessing } = useForm({});
     const { flash } = usePage().props;
-    const { authUser } = usePage().props;
 
-    console.log(active);
     useEffect(() => {
         setMessage(flash.message);
     }, [flash.message]);
@@ -22,11 +18,6 @@ export default function Layout({ children }) {
         const query = data.search ? `?query=${data.search}` : "";
         get(`/${query}`);
         setData("search", "");
-    }
-
-    function logout(e) {
-        e.preventDefault();
-        post("/logout");
     }
 
     return (
@@ -72,57 +63,7 @@ export default function Layout({ children }) {
                         </form>
                     </div>
 
-                    {authUser ? (
-                        <div
-                            className="relative z-10"
-                            onMouseLeave={() => setActive(false)}
-                        >
-                            <button
-                                className=""
-                                onClick={() => setActive(active ? false : true)}
-                            >
-                                <img
-                                    className="w-12 h-12 mt-1 rounded-3xl border border-[#2a475e]"
-                                    src={authUser.avatar}
-                                    alt="User's Avatar"
-                                />
-                            </button>
-                            <div
-                                className={`absolute bg-gray-400 top-3 right-3 -z-10 ${
-                                    active ? "active" : "hidden"
-                                }`}
-                            >
-                                <p className="justify-items-center text-white mx-2 py-3 pr-11 border-b border-[#66c0f4]">
-                                    {authUser.nickname}
-                                </p>
-                                {authUser.is_admin ? (
-                                    <Link className="" href="/admin/dashboard">
-                                        Admin
-                                    </Link>
-                                ) : (
-                                    ""
-                                )}
-                                <form onSubmit={logout}>
-                                    <button className="" type="submit">
-                                        {logoutprocessing
-                                            ? "Logging out..."
-                                            : "logout"}
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex-none">
-                            <button
-                                className="nav-link m-1"
-                                onClick={() =>
-                                    (window.location.href = "/auth/steam")
-                                }
-                            >
-                                Login
-                            </button>
-                        </div>
-                    )}
+                    <DropDown />
                 </nav>
             </header>
 
