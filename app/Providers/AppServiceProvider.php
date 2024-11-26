@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Inertia\Inertia;
@@ -33,7 +34,10 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share('notifications', function () {
             $cacheKey = 'user.' . Auth::id() . '.notifications';
             return Cache::remember($cacheKey, 5, function () {
-                return Auth::user()->notifications ?? [];
+                return Auth::user()->notifications()
+                    ->orderBy(DB::raw('GREATEST(COALESCE(patchNotesDate, "1970-01-01 00:00:00"), COALESCE(eventPatchesDate, "1970-01-01 00:00:00"))'), 'DESC')
+                    ->get()
+                    ?? [];
             });
         });
 
