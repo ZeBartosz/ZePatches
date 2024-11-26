@@ -32,12 +32,15 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Inertia::share('notifications', function () {
+            if (!Auth::user()) {
+                return [];
+            }
+
             $cacheKey = 'user.' . Auth::id() . '.notifications';
             return Cache::remember($cacheKey, 5, function () {
                 return Auth::user()->notifications()
                     ->orderBy(DB::raw('GREATEST(COALESCE(patchNotesDate, "1970-01-01 00:00:00"), COALESCE(eventPatchesDate, "1970-01-01 00:00:00"))'), 'DESC')
-                    ->get()
-                    ?? [];
+                    ->get();
             });
         });
 
