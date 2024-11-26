@@ -115,44 +115,55 @@ function DropDown({}) {
                         {notifications.map((notification) => (
                             <div
                                 key={notification.id}
-                                className={`p-1 flex justify-between items-center m-3 border-b  ${
+                                className={`grid grid-cols-12 items-center p-3 m-3 border-b ${
                                     pressed ? "active" : "hidden"
                                 }`}
                             >
-                                <div>
-                                    <h2 className="p-0">{notification.game}</h2>
-
-                                    <p className="p-0  m-0">
+                                {/* Game Name */}
+                                <div className="col-span-4">
+                                    <h2 className="font-bold truncate p-0 m-0">
+                                        {notification.game}
+                                    </h2>
+                                    <p className="text-sm text-gray-600 p-0 m-0">
                                         AppId {notification.appId}
                                     </p>
                                 </div>
-                                {notification.eventName ? (
-                                    <div className="">
-                                        <p className=" p-0 pb-0 m-0">
-                                            {notification.eventName}
-                                        </p>
-                                        <p className="p-0 m-0">
-                                            {notification.eventPatchesDate}
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <div className="">
-                                        <p className=" p-0 pb-0 m-0">
-                                            {notification.patchName}
-                                        </p>
-                                        <p className="p-0 m-0">
-                                            {notification.patchNotesDate}
-                                        </p>
-                                    </div>
-                                )}
-                                <Link
-                                    className="ani p-0 m-0"
-                                    href={`game/${notification.appId}`}
-                                >
-                                    View Update
-                                </Link>
+
+                                {/* Event or Patch Info */}
+                                <div className="col-span-5 text-center">
+                                    {notification.eventName ? (
+                                        <>
+                                            <p className="text-sm font-medium p-0 m-0">
+                                                {notification.eventName}
+                                            </p>
+                                            <p className="text-sm text-gray-600 p-0 m-0">
+                                                {notification.eventPatchesDate}
+                                            </p>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="text-sm font-medium p-0 m-0">
+                                                {notification.patchName}
+                                            </p>
+                                            <p className="text-sm text-gray-600 p-0 m-0">
+                                                {notification.patchNotesDate}
+                                            </p>
+                                        </>
+                                    )}
+                                </div>
+
+                                {/* Link */}
+                                <div className="col-span-3 text-right">
+                                    <Link
+                                        className="text-blue-500 hover:underline text-sm p-0 m-0"
+                                        href={`game/${notification.appId}`}
+                                    >
+                                        View Update
+                                    </Link>
+                                </div>
                             </div>
                         ))}
+
                         <div className="flex justify-end">
                             <button className="ani p-0 m-0 mr-4 mb-2">
                                 Clear Notification
