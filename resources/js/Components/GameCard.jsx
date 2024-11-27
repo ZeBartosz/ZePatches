@@ -65,7 +65,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                             }}
                         >
                             <div
-                                className="absolute border-2 border-[#66c0f4] inset-0 bg-cover bg-center filter blur-[2px] rounded-lg cursor-pointer"
+                                className="absolute inset-0 bg-center filter blur-[2px] rounded-lg cursor-pointer border-2 drop-shadow-md"
                                 style={{
                                     backgroundImage: `url(${game.banner})`,
                                     zIndex: 0,
@@ -99,7 +99,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                                 )}
                             </div>
                         </div>
-                        <div className="absolute top-[32px] right-[10px] ">
+                        <div className="absolute top-[35%] right-[10px] ">
                             <form onSubmit={(e) => addToFavorite(e, game.id)}>
                                 <button className="" type="submit">
                                     {game.is_favorite ? (
