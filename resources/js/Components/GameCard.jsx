@@ -80,12 +80,23 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                                 <p className="p-0 text-sm pb-3">
                                     Type: {game.type}
                                 </p>
-                                <p className="p-0 text-sm pb-3">
-                                    Latest event {game.eventPatchesDate}
-                                </p>
-                                <p className="p-0 text-sm pb-3">
-                                    Latest Patch {game.patchNotesDate}
-                                </p>
+
+                                {activeTab === "EventOrder" && (
+                                    <>
+                                        <p className="p-0 text-sm pb-3">
+                                            Latest Event:{" "}
+                                            {game.eventPatchesDate}
+                                        </p>
+                                    </>
+                                )}
+
+                                {activeTab === "PatchOrder" && (
+                                    <>
+                                        <p className="p-0 text-sm pb-3">
+                                            Latest Patch: {game.patchNotesDate}
+                                        </p>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className="absolute top-[32px] right-[10px] ">
