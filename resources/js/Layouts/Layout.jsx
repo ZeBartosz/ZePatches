@@ -3,6 +3,7 @@ import FlashCard from "../Components/FlashCard";
 import searchIcon from "../../Assets/search.svg";
 import { useEffect, useState } from "react";
 import DropDown from "../Components/DropDown";
+import background from "../../Assets/dark-motion-background.mp4";
 
 export default function Layout({ children }) {
     const [message, setMessage] = useState("");
