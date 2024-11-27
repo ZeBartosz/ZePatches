@@ -32,10 +32,10 @@ class FavoriteController extends Controller
 
             $this->favoriteService->updateGamePatchDate($steam);
 
-            return back()->with('message', 'The ' . $steam->name . ' was added to your favorite list');
+            return back()->with('message', $steam->name . ' was added to your favorite list');
         } else {
             $favorite->delete();
-            return back()->with('message', 'The ' . $steam->name . ' was removed from your favorite list');
+            return back()->with('message', $steam->name . ' was removed from your favorite list');
         }
     }
 
