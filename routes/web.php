@@ -1,15 +1,22 @@
 <?php
 
+use App\Events\BroadCastNotification;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\Auth\SteamAuthController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SteamController;
 use App\Models\Favorite;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [SteamController::class, 'index']);
+
+Route::get('/broadcast', function () {
+    broadcast(new BroadCastNotification(User::find(1)));
+});
 
 Route::get('/game/{steam}', [SteamController::class, 'show']);
 

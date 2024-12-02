@@ -9,6 +9,7 @@ export default function Layout({ children }) {
     const [message, setMessage] = useState("");
     const { data, setData, get, processing } = useForm({ search: "" });
     const { flash } = usePage().props;
+    const { authUser } = usePage().props;
 
     useEffect(() => {
         setMessage(flash.message);
@@ -20,6 +21,15 @@ export default function Layout({ children }) {
         get(`/${query}`);
         setData("search", "");
     }
+
+    useEffect(() => {
+        Echo.private(`Notify.User.${authUser.id}`).listen(
+            "BroadCastNotification",
+            (data) => {
+                console.log("Notification received:", data);
+            }
+        );
+    }, []);
 
     return (
         <>
