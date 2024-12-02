@@ -2,6 +2,7 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    \SocialiteProviders\Manager\ServiceProvider::class,
+    App\Providers\BroadcastServiceProvider::class,
     Barryvdh\Debugbar\ServiceProvider::class,
+    SocialiteProviders\Manager\ServiceProvider::class,
 ];
