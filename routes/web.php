@@ -14,10 +14,6 @@ use Inertia\Inertia;
 
 Route::get('/', [SteamController::class, 'index']);
 
-Route::get('/broadcast', function () {
-    broadcast(new BroadCastNotification(User::find(1)));
-});
-
 Route::get('/game/{steam}', [SteamController::class, 'show']);
 
 Route::get('/favorites/{user}/{steam}', [FavoriteController::class, 'isFavorited']);
@@ -33,3 +29,9 @@ Route::post('/fetchGames', [AdminController::class, 'FetchGamesFromAPI']);
 Route::post('/logout', [SteamAuthController::class, 'logout']);
 Route::get('/auth/steam', [SteamAuthController::class, 'redirectToSteam']);
 Route::get('/auth/steam/callback', [SteamAuthController::class, 'handleSteamCallback']);
+
+
+// Testing broadcast
+// Route::get('/broadcast', function () {
+//     broadcast(new BroadCastNotification(User::find(1), "This game has a new patch"));
+// });
