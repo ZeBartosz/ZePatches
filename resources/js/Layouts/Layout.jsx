@@ -15,21 +15,21 @@ export default function Layout({ children }) {
         setMessage(flash.message);
     }, [flash.message]);
 
+    useEffect(() => {
+        Echo.private(`Notify.User.${authUser.id}`).listen(
+            "BroadCastNotification",
+            (data) => {
+                setMessage(data.message);
+            }
+        );
+    }, []);
+
     function searchSubmit(e) {
         e.preventDefault();
         const query = data.search ? `?query=${data.search}` : "";
         get(`/${query}`);
         setData("search", "");
     }
-
-    useEffect(() => {
-        Echo.private(`Notify.User.${authUser.id}`).listen(
-            "BroadCastNotification",
-            (data) => {
-                console.log("Notification received:", data);
-            }
-        );
-    }, []);
 
     return (
         <>
