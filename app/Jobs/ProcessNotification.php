@@ -2,9 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Events\BroadCastNotification;
 use App\Models\Favorite;
 use App\Models\Notification;
 use App\Models\Steam;
+use App\Models\User;
 use App\Services\SteamService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -56,6 +58,10 @@ class ProcessNotification implements ShouldQueue
                     foreach ($userIds as $userId) {
                         Cache::forget('user.' . $userId . '.notifications');
 
+                        $message = $game->name . "has a new Event: " . $eventName;
+
+                        broadcast(new BroadCastNotification(User::find($userId), $message));
+
                         Notification::create([
                             'user_id' => $userId,
                             'steam_id' => $game->id,
@@ -82,6 +88,10 @@ class ProcessNotification implements ShouldQueue
 
                     foreach ($userIds as $userId) {
                         Cache::forget('user.' . $userId . '.notifications');
+
+                        $message = $game->name . "has a new Patch: " . $patchName;
+
+                        broadcast(new BroadCastNotification(User::find($userId), $message));
 
                         Notification::create([
                             'user_id' => $userId,
