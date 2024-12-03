@@ -21,7 +21,7 @@ class BroadCastNotification implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(protected User $user)
+    public function __construct(protected User $user, protected string $message)
     {
         //
     }
@@ -30,10 +30,7 @@ class BroadCastNotification implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'user' => [
-                'id' => $this->user->id,
-                'name' => $this->user->nickname,
-            ]
+            'message' => $this->message,
         ];
     }
 
@@ -45,7 +42,7 @@ class BroadCastNotification implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('chat'),
+            new PrivateChannel('Notify.User.' . $this->user->id),
         ];
     }
 }
