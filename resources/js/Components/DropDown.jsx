@@ -102,7 +102,7 @@ function DropDown({}) {
             {/* DropDown */}
             <div
                 onMouseLeave={() => setPressed(false)}
-                className={`fixed z-50 w-4/5 lg:w-4/6 top-5 left-1/2 transform -translate-x-1/2 bg-black text-white bg-blur bg-opacity-80 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
+                className={`fixed z-50 w-4/5 lg:w-4/6 top-5 left-1/2 transform -translate-x-1/2 bg-black text-white bg-blur bg-opacity-50 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
                     pressed ? "active" : "hidden"
                 }`}
             >
@@ -115,7 +115,7 @@ function DropDown({}) {
                         {notifications.map((notification) => (
                             <div
                                 key={notification.id}
-                                className={`grid grid-cols-12 items-center p-3 m-3 border-b ${
+                                className={`grid grid-cols-12 items-center px-3 pb-3  m-3 border-b ${
                                     pressed ? "active" : "hidden"
                                 }`}
                             >
