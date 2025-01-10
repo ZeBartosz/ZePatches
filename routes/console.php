@@ -7,4 +7,4 @@ use Illuminate\Support\Facades\Schedule;
 //    $this->comment(Inspiring::quote());
 //})->purpose('Display an inspiring quote')->hourly();
 
-Schedule::call(new ProcessNotification())->hourly();
+Schedule::job(new ProcessNotification())->hourly();
