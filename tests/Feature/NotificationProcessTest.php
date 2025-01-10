@@ -1,14 +1,13 @@
 <?php
 
-use App\Models\Steam;
-use App\Models\Favorite;
-use App\Models\Notification;
-use App\Models\User;
 use App\Jobs\ProcessNotification;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use App\Models\Favorite;
+use App\Models\Steam;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Tests\TestCase;
 
 class NotificationProcessTest extends TestCase
 {
@@ -16,13 +15,13 @@ class NotificationProcessTest extends TestCase
 
     public function testNotificationProcessJobNotifiesMultipleUsers()
     {
-        // Arrange: Use a fixed current time for consistency
+        // Arrange: Mock the current time
         $currentTime = Carbon::now();
         Carbon::setTestNow($currentTime);
 
-        // Mock HTTP responses for the event and patch URLs
+        // Mock HTTP responses
         Http::fake([
-            'store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=12345&count_before=0&count_after=100&event_type_filter=14' => Http::response([
+            'https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=12345&count_before=0&count_after=100&event_type_filter=14' => Http::response([
                 'events' => [
                     [
                         'announcement_body' => [
@@ -32,7 +31,7 @@ class NotificationProcessTest extends TestCase
                     ]
                 ]
             ], 200),
-            'store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=12345&count_before=0&count_after=100&event_type_filter=13' => Http::response([
+            'https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=12345&count_before=0&count_after=100&event_type_filter=13' => Http::response([
                 'events' => [
                     [
                         'announcement_body' => [
@@ -44,29 +43,24 @@ class NotificationProcessTest extends TestCase
             ], 200),
         ]);
 
-        // Create the Steam game and multiple users who have favorited it
+        // Create game and users
         $steamGame = Steam::factory()->create(['appId' => 12345]);
-        $user1 = User::factory()->create();
-        $user2 = User::factory()->create();
-        $user3 = User::factory()->create();
+        $users = User::factory(3)->create();
+        foreach ($users as $user) {
+            Favorite::create(['user_id' => $user->id, 'steam_id' => $steamGame->id]);
+        }
 
-        // Add the game to each user's favorites
-        Favorite::create(['user_id' => $user1->id, 'steam_id' => $steamGame->id]);
-        Favorite::create(['user_id' => $user2->id, 'steam_id' => $steamGame->id]);
-        Favorite::create(['user_id' => $user3->id, 'steam_id' => $steamGame->id]);
+        // Act: Dispatch the job
+        ProcessNotification::dispatch();
 
-        // Act: Dispatch the job immediately for testing
-        ProcessNotification::dispatch([$steamGame]);
-
-        // Assert: Check that each user has received a notification for the new event and patch
-        foreach ([$user1, $user2, $user3] as $user) {
+        // Assert: Notifications are created for each user
+        foreach ($users as $user) {
             $this->assertDatabaseHas('notifications', [
                 'user_id' => $user->id,
                 'steam_id' => $steamGame->id,
-                'EventName' => 'New Event Released!',
+                'eventName' => 'New Event Released!',
                 'eventPatchesDate' => $currentTime->toDateTimeString(),
             ]);
-
             $this->assertDatabaseHas('notifications', [
                 'user_id' => $user->id,
                 'steam_id' => $steamGame->id,
@@ -75,8 +69,128 @@ class NotificationProcessTest extends TestCase
             ]);
         }
 
-        // Verify that the event date and patch date were updated on the Steam model
-        $this->assertEquals($currentTime->toDateTimeString(), $steamGame->fresh()->eventPatchesDate);
-        $this->assertEquals($currentTime->toDateTimeString(), $steamGame->fresh()->patchNotesDate);
+        // Assert: Steam model dates are updated
+        $steamGame->refresh();
+        $this->assertEquals($currentTime->toDateTimeString(), $steamGame->eventPatchesDate);
+        $this->assertEquals($currentTime->toDateTimeString(), $steamGame->patchNotesDate);
+    }
+
+    public function testNotificationProcessJobNotifiesMultipleUsersForMultipleGames()
+    {
+        // Arrange: Mock the current time
+        $currentTime = Carbon::now();
+        Carbon::setTestNow($currentTime);
+
+        // Mock HTTP responses for multiple games
+        Http::fake([
+            'https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=12345&count_before=0&count_after=100&event_type_filter=14' => Http::response([
+                'events' => [
+                    [
+                        'announcement_body' => [
+                            'posttime' => $currentTime->timestamp,
+                            'headline' => 'New Event for Game 1 Released!',
+                        ]
+                    ]
+                ]
+            ], 200),
+            'https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=67890&count_before=0&count_after=100&event_type_filter=14' => Http::response([
+                'events' => [
+                    [
+                        'announcement_body' => [
+                            'posttime' => $currentTime->timestamp,
+                            'headline' => 'New Event for Game 2 Released!',
+                        ]
+                    ]
+                ]
+            ], 200),
+            'https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=12345&count_before=0&count_after=100&event_type_filter=13' => Http::response([
+                'events' => [
+                    [
+                        'announcement_body' => [
+                            'posttime' => $currentTime->timestamp,
+                            'headline' => 'New Patch for Game 1 Released!',
+                        ]
+                    ]
+                ]
+            ], 200),
+            'https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=67890&count_before=0&count_after=100&event_type_filter=13' => Http::response([
+                'events' => [
+                    [
+                        'announcement_body' => [
+                            'posttime' => $currentTime->timestamp,
+                            'headline' => 'New Patch for Game 2 Released!',
+                        ]
+                    ]
+                ]
+            ], 200),
+        ]);
+
+        // Create multiple games
+        $game1 = Steam::factory()->create(['appId' => 12345]);
+        $game2 = Steam::factory()->create(['appId' => 67890]);
+
+        // Create users and assign favorites (some will not favorite certain games)
+        $users = User::factory(3)->create();
+        Favorite::create(['user_id' => $users[0]->id, 'steam_id' => $game1->id]); // User 1 favorites Game 1
+        Favorite::create(['user_id' => $users[1]->id, 'steam_id' => $game2->id]); // User 2 favorites Game 2
+        // User 3 doesn't favorite any game
+
+        // Act: Dispatch the job to process notifications for multiple games
+        ProcessNotification::dispatch();
+
+        // Assert: Notifications for Game 1 are created for User 1
+        $this->assertDatabaseHas('notifications', [
+            'user_id' => $users[0]->id,
+            'steam_id' => $game1->id,
+            'eventName' => 'New Event for Game 1 Released!',
+            'eventPatchesDate' => $currentTime->toDateTimeString(),
+        ]);
+        $this->assertDatabaseHas('notifications', [
+            'user_id' => $users[0]->id,
+            'steam_id' => $game1->id,
+            'patchName' => 'New Patch for Game 1 Released!',
+            'patchNotesDate' => $currentTime->toDateTimeString(),
+        ]);
+
+        // Assert: Notifications for Game 2 are created for User 2
+        $this->assertDatabaseHas('notifications', [
+            'user_id' => $users[1]->id,
+            'steam_id' => $game2->id,
+            'eventName' => 'New Event for Game 2 Released!',
+            'eventPatchesDate' => $currentTime->toDateTimeString(),
+        ]);
+        $this->assertDatabaseHas('notifications', [
+            'user_id' => $users[1]->id,
+            'steam_id' => $game2->id,
+            'patchName' => 'New Patch for Game 2 Released!',
+            'patchNotesDate' => $currentTime->toDateTimeString(),
+        ]);
+
+        $this->assertDatabaseMissing('notifications', [
+            'user_id' => $users[2]->id,
+            'steam_id' => $game2->id,
+            'patchName' => 'New Patch for Game 2 Released!',
+            'patchNotesDate' => $currentTime->toDateTimeString(),
+        ]);
+
+        $this->assertDatabaseMissing('notifications', [
+            'user_id' => $users[2]->id,
+            'steam_id' => $game2->id,
+            'patchName' => 'New Event for Game 2 Released!',
+            'patchNotesDate' => $currentTime->toDateTimeString(),
+        ]);
+
+        $this->assertDatabaseMissing('favorites', [
+            'user_id' => $users[2]->id,
+            'steam_id' => $game2->id,
+        ]);
+
+        // Assert: Steam model dates are updated
+        $game1->refresh();
+        $game2->refresh();
+        $this->assertEquals($currentTime->toDateTimeString(), $game1->eventPatchesDate);
+        $this->assertEquals($currentTime->toDateTimeString(), $game1->patchNotesDate);
+        $this->assertEquals($currentTime->toDateTimeString(), $game2->eventPatchesDate);
+        $this->assertEquals($currentTime->toDateTimeString(), $game2->patchNotesDate);
     }
 }
