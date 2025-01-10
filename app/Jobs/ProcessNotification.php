@@ -18,6 +18,11 @@ class ProcessNotification implements ShouldQueue
 
     use Queueable;
 
+    public function __construct()
+    {
+        //
+    }
+
     public function handle(): void
     {
 
