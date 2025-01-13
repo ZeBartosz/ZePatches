@@ -45,19 +45,14 @@ function DropDown({}) {
                             alt="User's Avatar"
                         />
                     </button>
-                    {notifications.length > 0 ? (
-                        <div
-                            className={`absolute -right-1 top-0 z-10 ${
-                                active ? "hidden" : "active"
-                            }`}
-                        >
-                            <p className="m-0 rounded-full border border-[#2a475e] bg-red-500 px-2 py-0">
-                                {notifications.length}
-                            </p>
-                        </div>
-                    ) : (
-                        ""
-                    )}
+                    {notifications.some(
+                        (notification) => !notification.checked,
+                    ) &&
+                        !active && (
+                            <div className="absolute -right-1 top-1 z-10">
+                                <div className="h-4 w-4 rounded-full border border-[#2a475e] bg-red-500"></div>
+                            </div>
+                        )}
                     <div
                         className={`absolute right-3 top-3 -z-10 bg-gray-400 bg-opacity-80 pb-2 pl-2 ${
                             active ? "active" : "hidden"
@@ -77,16 +72,14 @@ function DropDown({}) {
                             ""
                         )}
                         <div className="relative">
-                            {notifications.length > 0 ? (
-                                <div className="absolute -top-2 right-4">
-                                    <p className="m-0 rounded-full border border-[#66c0f4] bg-red-500 px-2 py-0">
-                                        {notifications.length}
-                                    </p>
-                                </div>
-                            ) : (
-                                ""
-                            )}
-                            {/*// TODO add post to update notifications to checked.*/}
+                            {notifications.some(
+                                (notification) => !notification.checked,
+                            ) &&
+                                active && (
+                                    <div className="absolute -top-1 right-5">
+                                        <div className="h-4 w-4 rounded-full border border-[#2a475e] bg-red-500"></div>
+                                    </div>
+                                )}
                             <button
                                 className="ani"
                                 onClick={() => {
