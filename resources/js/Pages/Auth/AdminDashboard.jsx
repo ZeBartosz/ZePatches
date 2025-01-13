@@ -13,8 +13,6 @@ export default function AdminDashboard({
         post("/fetchGames");
     };
 
-    console.log(topFavorite);
-
     return (
         <>
             <h1>welcome to the admin page {authUser.name}</h1>
@@ -56,7 +54,7 @@ export default function AdminDashboard({
                     ))}
                 </table>
 
-                <table className="table-fixed border-collapse mt-1">
+                <table className="mt-1 table-fixed border-collapse">
                     <tr>
                         <th className="border border-slate-600">Name</th>
                         <th className="border border-slate-600">AppId</th>
