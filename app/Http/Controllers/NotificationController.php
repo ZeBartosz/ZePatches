@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreNotificationRequest;
-use App\Http\Requests\UpdateNotificationRequest;
+use Illuminate\Http\Request;
+
 
 class NotificationController extends Controller
 {
-    //  
+    public function updateChecked(Request $request)
+    {
+        $validated = $request->validate([
+            'notificationId' => 'required|array',
+        ]);
+
+        Notification::whereIn('id', $validated['notificationId'])->update(['checked' => true]);
+
+    }
+
 }

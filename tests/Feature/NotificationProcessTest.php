@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature;
+
 use App\Jobs\ProcessNotification;
 use App\Models\Favorite;
 use App\Models\Steam;
