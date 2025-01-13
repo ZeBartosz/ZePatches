@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Jobs\ProcessSteam;
-use App\Models\Favorite;
+use App\Models\Admin;
 use App\Models\Steam;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Syntax\SteamApi\Facades\SteamApi;
 
 class AdminController extends Controller
@@ -26,12 +24,12 @@ class AdminController extends Controller
         $users = User::withCount(['favorites'])->get();
 
 
-        return inertia('Auth/AdminDashboard', ['gameCount' => $totalGameCount, 'users' => $users, 'topFavorite' => $topFavorites]);
+        return inertia('Auth/AdminDashboard',
+            ['gameCount' => $totalGameCount, 'users' => $users, 'topFavorite' => $topFavorites]);
     }
 
     public function FetchGamesFromAPI()
     {
-
         collect(SteamApi::app()->GetAppList())
             ->chunk(5000)->each(function ($games) {
                 ProcessSteam::dispatch($games);
