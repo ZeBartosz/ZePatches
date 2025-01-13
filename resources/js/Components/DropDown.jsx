@@ -1,5 +1,6 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import axios from "axios";
 
 function DropDown({}) {
     const [active, setActive] = useState(false);
@@ -13,6 +14,23 @@ function DropDown({}) {
         post("/logout");
     }
 
+    const updateNotification = async () => {
+        const notificationsToUpdate = notifications
+            .filter((notification) => notification.checked === 0)
+            .map((notification) => notification.id);
+
+        if (notificationsToUpdate.length > 0) {
+            try {
+                await axios.put("/notifications/updateChecked", {
+                    notificationId: notificationsToUpdate,
+                });
+                console.log("Notifications updated successfully");
+            } catch (error) {
+                console.error("Error updating notifications:", error);
+            }
+        }
+    };
+
     return (
         <>
             {authUser ? (
@@ -20,23 +38,20 @@ function DropDown({}) {
                     className="relative z-10"
                     onMouseLeave={() => setActive(false)}
                 >
-                    <button
-                        className=""
-                        onClick={() => setActive(active ? false : true)}
-                    >
+                    <button className="" onClick={() => setActive(!active)}>
                         <img
-                            className="w-12 h-12 mt-1 rounded-3xl border border-[#2a475e]"
+                            className="mt-1 h-12 w-12 rounded-3xl border border-[#2a475e]"
                             src={authUser.avatar}
                             alt="User's Avatar"
                         />
                     </button>
                     {notifications.length > 0 ? (
                         <div
-                            className={`absolute top-0 -right-1 z-10 ${
+                            className={`absolute -right-1 top-0 z-10 ${
                                 active ? "hidden" : "active"
                             }`}
                         >
-                            <p className="py-0 px-2 m-0 border rounded-full border-[#2a475e] bg-red-500">
+                            <p className="m-0 rounded-full border border-[#2a475e] bg-red-500 px-2 py-0">
                                 {notifications.length}
                             </p>
                         </div>
@@ -44,17 +59,16 @@ function DropDown({}) {
                         ""
                     )}
                     <div
-                        className={`absolute bg-gray-400 bg-opacity-80 top-3 right-3 -z-10 pl-2 pb-2 ${
+                        className={`absolute right-3 top-3 -z-10 bg-gray-400 bg-opacity-80 pb-2 pl-2 ${
                             active ? "active" : "hidden"
                         }`}
                     >
-                        <p className="text-white mx-2 py-3 pr-11 border-b border-[#66c0f4]">
+                        <p className="mx-2 border-b border-[#66c0f4] py-3 pr-11 text-white">
                             {authUser.nickname}
                         </p>
                         {authUser.is_admin ? (
-                            // TODO Link does change y axis's when hovered over
                             <Link
-                                className="ani no-underline text-black hover:text-black"
+                                className="ani text-black no-underline hover:text-black"
                                 href="/admin/dashboard"
                             >
                                 Admin
@@ -65,16 +79,19 @@ function DropDown({}) {
                         <div className="relative">
                             {notifications.length > 0 ? (
                                 <div className="absolute -top-2 right-4">
-                                    <p className="py-0 px-2 m-0 border rounded-full border-[#66c0f4] bg-red-500">
+                                    <p className="m-0 rounded-full border border-[#66c0f4] bg-red-500 px-2 py-0">
                                         {notifications.length}
                                     </p>
                                 </div>
                             ) : (
                                 ""
                             )}
+                            {/*// TODO add post to update notifications to checked.*/}
                             <button
                                 className="ani"
-                                onClick={() => setPressed(true)}
+                                onClick={() => {
+                                    updateNotification(), setPressed(true);
+                                }}
                             >
                                 Notifications
                             </button>
@@ -99,14 +116,14 @@ function DropDown({}) {
                 </div>
             )}
 
-            {/* DropDown */}
+            {/* Notification */}
             <div
                 onMouseLeave={() => setPressed(false)}
-                className={`fixed z-50 w-4/5 lg:w-4/6 top-5 left-1/2 transform -translate-x-1/2 bg-black text-white bg-blur bg-opacity-50 rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] ${
+                className={`bg-blur fixed left-1/2 top-5 z-50 w-4/5 -translate-x-1/2 transform rounded-md bg-black bg-opacity-50 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] lg:w-4/6 ${
                     pressed ? "active" : "hidden"
                 }`}
             >
-                <h1 className="m-1 p-1 border-[#66c0f4]">
+                <h1 className="m-1 border-[#66c0f4] p-1">
                     You currently have {notifications.length} notifications
                 </h1>
 
@@ -115,16 +132,16 @@ function DropDown({}) {
                         {notifications.map((notification) => (
                             <div
                                 key={notification.id}
-                                className={`grid grid-cols-12 items-center px-3 pb-3  m-3 border-b ${
+                                className={`m-3 grid grid-cols-12 items-center border-b px-3 pb-3 ${
                                     pressed ? "active" : "hidden"
                                 }`}
                             >
                                 {/* Game Name */}
                                 <div className="col-span-4">
-                                    <h2 className="font-bold truncate p-0 m-0">
+                                    <h2 className="m-0 truncate p-0 font-bold">
                                         {notification.game}
                                     </h2>
-                                    <p className="text-sm text-gray-600 p-0 m-0">
+                                    <p className="m-0 p-0 text-sm text-gray-600">
                                         AppId {notification.appId}
                                     </p>
                                 </div>
@@ -133,19 +150,19 @@ function DropDown({}) {
                                 <div className="col-span-5 text-center">
                                     {notification.eventName ? (
                                         <>
-                                            <p className="text-sm font-medium p-0 m-0">
+                                            <p className="m-0 p-0 text-sm font-medium">
                                                 {notification.eventName}
                                             </p>
-                                            <p className="text-sm text-gray-600 p-0 m-0">
+                                            <p className="m-0 p-0 text-sm text-gray-600">
                                                 {notification.eventPatchesDate}
                                             </p>
                                         </>
                                     ) : (
                                         <>
-                                            <p className="text-sm font-medium p-0 m-0">
+                                            <p className="m-0 p-0 text-sm font-medium">
                                                 {notification.patchName}
                                             </p>
-                                            <p className="text-sm text-gray-600 p-0 m-0">
+                                            <p className="m-0 p-0 text-sm text-gray-600">
                                                 {notification.patchNotesDate}
                                             </p>
                                         </>
@@ -155,7 +172,7 @@ function DropDown({}) {
                                 {/* Link */}
                                 <div className="col-span-3 text-right">
                                     <Link
-                                        className="text-blue-500 hover:underline text-sm p-0 m-0"
+                                        className="m-0 p-0 text-sm text-blue-500 hover:underline"
                                         href={`game/${notification.appId}`}
                                     >
                                         View Update
@@ -165,7 +182,7 @@ function DropDown({}) {
                         ))}
 
                         <div className="flex justify-end">
-                            <button className="ani p-0 m-0 mr-4 mb-2">
+                            <button className="ani m-0 mb-2 mr-4 p-0">
                                 Clear Notification
                             </button>
                         </div>
