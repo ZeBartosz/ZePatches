@@ -31,7 +31,7 @@ class AdminController extends Controller
     public function FetchGamesFromAPI()
     {
         collect(SteamApi::app()->GetAppList())
-            ->chunk(5000)->each(function ($games) {
+            ->chunk(1000)->each(function ($games) {
                 ProcessSteam::dispatch($games);
             });
 

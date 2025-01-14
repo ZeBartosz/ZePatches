@@ -22,9 +22,12 @@ class ProcessSteam implements ShouldQueue
     {
         foreach ($this->games as $game) {
             if (isset($game->appid, $game->name)) {
-                Steam::firstOrCreate(
-                    ['appId' => $game->appid],
-                    ['name' => $game->name])->searchable();
+                if (!Steam::where('appid', $game->appid)->exists()) {
+                    Steam::create([
+                        'appId' => $game->appid,
+                        'name' => $game->name
+                    ])->searchable();
+                }
             }
         }
     }
