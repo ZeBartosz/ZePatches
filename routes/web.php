@@ -19,6 +19,8 @@ Route::post('/favorite/{steam}', [FavoriteController::class, 'favorite']);
 Route::post('/inputGames', [SteamController::class, 'store']);
 
 Route::put('/notifications/updateChecked', [NotificationController::class, 'updateChecked']);
+Route::delete('/notifications/delete', [NotificationController::class, 'deleteNotifications'])
+    ->name('notifications.delete');
 
 Route::get('/admin/dashboard', [AdminController::class, 'show']);
 Route::post('/fetchGames', [AdminController::class, 'FetchGamesFromAPI']);

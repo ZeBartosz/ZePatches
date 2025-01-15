@@ -6,12 +6,18 @@ function DropDown({}) {
     const [active, setActive] = useState(false);
     const [pressed, setPressed] = useState(false);
     const { post, logoutprocessing } = useForm({});
+    const { delete: notificationDelete, notificationProcess } = useForm({});
     const { authUser } = usePage().props;
     const { notifications } = usePage().props;
 
     function logout(e) {
         e.preventDefault();
         post("/logout");
+    }
+
+    function deleteNotifications(e) {
+        e.preventDefault();
+        notificationDelete("/notifications/delete");
     }
 
     const updateNotification = async () => {
@@ -175,9 +181,17 @@ function DropDown({}) {
                         ))}
 
                         <div className="flex justify-end">
-                            <button className="ani m-0 mb-2 mr-4 p-0">
-                                Clear Notification
-                            </button>
+                            <form onSubmit={deleteNotifications}>
+                                <button
+                                    type="submit"
+                                    className="ani m-0 mb-2 mr-4 p-0"
+                                    disabled={notificationProcess}
+                                >
+                                    {notificationProcess
+                                        ? "Clearing..."
+                                        : "Clear Notification"}
+                                </button>
+                            </form>
                         </div>
                     </>
                 ) : (
