@@ -31,8 +31,8 @@ class ProcessNotification implements ShouldQueue
 
         foreach ($games as $game) {
             // Fetch data from URLs
-            $eventPatches = $this->fetchData($game->appId, 14);
-            $patches = $this->fetchData($game->appId, 13);
+            $eventPatches = $this->fetchData($game->appId, 13);
+            $patches = $this->fetchData($game->appId, 12);
 
             // Process events and patches
             $this->processUpdates($game, $eventPatches, 'event');

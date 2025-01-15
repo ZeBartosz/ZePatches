@@ -129,8 +129,8 @@ class SteamService
 
         $gameName = $this->findGameByAppId($appId)->name;
 
-        $urlMinor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=".$appId."&count_before=0&count_after=100&event_type_filter=13";
-        $urlMajor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=".$appId."&count_before=0&count_after=100&event_type_filter=14";
+        $urlMinor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=".$appId."&count_before=0&count_after=100&event_type_filter=12";
+        $urlMajor = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/?appid=".$appId."&count_before=0&count_after=100&event_type_filter=13";
 
         $minorPatches = json_decode(file_get_contents($urlMinor), true);
         $majorPatches = json_decode(file_get_contents($urlMajor), true);
