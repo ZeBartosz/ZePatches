@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
@@ -22,6 +23,11 @@ class ProcessCheckedNotifications implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        Notification::where('checked', true)
+            ->chunk(1000, function ($notifications) {
+                foreach ($notifications as $notification) {
+                    $notification->delete();
+                }
+            });
     }
 }

@@ -3,6 +3,9 @@
 use App\Models\Notification;
 use App\Models\Steam;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 it('updates notifications to checked for single users and games', function () {
     $steamGame = Steam::factory()->create(['appId' => 12345, 'name' => 'aaaa']);
