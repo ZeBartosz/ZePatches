@@ -15,75 +15,78 @@ export default function AdminDashboard({
 
     return (
         <>
-            <h1>welcome to the admin page {authUser.name}</h1>
-            <h1>Total Game Count: {gameCount}</h1>
+            <h1 className="m-0 mt-2 border-0 p-0 text-white">
+                Welcome to the admin page {authUser.name}
+            </h1>
+            <h1 className="m-0 mt-2 p-0 pb-1 text-white">
+                Total Game Count: {gameCount}
+            </h1>
             <form onSubmit={FetchNewGames}>
-                <button className="text-white">Fetch New Games</button>
+                <button className="mt-1 text-white">Fetch New Games</button>
             </form>
 
-            <div>
-                <table className="table-fixed border-collapse border border-slate-500">
+            <div className="mt-5 flex flex-col justify-center bg-[#05283d] bg-opacity-75 text-white">
+                <table className="table-fixed border-collapse rounded-md border border-[#9dbebb] text-center">
                     <tr>
-                        <th className="border border-slate-600">Avatar</th>
-                        <th className="border border-slate-600">Username</th>
-                        <th className="border border-slate-600">
-                            Favorite_Count
-                        </th>
-                        <th className="border border-slate-600">Is_Admin</th>
-                        <th className="border border-slate-600">Other</th>
+                        <th>Avatar</th>
+                        <th>Username</th>
+                        <th>Favorite_Count</th>
+                        <th>Is_Admin</th>
+                        <th>Other</th>
                     </tr>
 
                     {users.map((user) => (
                         <tr key={user.steam_id}>
-                            <td className="border border-slate-700">
+                            <td className="flex items-center justify-center border-b-0">
                                 <img src={user.avatar} alt="" />
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{user.nickname}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{user.favorites_count}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{user.is_admin}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>promote</p>
                             </td>
                         </tr>
                     ))}
                 </table>
 
-                <table className="mt-1 table-fixed border-collapse">
+                <table className="mt-1 table-fixed border-collapse text-center">
                     <tr>
-                        <th className="border border-slate-600">Name</th>
-                        <th className="border border-slate-600">AppId</th>
-                        <th className="border border-slate-600">Developer</th>
-                        <th className="border border-slate-600">releaseDate</th>
-                        <th className="border border-slate-600">Type</th>
-                        <th className="border border-slate-600">
-                            Favorite_count
-                        </th>
+                        <th>Name</th>
+                        <th>AppId</th>
+                        <th>Developer</th>
+                        <th>releaseDate</th>
+                        <th>Type</th>
+                        <th>Favorite_count</th>
                     </tr>
 
                     {topFavorite.map((favorite) => (
-                        <tr key={favorite.appId} className={`bg-gradient-to-l`}>
-                            <td className="border border-slate-700">
+                        <tr
+                            key={favorite.appId}
+                            className={`bg-gradient-to-l text-white`}
+                        >
+                            <td>
                                 <p>{favorite.name}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{favorite.appId}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{favorite.developer}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{favorite.releaseDate}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{favorite.type}</p>
                             </td>
-                            <td className="border border-slate-700">
+                            <td>
                                 <p>{favorite.favorites_count}</p>
                             </td>
                         </tr>

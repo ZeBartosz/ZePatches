@@ -52,6 +52,10 @@ strong {
     @apply pt-2
 }
 
+th, td {
+    @apply border border-[#9dbebb]
+}
+
 /* text underline and y-axis animation on hover */
 .ani {
     text-decoration: none;
