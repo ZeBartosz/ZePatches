@@ -52,7 +52,7 @@ export default function Layout({ children }) {
             </div>
             <header>
                 <nav>
-                    <div className="m-auto flex w-3/4 items-center justify-between px-2">
+                    <div className="motion-preset-fade-sm motion-duration-2000 m-auto flex w-3/4 items-center justify-between px-2">
                         <div className="flex-none">
                             <Link href="/">
                                 <img

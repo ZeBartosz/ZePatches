@@ -13,14 +13,14 @@ export default function Home({
     return (
         <>
             {search ? (
-                <div className="flex flex-col text-white">
+                <div className="motion-preset-focus motion-duration-2000 flex flex-col text-white">
                     <h1 className="mb-0 pb-1">Searched for: {search}</h1>
                     <p className="mt-0 flex justify-center pt-1 text-sm">
                         Total Results: {games.total || 0}
                     </p>
                 </div>
             ) : authUser ? (
-                <div className="flex flex-col justify-items-center">
+                <div className="motion-preset-focus-sm motion-duration-2000 flex flex-col justify-items-center">
                     <div className="flex">
                         <img
                             className="m-3 h-16 w-16 rounded-3xl"

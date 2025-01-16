@@ -54,7 +54,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                 games.map((game) => (
                     <div
                         key={game.id}
-                        className={`relative my-3 w-[80%] lg:w-[50%] ${
+                        className={`motion-blur-in relative my-3 w-[80%] lg:w-[50%] ${
                             activeTab === tableId ? "active" : "hidden"
                         }`}
                     >
