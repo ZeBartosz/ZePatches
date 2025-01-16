@@ -6,10 +6,10 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
 
     return (
         <>
-            <h1 className="my-0 flex items-start pt-2 text-white">
+            <h1 className="motion-preset-fade-sm motion-duration-2000 my-0 flex items-start pt-2 text-white">
                 {gameName}
             </h1>
-            <div className="tab mb-2 flex justify-evenly border-[#9dbebb] text-[#47828a]">
+            <div className="motion-preset-fade-sm motion-duration-2000 tab mb-2 flex justify-evenly border-[#9dbebb] text-[#47828a]">
                 <button
                     className={`tablinks border-r px-1 ${
                         activeTab === "Table1" ? "text-[#69b6a7]" : ""

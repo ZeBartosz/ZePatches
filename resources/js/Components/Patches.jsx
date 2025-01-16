@@ -56,7 +56,7 @@ function Patches({ patch, activeTab, tableId, title }) {
                     id={tableId}
                     className={`table-content ${
                         activeTab === tableId ? "active" : "hidden"
-                    } rounded-lg border-2 border-[#9dbebb] bg-[#05283d] bg-opacity-75 text-white`}
+                    } motion-preset-focus-sm motion-duration-2000 rounded-lg border-2 border-[#9dbebb] bg-[#05283d] bg-opacity-75 text-white`}
                 >
                     <h1 className="my-0 border-0 py-3 text-white">{title}</h1>
                     <InfiniteScroll

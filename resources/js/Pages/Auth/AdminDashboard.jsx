@@ -15,14 +15,18 @@ export default function AdminDashboard({
 
     return (
         <>
-            <h1 className="m-0 mt-2 border-0 p-0 text-white">
-                Welcome to the admin page {authUser.name}
-            </h1>
-            <h1 className="m-0 mt-2 p-0 pb-1 text-white">
-                Total Game Count: {gameCount}
-            </h1>
+            <div className="motion-preset-focus-sm motion-duration-2000">
+                <h1 className="m-0 mt-2 border-0 p-0 text-white">
+                    Welcome to the Admin Page {authUser.name}
+                </h1>
+                <h1 className="m-0 mt-2 p-0 pb-1 text-white">
+                    Total Game Count: {gameCount}
+                </h1>
+            </div>
             <form onSubmit={FetchNewGames}>
-                <button className="mt-1 text-white">Fetch New Games</button>
+                <button className="motion-preset-slide-left-sm my-2 me-2 rounded-lg border border-[#9dbebb] bg-[#05283d] px-5 py-2.5 text-sm font-medium text-gray-200 hover:bg-[#47828a] hover:text-white focus:ring-[#9dbebb]">
+                    Fetch New Games
+                </button>
             </form>
 
             <div className="mt-5 flex flex-col justify-center bg-[#05283d] bg-opacity-75 text-white">

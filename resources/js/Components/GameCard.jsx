@@ -124,7 +124,9 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                 <div
                     className={`${activeTab === tableId ? "active" : "hidden"}`}
                 >
-                    <p className="text-lg text-white">No games found</p>
+                    <p className="motion-preset-focus-sm motion-duration-2000 text-lg text-white">
+                        No games found
+                    </p>
                 </div>
             )}
 
