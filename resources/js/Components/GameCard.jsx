@@ -1,4 +1,4 @@
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import favorite from "../../Assets/favorite.svg";
@@ -17,7 +17,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
     useEffect(() => {
         const fetchGameDetails = async () => {
             const gamesToFetch = games.filter(
-                (game) => game.appId && game.moreDetails === 0
+                (game) => game.appId && game.moreDetails === 0,
             );
             if (gamesToFetch.length > 0) {
                 try {
@@ -28,7 +28,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
 
                     const updatedGames = games.map((game) => {
                         const foundGame = response.data.find(
-                            (g) => g.appId === game.appId
+                            (g) => g.appId === game.appId,
                         );
                         return foundGame ? { ...game, ...foundGame } : game;
                     });
@@ -65,25 +65,25 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                             }}
                         >
                             <div
-                                className="absolute inset-0 bg-center filter blur-[2px] rounded-lg cursor-pointer border-2 drop-shadow-md"
+                                className="absolute inset-0 cursor-pointer rounded-lg border-2 border-[#9dbebb] bg-center ring-1 ring-[#9dbebb] blur-[2px] drop-shadow-md filter"
                                 style={{
                                     backgroundImage: `url(${game.banner})`,
                                     zIndex: 0,
                                 }}
                             ></div>
 
-                            <div className="flex flex-col justify-start text-white z-10 bg-black opacity-75 rounded-lg p-2">
-                                <h2 className="font-bold py-1 ">{game.name}</h2>
+                            <div className="z-10 flex flex-col justify-start rounded-lg bg-black p-2 text-white opacity-75">
+                                <h2 className="py-1 font-bold">{game.name}</h2>
                                 <p className="p-0 text-sm">
                                     AppId: {game.appId}
                                 </p>
-                                <p className="p-0 text-sm pb-3">
+                                <p className="p-0 pb-2 text-sm">
                                     Type: {game.type}
                                 </p>
 
                                 {activeTab === "EventOrder" && (
                                     <>
-                                        <p className="p-0 text-sm pb-3">
+                                        <p className="p-0 text-sm">
                                             Latest Event:{" "}
                                             {game.eventPatchesDate}
                                         </p>
@@ -92,14 +92,14 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
 
                                 {activeTab === "PatchOrder" && (
                                     <>
-                                        <p className="p-0 text-sm pb-3">
+                                        <p className="p-0 text-sm">
                                             Latest Patch: {game.patchNotesDate}
                                         </p>
                                     </>
                                 )}
                             </div>
                         </div>
-                        <div className="absolute top-[35%] right-[10px] ">
+                        <div className="absolute right-[10px] top-[35%]">
                             <form onSubmit={(e) => addToFavorite(e, game.id)}>
                                 <button className="" type="submit">
                                     {game.is_favorite ? (
@@ -129,7 +129,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
             )}
 
             <div
-                className={`flex justify-center mt-4 mb-4 ${
+                className={`mb-4 mt-4 flex justify-center ${
                     activeTab === tableId ? "active" : "hidden"
                 }`}
             >
@@ -141,7 +141,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                             <Link
                                 key={index}
                                 href={link.url ? `${link.url}${query}` : "#"}
-                                className={` p-2 ${
+                                className={`p-2 ${
                                     link.active ? "bg-blue-500 text-white" : ""
                                 }`}
                                 dangerouslySetInnerHTML={{

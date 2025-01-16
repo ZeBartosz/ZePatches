@@ -12,7 +12,9 @@
 </head>
 
 <body>
-    @inertia
+
+@inertia
+
 </body>
 
 </html>
