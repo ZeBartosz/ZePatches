@@ -60,7 +60,7 @@ function DropDown({}) {
                             </div>
                         )}
                     <div
-                        className={`absolute right-3 top-3 -z-10 rounded-lg border border-[#9dbebb] bg-[#47828a] bg-opacity-80 pb-2 pl-2 text-white ${
+                        className={`absolute right-3 top-3 -z-10 rounded-lg border border-[#9dbebb] bg-[#05283d] bg-opacity-80 pb-2 pl-2 text-white ${
                             active ? "active" : "hidden"
                         }`}
                     >
@@ -118,7 +118,7 @@ function DropDown({}) {
             {/* Notification */}
             <div
                 onMouseLeave={() => setPressed(false)}
-                className={`bg-blur fixed left-1/2 top-5 z-50 w-4/5 -translate-x-1/2 transform rounded-md border border-[#9dbebb] bg-[#031926] bg-opacity-95 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] lg:w-1/2 ${
+                className={`bg-blur fixed left-1/2 top-5 z-50 w-4/5 -translate-x-1/2 transform rounded-md border border-[#9dbebb] bg-[#05283d] bg-opacity-95 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] lg:w-1/2 ${
                     pressed ? "active" : "hidden"
                 }`}
             >
@@ -196,7 +196,9 @@ function DropDown({}) {
                     </>
                 ) : (
                     <div>
-                        <p className="text-white">No new Updates</p>
+                        <p className="flex justify-center text-white">
+                            No New Updates
+                        </p>
                     </div>
                 )}
             </div>

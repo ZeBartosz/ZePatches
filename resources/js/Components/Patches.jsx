@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { convertToHTML } from "../app.js";
 
@@ -20,7 +20,7 @@ function Patches({ patch, activeTab, tableId, title }) {
         // Calculate the next batch of patches to be loaded.
         const nextBatch = patch.events.slice(
             currentPatches.length,
-            currentPatches.length + 3
+            currentPatches.length + 3,
         );
 
         // Update the currentPatches state by adding the newly fetched patches to the previous ones
@@ -56,11 +56,9 @@ function Patches({ patch, activeTab, tableId, title }) {
                     id={tableId}
                     className={`table-content ${
                         activeTab === tableId ? "active" : "hidden"
-                    } bg-gray-900 bg-opacity-75 border-2 border-white rounded-lg text-white`}
+                    } rounded-lg border-2 border-[#9dbebb] bg-[#05283d] bg-opacity-75 text-white`}
                 >
-                    <h1 className="py-3 my-0 text-[#c7d5e0] border-0">
-                        {title}
-                    </h1>
+                    <h1 className="my-0 border-0 py-3 text-white">{title}</h1>
                     <InfiniteScroll
                         dataLength={currentPatches.length}
                         next={fetchMorePatches}
@@ -75,21 +73,21 @@ function Patches({ patch, activeTab, tableId, title }) {
                         {currentPatches.map((patch) => (
                             <div
                                 key={patch.forum_topic_id}
-                                className="mx-4 mb-4 p-4 border-b flex flex-col items-center w-auto max-w-[900px] min-w-[900px]"
+                                className="mx-4 mb-4 flex w-auto min-w-[900px] max-w-[900px] flex-col items-center border-b border-[#9dbebb] p-4"
                             >
-                                <div className="flex flex-col justify-center items-center text-[#c7d5e0]">
+                                <div className="flex flex-col items-center justify-center text-[#c7d5e0]">
                                     <h1>{patch.announcement_body.headline}</h1>
                                     <span>
                                         <span>Posted on: </span>
                                         {getSteamPostDate(
-                                            patch.announcement_body.posttime
+                                            patch.announcement_body.posttime,
                                         )}
                                     </span>
                                     <p
-                                        className="text-center flex flex-col justify-center"
+                                        className="flex flex-col justify-center text-center"
                                         dangerouslySetInnerHTML={{
                                             __html: convertToHTML(
-                                                patch.announcement_body.body
+                                                patch.announcement_body.body,
                                             ),
                                         }}
                                     />
@@ -100,7 +98,7 @@ function Patches({ patch, activeTab, tableId, title }) {
                 </div>
             ) : (
                 <h3
-                    className={`text-[#c7d5e0] text-3xl ${
+                    className={`text-3xl text-[#c7d5e0] ${
                         activeTab === tableId ? "active" : "hidden"
                     }`}
                 >

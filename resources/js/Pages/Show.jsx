@@ -6,21 +6,21 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
 
     return (
         <>
-            <h1 className="flex items-start pt-2 my-0 text-[#c7d5e0]">
+            <h1 className="my-0 flex items-start pt-2 text-white">
                 {gameName}
             </h1>
-            <div className="tab flex justify-evenlytext-[#c7d5e0] border-[#66c0f4] mb-2 text-blue-900">
+            <div className="tab mb-2 flex justify-evenly border-[#9dbebb] text-[#47828a]">
                 <button
-                    className={`px-1 border-r tablinks ${
-                        activeTab === "Table1" ? "text-blue-600" : ""
+                    className={`tablinks border-r px-1 ${
+                        activeTab === "Table1" ? "text-[#69b6a7]" : ""
                     }`}
                     onClick={() => setActiveTab("Table1")}
                 >
                     Events
                 </button>
                 <button
-                    className={`px-1  tablinks ${
-                        activeTab === "Table2" ? "text-blue-600" : ""
+                    className={`tablinks px-1 ${
+                        activeTab === "Table2" ? "text-[#69b6a7]" : ""
                     }`}
                     onClick={() => setActiveTab("Table2")}
                 >
@@ -38,7 +38,7 @@ export default function Show({ minorPatches, majorPatches, gameName }) {
                 patch={minorPatches}
                 activeTab={activeTab}
                 tableId={"Table2"}
-                title={"Minor"}
+                title={"Patches"}
             />
         </>
     );
