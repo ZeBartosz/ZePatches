@@ -8,5 +8,5 @@ export default {
     theme: {
         extend: {},
     },
-    plugins: [require("tailwindcss-motion")],
+    plugins: [require("tailwindcss-motion"), require("tailwindcss-intersect")],
 };

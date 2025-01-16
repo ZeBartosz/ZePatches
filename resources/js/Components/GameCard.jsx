@@ -143,7 +143,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                             <Link
                                 key={index}
                                 href={link.url ? `${link.url}${query}` : "#"}
-                                className={`p-2 ${
+                                className={`motion-preset-slide-up-md p-2 ${
                                     link.active ? "bg-blue-500 text-white" : ""
                                 }`}
                                 dangerouslySetInnerHTML={{
