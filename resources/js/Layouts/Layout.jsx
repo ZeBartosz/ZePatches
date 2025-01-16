@@ -35,6 +35,20 @@ export default function Layout({ children }) {
 
     return (
         <>
+            <div className="area">
+                <ul className="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
             <header>
                 <nav>
                     <div className="m-auto flex w-3/4 items-center justify-between px-2">
