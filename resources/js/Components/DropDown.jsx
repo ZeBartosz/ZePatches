@@ -196,7 +196,7 @@ function DropDown({}) {
                     </>
                 ) : (
                     <div>
-                        <p>No new Updates</p>
+                        <p className="text-white">No new Updates</p>
                     </div>
                 )}
             </div>

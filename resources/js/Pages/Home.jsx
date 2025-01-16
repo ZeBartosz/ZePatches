@@ -13,9 +13,9 @@ export default function Home({
     return (
         <>
             {search ? (
-                <div className="flex flex-col">
+                <div className="flex flex-col text-white">
                     <h1 className="mb-0 pb-1">Searched for: {search}</h1>
-                    <p className="mt-0 flex justify-center pt-0 text-sm text-gray-600">
+                    <p className="mt-0 flex justify-center pt-1 text-sm">
                         Total Results: {games.total || 0}
                     </p>
                 </div>
