@@ -3,6 +3,7 @@ import FlashCard from "../Components/FlashCard";
 import searchIcon from "../../Assets/search.svg";
 import { useEffect, useState } from "react";
 import DropDown from "../Components/DropDown";
+import ZePatches from "../../Assets/zepatches-logo.png";
 
 export default function Layout({ children }) {
     const [message, setMessage] = useState("");
@@ -53,8 +54,12 @@ export default function Layout({ children }) {
                 <nav>
                     <div className="m-auto flex w-3/4 items-center justify-between px-2">
                         <div className="flex-none">
-                            <Link className="" href="/">
-                                ZePatches
+                            <Link href="/">
+                                <img
+                                    className="w-50 h-5"
+                                    src={ZePatches}
+                                    alt=""
+                                />
                             </Link>
                         </div>
 
