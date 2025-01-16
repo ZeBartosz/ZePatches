@@ -46,7 +46,7 @@ function DropDown({}) {
                 >
                     <button className="" onClick={() => setActive(!active)}>
                         <img
-                            className="mt-1 h-12 w-12 rounded-3xl border border-[#2a475e]"
+                            className="mt-1 h-12 w-12 rounded-3xl border border-[#9dbebb]"
                             src={authUser.avatar}
                             alt="User's Avatar"
                         />
@@ -56,20 +56,20 @@ function DropDown({}) {
                     ) &&
                         !active && (
                             <div className="absolute -right-1 top-1 z-10">
-                                <div className="h-4 w-4 rounded-full border border-[#2a475e] bg-red-500"></div>
+                                <div className="h-4 w-4 rounded-full bg-red-500"></div>
                             </div>
                         )}
                     <div
-                        className={`absolute right-3 top-3 -z-10 bg-gray-400 bg-opacity-80 pb-2 pl-2 ${
+                        className={`absolute right-3 top-3 -z-10 rounded-lg border border-[#9dbebb] bg-[#47828a] bg-opacity-80 pb-2 pl-2 text-white ${
                             active ? "active" : "hidden"
                         }`}
                     >
-                        <p className="mx-2 border-b border-[#66c0f4] py-3 pr-11 text-white">
+                        <p className="mx-2 border-[#66c0f4] py-3 pr-11">
                             {authUser.nickname}
                         </p>
                         {authUser.is_admin ? (
                             <Link
-                                className="ani text-black no-underline hover:text-black"
+                                className="transform text-white no-underline hover:text-white"
                                 href="/admin/dashboard"
                             >
                                 Admin
@@ -87,7 +87,7 @@ function DropDown({}) {
                                     </div>
                                 )}
                             <button
-                                className="ani"
+                                className="hov"
                                 onClick={() => {
                                     updateNotification(), setPressed(true);
                                 }}
@@ -95,7 +95,7 @@ function DropDown({}) {
                                 Notifications
                             </button>
                             <form onSubmit={logout}>
-                                <button className="ani" type="submit">
+                                <button className="hov" type="submit">
                                     {logoutprocessing
                                         ? "Logging out..."
                                         : "logout"}
@@ -118,11 +118,11 @@ function DropDown({}) {
             {/* Notification */}
             <div
                 onMouseLeave={() => setPressed(false)}
-                className={`bg-blur fixed left-1/2 top-5 z-50 w-4/5 -translate-x-1/2 transform rounded-md bg-black bg-opacity-50 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] lg:w-4/6 ${
+                className={`bg-blur fixed left-1/2 top-5 z-50 w-4/5 -translate-x-1/2 transform rounded-md border border-[#9dbebb] bg-[#031926] bg-opacity-95 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] lg:w-1/2 ${
                     pressed ? "active" : "hidden"
                 }`}
             >
-                <h1 className="m-1 border-[#66c0f4] p-1">
+                <h1 className="m-1 border-[#9dbebb]">
                     You currently have {notifications.length} notifications
                 </h1>
 
@@ -131,7 +131,7 @@ function DropDown({}) {
                         {notifications.map((notification) => (
                             <div
                                 key={notification.id}
-                                className={`m-3 grid grid-cols-12 items-center border-b px-3 pb-3 ${
+                                className={`m-3 grid grid-cols-12 items-center border-b border-[#9dbebb] px-3 pb-3 ${
                                     pressed ? "active" : "hidden"
                                 }`}
                             >
@@ -140,7 +140,7 @@ function DropDown({}) {
                                     <h2 className="m-0 truncate p-0 font-bold">
                                         {notification.game}
                                     </h2>
-                                    <p className="m-0 p-0 text-sm text-gray-600">
+                                    <p className="m-0 p-0 text-sm">
                                         AppId {notification.appId}
                                     </p>
                                 </div>
@@ -152,7 +152,7 @@ function DropDown({}) {
                                             <p className="m-0 p-0 text-sm font-medium">
                                                 {notification.eventName}
                                             </p>
-                                            <p className="m-0 p-0 text-sm text-gray-600">
+                                            <p className="m-0 p-0 text-sm">
                                                 {notification.eventPatchesDate}
                                             </p>
                                         </>
@@ -161,7 +161,7 @@ function DropDown({}) {
                                             <p className="m-0 p-0 text-sm font-medium">
                                                 {notification.patchName}
                                             </p>
-                                            <p className="m-0 p-0 text-sm text-gray-600">
+                                            <p className="m-0 p-0 text-sm">
                                                 {notification.patchNotesDate}
                                             </p>
                                         </>
@@ -171,7 +171,7 @@ function DropDown({}) {
                                 {/* Link */}
                                 <div className="col-span-3 text-right">
                                     <Link
-                                        className="m-0 p-0 text-sm text-blue-500 hover:underline"
+                                        className="m-0 p-0 text-sm hover:underline"
                                         href={`game/${notification.appId}`}
                                     >
                                         View Update

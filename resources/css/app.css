@@ -3,24 +3,27 @@
 @tailwind utilities;
 
 nav {
-    @apply flex items-center justify-between px-2 bg-[#2a475e] border-b-2 border-[#66c0f4] w-full
+    @apply border-opacity-35 border-b border-[#9dbebb] w-full
 }
 
+body {
+    @apply bg-[#031926]
+}
 
 main {
-    @apply bg-gray-500 flex flex-col items-center justify-start min-h-screen
+    @apply flex flex-col items-center justify-start min-h-screen
 }
 
 h1 {
     @apply flex justify-center text-4xl font-bold leading-9 mt-6 mb-4  pb-3 border-b-[1px] text-center
-} 
+}
 
 h3, h2 {
-    @apply font-bold text-lg py-3 
+    @apply font-bold text-lg py-3
 }
 
 ul {
-    @apply pl-24 py-2 text-left	
+    @apply pl-24 py-2 text-left
 }
 
 li {
@@ -49,13 +52,14 @@ strong {
     @apply pt-2
 }
 
+
 .ani {
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
     background-position: 0% 100%;
     background-repeat: no-repeat;
     background-size: 0% 5px;
-    transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+    transition: background-size cubic-bezier(0, .5, 0, 1) 0.3s;
 }
 
 .ani:hover,
@@ -70,3 +74,13 @@ div > a.ani:hover {
     background-size: 100% 3px;
     transform: translateY(-1px);
 }
+
+
+.hov:hover,
+.hov:focus {
+    text-decoration: none;
+    background-size: 100% 3px;
+    transform: translateY(-1px);
+    transition: transform 0.3s ease, background-size 0.3s ease;
+}
+

@@ -27,25 +27,27 @@ export default function Home({
                             src={authUser.avatar}
                             alt="User's Avatar"
                         />
-                        <h1 className="text-white">
+                        <h1 className="border-[#9dbebb] text-white">
                             {authUser.nickname}'s Favorite List:
                         </h1>
                     </div>
 
-                    <div className="tab mb-2 flex justify-center border-[#66c0f4] text-blue-900">
+                    <div className="tab mb-2 flex justify-center border-[#9dbebb] text-[#47828a]">
                         <p className="p-0 pr-1 text-white">Order by:</p>
                         <button
-                            className={`ani tablinks border-r px-1 ${
-                                activeTab === "NameOrder" ? "text-blue-600" : ""
+                            className={`ani tablinks border-r border-[#9dbebb] px-1 ${
+                                activeTab === "NameOrder"
+                                    ? "text-[#69b6a7]"
+                                    : ""
                             }`}
                             onClick={() => setActiveTab("NameOrder")}
                         >
                             Name
                         </button>
                         <button
-                            className={`ani tablinks border-r px-1 ${
+                            className={`ani tablinks border-r border-[#9dbebb] px-1 ${
                                 activeTab === "EventOrder"
-                                    ? "text-blue-600"
+                                    ? "text-[#69b6a7]"
                                     : ""
                             }`}
                             onClick={() => setActiveTab("EventOrder")}
@@ -55,7 +57,7 @@ export default function Home({
                         <button
                             className={`ani tablinks px-1 ${
                                 activeTab === "PatchOrder"
-                                    ? "text-blue-600"
+                                    ? "text-[#69b6a7]"
                                     : ""
                             }`}
                             onClick={() => setActiveTab("PatchOrder")}
