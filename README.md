@@ -53,6 +53,11 @@ Follow these steps to get the project up and running locally:
    php artisan serve
    npm run dev
    ```
+   or
+    ```bash
+   composer run dev
+   ```
+   
 
 ## Usage
 
