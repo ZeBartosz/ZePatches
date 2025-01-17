@@ -37,4 +37,26 @@ class AdminController extends Controller
 
         return back()->with('message', 'Retriving games from API ');
     }
+
+    public function promoteUserToAdmin($userId)
+    {
+        $user = User::where('id', $userId)->first();
+
+        $user->update([
+            'is_admin' => true,
+        ]);
+
+        return back()->with('message', $user->nickname.' has Promoted to admin');
+    }
+
+    public function demoteUserToAdmin($userId)
+    {
+        $user = User::where('id', $userId)->first();
+
+        $user->update([
+            'is_admin' => false,
+        ]);
+
+        return back()->with('message', $user->nickname.' has Demoted from being a admin');
+    }
 }

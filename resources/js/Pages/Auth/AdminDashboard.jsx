@@ -7,7 +7,7 @@ export default function AdminDashboard({
     topFavorite,
 }) {
     const { post, processing } = useForm({});
-
+    console.log(authUser);
     const FetchNewGames = (e) => {
         e.preventDefault();
         post("/fetchGames");
@@ -54,7 +54,25 @@ export default function AdminDashboard({
                                 <p>{user.is_admin}</p>
                             </td>
                             <td>
-                                <p>promote</p>
+                                {authUser.is_admin && 0 ? (
+                                    <button className="rounded-lg border bg-green-600 p-2">
+                                        Promote
+                                    </button>
+                                ) : authUser.id && user.id ? (
+                                    <button
+                                        disabled
+                                        className="rounded-lg border bg-gray-900 p-2"
+                                    >
+                                        Demote
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="rounded-lg border bg-red-600 p-2"
+                                        type="submit"
+                                    >
+                                        Demote
+                                    </button>
+                                )}
                             </td>
                         </tr>
                     ))}

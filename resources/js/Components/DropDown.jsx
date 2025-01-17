@@ -60,7 +60,7 @@ function DropDown({}) {
                             </div>
                         )}
                     <div
-                        className={`motion-preset-slide-left-sm motion-duration-2000 absolute right-3 top-3 -z-10 rounded-lg border border-[#9dbebb] bg-[#05283d] bg-opacity-80 pb-2 pl-2 text-white ${
+                        className={`motion-preset-slide-left-sm absolute right-3 top-3 -z-10 rounded-lg border border-[#9dbebb] bg-[#05283d] bg-opacity-80 pb-2 pl-2 text-white motion-duration-2000 ${
                             active ? "active" : "hidden"
                         }`}
                     >

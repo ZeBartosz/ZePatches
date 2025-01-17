@@ -54,7 +54,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                 games.map((game) => (
                     <div
                         key={game.id}
-                        className={`motion-blur-in relative my-3 w-[80%] lg:w-[50%] ${
+                        className={`relative my-3 w-[80%] motion-blur-in lg:w-[50%] ${
                             activeTab === tableId ? "active" : "hidden"
                         }`}
                     >
@@ -101,7 +101,10 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                         </div>
                         <div className="absolute right-[10px] top-[35%]">
                             <form onSubmit={(e) => addToFavorite(e, game.id)}>
-                                <button className="" type="submit">
+                                <button
+                                    className="hover:motion-preset-seesaw-sm"
+                                    type="submit"
+                                >
                                     {game.is_favorite ? (
                                         <img
                                             src={favorited}
@@ -124,7 +127,7 @@ function GameCard({ initialGames, activeTab, tableId, search }) {
                 <div
                     className={`${activeTab === tableId ? "active" : "hidden"}`}
                 >
-                    <p className="motion-preset-focus-sm motion-duration-2000 text-lg text-white">
+                    <p className="motion-preset-focus-sm text-lg text-white motion-duration-2000">
                         No games found
                     </p>
                 </div>
