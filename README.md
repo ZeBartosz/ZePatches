@@ -1,6 +1,6 @@
 # ZePatches
 
-ZePatches is a web application that utilises the Steam API to provide detailed information about games. Users can track events and patches for their favourite games, receive notifications about updates, and stay up-to-date with the latest news.
+ZePatches is a website that integrates with the Steam API, allowing users to search for patches and events related to their favourite games on Steam. Users can mark games as favourites to display them on the homepage and can filter the listings by game name, latest patches, or upcoming events. The notification panel keeps users informed by alerting them to new patches or events for their favoured games.new patches or events for their favourite games.
 
 ## Features
 
@@ -82,13 +82,19 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## Contact
 
 Feel free to reach out for any questions or feedback:
 - **GitHub:** [ZeBartosz](https://github.com/ZeBartosz)
 
+## Screenshots
+![Homescreen](https://imgur.com/QWI5TeA)
+![Search View](https://imgur.com/MEQClz7)
+![Patch View](https://imgur.com/yKxz4NM)
+![Notification View](https://imgur.com/lZa2OxT)
+
 ---
 
-Enjoy tracking your games with ZePatches! 🚀
+Enjoy tracking your games with ZePatches! 
