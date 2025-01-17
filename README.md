@@ -90,10 +90,10 @@ Feel free to reach out for any questions or feedback:
 - **GitHub:** [ZeBartosz](https://github.com/ZeBartosz)
 
 ## Screenshots
-![Homescreen](https://imgur.com/QWI5TeA)
-![Search View](https://imgur.com/MEQClz7)
-![Patch View](https://imgur.com/yKxz4NM)
-![Notification View](https://imgur.com/lZa2OxT)
+![Homescreen](https://imgur.com/QWI5TeA.png)
+![Search View](https://imgur.com/MEQClz7.png)
+![Patch View](https://imgur.com/yKxz4NM.png)
+![Notification View](https://imgur.com/lZa2OxT.png)
 
 ---
 
