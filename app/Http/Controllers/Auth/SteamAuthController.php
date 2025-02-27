@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class SteamAuthController extends Controller
 {
@@ -21,7 +22,7 @@ class SteamAuthController extends Controller
 
         try {
             $steamUser = Socialite::driver('steam')->user();
-            $user = User::firstOrCreate(
+            $user = User::updateOrCreate(
                 ['steam_id' => $steamUser->id],
                 [
                     'nickname' => $steamUser->nickname,
@@ -32,8 +33,8 @@ class SteamAuthController extends Controller
 
             $token = $user->createToken('access_token')->plainTextToken;
 
-            return redirect()->away("http://localhost:3000/auth/callback?token=$token");
-        } catch (\Exception $e) {
+            return redirect()->away(env("APP_URL")."?token=$token");
+        } catch (Exception $e) {
             return redirect("/")->withErrors('Steam login failed.');
         }
     }
@@ -47,10 +48,10 @@ class SteamAuthController extends Controller
         // Invalidate the session
         $request->session()->invalidate();
 
-        // Regenerate the token 
+        // Regenerate the token
         $request->session()->regenerateToken();
 
-        // Redirect to home 
+        // Redirect to home
         return redirect('/');
     }
 }
