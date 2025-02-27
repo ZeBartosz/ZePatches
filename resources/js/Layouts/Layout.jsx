@@ -36,20 +36,6 @@ export default function Layout({ children }) {
 
     return (
         <>
-            <div className="area">
-                <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
             <header>
                 <nav>
                     <div className="motion-preset-fade-sm m-auto flex w-3/4 items-center justify-between motion-duration-2000">
